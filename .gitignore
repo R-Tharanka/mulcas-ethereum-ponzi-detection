@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Data files
+data/raw/
+data/processed/
+*.csv
+*.parquet
+
+# Model outputs
+*.pkl
+*.joblib
+*.onnx
+
+# Experiment outputs
+results/temp/
