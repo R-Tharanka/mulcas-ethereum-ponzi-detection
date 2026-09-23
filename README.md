@@ -4,9 +4,13 @@ Reproducing and improving the MulCas multi-view cascade ensemble for Ethereum
 smart Ponzi scheme detection through feature engineering, model fine-tuning, and
 performance evaluation.
 
-This repository is currently in Phase 0: local development scaffolding for a
-research-reproducible Python project. Dataset processing, feature engineering,
-model implementations, and experiments are intentionally not implemented yet.
+The repository currently implements the research workflow through Phase 5: a
+dataset audit, leakage-safe temporal splitting, reproduced feature views,
+individual model baselines, and a frozen independent MulCas reconstruction.
+
+See [Running and Testing Guide](docs/RUN_AND_TEST_GUIDE.md) for the complete
+setup, phase-by-phase execution, notebook, testing, reproducibility, and do/don't
+instructions.
 
 ## Local Setup
 
@@ -35,9 +39,8 @@ Run the test suite from the repository root:
 python -m pytest
 ```
 
-The initial smoke tests verify that the `src` package imports correctly, common
-repository paths resolve from the project root, and the deterministic seed helper
-is reusable.
+The tests cover the environment, data validation, temporal and feature leakage,
+evaluation metrics, baseline models, and MulCas cascade routing and voting.
 
 ## Repository Layout
 
