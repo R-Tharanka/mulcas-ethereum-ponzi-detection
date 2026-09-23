@@ -1,0 +1,27 @@
+feature_config: configs/feature_reproduction.yaml
+results_json: results/baseline/individual_baseline_results.json
+results_csv: results/baseline/individual_baseline_results.csv
+artifact_dir: results/artifacts/baseline_models
+seed: 42
+models:
+  ridge:
+    alpha: 1.0
+    class_weight: null
+  svm:
+    C: 1.0
+    kernel: linear
+    class_weight: null
+    tol: 0.001
+    cache_size: 1024
+  xgboost:
+    objective: binary:logistic
+    eval_metric: logloss
+    n_estimators: 100
+    learning_rate: 0.1
+    max_depth: 3
+    min_child_weight: 1
+    subsample: 1.0
+    colsample_bytree: 1.0
+    reg_lambda: 1.0
+    tree_method: hist
+    n_jobs: 1
