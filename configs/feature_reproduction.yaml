@@ -1,0 +1,14 @@
+dataset: data/raw/PonziDataset_20221114.csv
+split_membership: results/baseline/temporal_split_membership.csv
+summary_output: results/baseline/feature_view_summary.json
+artifact_dir: results/artifacts/features
+opcode:
+  lowercase: false
+  dtype: float32
+word2vec:
+  vector_size: 100
+  window: 5
+  min_count: 1
+  epochs: 10
+  seed: 42
+  workers: 1

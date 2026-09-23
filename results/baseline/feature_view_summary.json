@@ -1,0 +1,254 @@
+{
+  "generated_at_utc": "2026-09-23T11:42:32.098049+00:00",
+  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "split_membership_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\results\\baseline\\temporal_split_membership.csv",
+  "anti_leakage_policy": {
+    "text_fit_partition": "train only",
+    "validation_test_operation": "transform only",
+    "creator_training": "strictly earlier blocks only",
+    "creator_validation_test": "frozen training-label state; labels not read"
+  },
+  "feature_views": {
+    "opcode_term_count": {
+      "fitted_on": "train",
+      "vocabulary_size": 142,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 142,
+          "nonzero_values": 272715,
+          "density": 0.4222797205395964,
+          "sparsity": 0.5777202794604036,
+          "nonzero_per_contract": {
+            "min": 4,
+            "mean": 59.96372031662269,
+            "max": 102
+          }
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 142,
+          "nonzero_values": 61312,
+          "density": 0.4433004598432484,
+          "sparsity": 0.5566995401567516,
+          "nonzero_per_contract": {
+            "min": 31,
+            "mean": 62.94866529774127,
+            "max": 91
+          }
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 142,
+          "nonzero_values": 63329,
+          "density": 0.45694556684368504,
+          "sparsity": 0.543054433156315,
+          "nonzero_per_contract": {
+            "min": 34,
+            "mean": 64.88627049180327,
+            "max": 98
+          }
+        }
+      }
+    },
+    "opcode_tfidf": {
+      "fitted_on": "train",
+      "vocabulary_size": 142,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 142,
+          "nonzero_values": 272715,
+          "density": 0.4222797205395964,
+          "sparsity": 0.5777202794604036,
+          "nonzero_per_contract": {
+            "min": 4,
+            "mean": 59.96372031662269,
+            "max": 102
+          }
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 142,
+          "nonzero_values": 61312,
+          "density": 0.4433004598432484,
+          "sparsity": 0.5566995401567516,
+          "nonzero_per_contract": {
+            "min": 31,
+            "mean": 62.94866529774127,
+            "max": 91
+          }
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 142,
+          "nonzero_values": 63329,
+          "density": 0.45694556684368504,
+          "sparsity": 0.543054433156315,
+          "nonzero_per_contract": {
+            "min": 34,
+            "mean": 64.88627049180327,
+            "max": 98
+          }
+        }
+      }
+    },
+    "opcode_ngram_count_1_3": {
+      "fitted_on": "train",
+      "vocabulary_size": 70867,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 70867,
+          "nonzero_values": 4742531,
+          "density": 0.014714505583619614,
+          "sparsity": 0.9852854944163804,
+          "nonzero_per_contract": {
+            "min": 16,
+            "mean": 1042.7728671943712,
+            "max": 3889
+          }
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 70867,
+          "nonzero_values": 1002012,
+          "density": 0.01451676737541351,
+          "sparsity": 0.9854832326245865,
+          "nonzero_per_contract": {
+            "min": 96,
+            "mean": 1028.7597535934292,
+            "max": 3352
+          }
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 70867,
+          "nonzero_values": 1045700,
+          "density": 0.015118657970934701,
+          "sparsity": 0.9848813420290653,
+          "nonzero_per_contract": {
+            "min": 160,
+            "mean": 1071.4139344262296,
+            "max": 3158
+          }
+        }
+      }
+    },
+    "opcode_ngram_tfidf_1_3": {
+      "fitted_on": "train",
+      "vocabulary_size": 70867,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 70867,
+          "nonzero_values": 4742531,
+          "density": 0.014714505583619614,
+          "sparsity": 0.9852854944163804,
+          "nonzero_per_contract": {
+            "min": 16,
+            "mean": 1042.7728671943712,
+            "max": 3889
+          }
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 70867,
+          "nonzero_values": 1002012,
+          "density": 0.01451676737541351,
+          "sparsity": 0.9854832326245865,
+          "nonzero_per_contract": {
+            "min": 96,
+            "mean": 1028.7597535934292,
+            "max": 3352
+          }
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 70867,
+          "nonzero_values": 1045700,
+          "density": 0.015118657970934701,
+          "sparsity": 0.9848813420290653,
+          "nonzero_per_contract": {
+            "min": 160,
+            "mean": 1071.4139344262296,
+            "max": 3158
+          }
+        }
+      }
+    },
+    "opcode_word2vec_mean": {
+      "fitted_on": "train",
+      "vocabulary_size": 142,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 100,
+          "nonzero_values": 454800,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 2.549572467803955,
+            "mean": 3.96246075630188,
+            "max": 9.483686447143555
+          },
+          "zero_vector_contracts": 0
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 100,
+          "nonzero_values": 97400,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 2.8689985275268555,
+            "mean": 4.070799350738525,
+            "max": 4.748298168182373
+          },
+          "zero_vector_contracts": 0
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 100,
+          "nonzero_values": 97600,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 2.925203800201416,
+            "mean": 3.973630428314209,
+            "max": 4.835484504699707
+          },
+          "zero_vector_contracts": 0
+        }
+      }
+    },
+    "chronological_creator": {
+      "fitted_on": "train_prequential_strictly_earlier_blocks",
+      "validation_test_state": "frozen_training_state",
+      "positive_creators_in_training_state": 79,
+      "splits": {
+        "train": {
+          "rows": 4548,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 110,
+          "unknown_creator_count": 4438,
+          "known_prior_positive_creator_share": 0.024186455584872472
+        },
+        "validation": {
+          "rows": 974,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 7,
+          "unknown_creator_count": 967,
+          "known_prior_positive_creator_share": 0.007186858316221766
+        },
+        "test": {
+          "rows": 976,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 1,
+          "unknown_creator_count": 975,
+          "known_prior_positive_creator_share": 0.0010245901639344263
+        }
+      }
+    }
+  }
+}
