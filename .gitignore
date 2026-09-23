@@ -33,3 +33,6 @@ data/raw/*
 data/interim/*
 data/processed/*
 data/raw/PonziDataset_20221114.csv
+
+# Documentation
+docs/reference
