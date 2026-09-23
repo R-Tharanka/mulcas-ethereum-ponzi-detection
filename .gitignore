@@ -1,3 +1,6 @@
+.DS_Store
+.vscode/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -9,6 +12,7 @@ venv/
 
 # Environment variables
 .env
+.env.*
 
 # Data files
 data/raw/
@@ -23,3 +27,9 @@ data/processed/
 
 # Experiment outputs
 results/temp/
+
+# data folders
+data/raw/*
+data/interim/*
+data/processed/*
+data/raw/PonziDataset_20221114.csv
