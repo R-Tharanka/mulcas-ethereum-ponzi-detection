@@ -1,0 +1,40 @@
+baseline_config: configs/baseline_models.yaml
+results_json: results/baseline/mulcas_reproduction_results.json
+trace_dir: results/baseline/mulcas_traces
+artifact_dir: results/artifacts/mulcas
+report_path: docs/mulcas_baseline_report.md
+seed: 42
+frozen_baseline: true
+
+# Paper configuration: N=2, theta=0.05 in stage 1, positive confidence
+# threshold=0.51 in stage 2, and lambda=0 (any positive vote wins).
+complexity_control_n: 2
+score_mapping: sigmoid_decision_function
+voting_threshold: 0
+viewer_sequence:
+  - name: xgboost_term_count
+    feature_view: opcode_term_count
+    model: xgboost
+    negative_threshold: 0.05
+    positive_threshold: 0.95
+  - name: xgboost_ngram_count
+    feature_view: opcode_ngram_count_1_3
+    model: xgboost
+    negative_threshold: 0.05
+    positive_threshold: 0.51
+  - name: xgboost_ngram_tfidf
+    feature_view: opcode_ngram_tfidf_1_3
+    model: xgboost
+  - name: ridge_tfidf
+    feature_view: opcode_tfidf
+    model: ridge
+
+developer_feature:
+  concatenate_to_every_view: true
+  validation_test_state: frozen_training_state
+
+published_reference:
+  source: "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes"
+  precision: 0.951
+  recall: 0.674
+  f1: 0.789

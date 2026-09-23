@@ -1,0 +1,155 @@
+{
+  "generated_at_utc": "2026-09-23T14:15:55.821576+00:00",
+  "baseline_status": "frozen",
+  "configuration": {
+    "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\configs\\mulcas_reproduction.yaml",
+    "sha256": "8a75e09a53c6d190b056d00ac60f030ab9d62dd1d4e3c91c886255f3913e4168",
+    "snapshot": {
+      "baseline_config": "configs/baseline_models.yaml",
+      "results_json": "results/baseline/mulcas_reproduction_results.json",
+      "trace_dir": "results/baseline/mulcas_traces",
+      "artifact_dir": "results/artifacts/mulcas",
+      "report_path": "docs/mulcas_baseline_report.md",
+      "seed": 42,
+      "frozen_baseline": true,
+      "complexity_control_n": 2,
+      "score_mapping": "sigmoid_decision_function",
+      "voting_threshold": 0,
+      "viewer_sequence": [
+        {
+          "name": "xgboost_term_count",
+          "feature_view": "opcode_term_count",
+          "model": "xgboost",
+          "negative_threshold": 0.05,
+          "positive_threshold": 0.95
+        },
+        {
+          "name": "xgboost_ngram_count",
+          "feature_view": "opcode_ngram_count_1_3",
+          "model": "xgboost",
+          "negative_threshold": 0.05,
+          "positive_threshold": 0.51
+        },
+        {
+          "name": "xgboost_ngram_tfidf",
+          "feature_view": "opcode_ngram_tfidf_1_3",
+          "model": "xgboost"
+        },
+        {
+          "name": "ridge_tfidf",
+          "feature_view": "opcode_tfidf",
+          "model": "ridge"
+        }
+      ],
+      "developer_feature": {
+        "concatenate_to_every_view": true,
+        "validation_test_state": "frozen_training_state"
+      },
+      "published_reference": {
+        "source": "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes",
+        "precision": 0.951,
+        "recall": 0.674,
+        "f1": 0.789
+      }
+    }
+  },
+  "methodology": {
+    "cascade_training": "Each of N=2 viewers fitted on residual training rows.",
+    "voting_training": "All voting viewers fitted on the full training partition.",
+    "developer_feature": "Leakage-safe creator flag concatenated to every view.",
+    "validation_policy": "Validation labels used for reporting only in Phase 5.",
+    "test_policy": "Final-test labels used only after predictions for reporting.",
+    "score_mapping": "sigmoid_decision_function",
+    "reconstruction_note": "Algorithm and N/theta/lambda follow the paper. Existing 70/15/15 chronological splits and independently reproduced features/classifiers differ from the paper's experimental environment."
+  },
+  "cascade_training_trace": [
+    {
+      "stage": 1,
+      "viewer": "xgboost_term_count",
+      "training_rows_in": 4548,
+      "confident_training_rows": 4394,
+      "training_rows_out": 154,
+      "positive_training_rows_in": 140,
+      "positive_training_rows_out": 74
+    },
+    {
+      "stage": 2,
+      "viewer": "xgboost_ngram_count",
+      "training_rows_in": 154,
+      "confident_training_rows": 122,
+      "training_rows_out": 32,
+      "positive_training_rows_in": 74,
+      "positive_training_rows_out": 0
+    }
+  ],
+  "published_mulcas": {
+    "label": "Published MulCas (paper reference; not generated here)",
+    "precision": 0.951,
+    "recall": 0.674,
+    "f1": 0.789,
+    "accuracy": null,
+    "pr_auc": null,
+    "balanced_accuracy": null,
+    "confusion_matrix": null
+  },
+  "experimental_reconstruction": {
+    "label": "Our independent MulCas reconstruction",
+    "validation": {
+      "accuracy": 0.9928131416837782,
+      "balanced_accuracy": 0.7484472049689441,
+      "precision": 0.5714285714285714,
+      "recall": 0.5,
+      "f1": 0.5333333333333333,
+      "pr_auc": 0.41597767594422025,
+      "roc_auc": 0.9636387163561076,
+      "tn": 963,
+      "fp": 3,
+      "fn": 4,
+      "tp": 4,
+      "support_negative": 966,
+      "support_positive": 8,
+      "routing_counts": {
+        "xgboost_term_count": 955,
+        "vote": 15,
+        "xgboost_ngram_count": 4
+      }
+    },
+    "test": {
+      "accuracy": 0.8360655737704918,
+      "balanced_accuracy": 0.5468094600624721,
+      "precision": 0.6,
+      "recall": 0.10843373493975904,
+      "f1": 0.1836734693877551,
+      "pr_auc": 0.5221678810602857,
+      "roc_auc": 0.8613751301502306,
+      "tn": 798,
+      "fp": 12,
+      "fn": 148,
+      "tp": 18,
+      "support_negative": 810,
+      "support_positive": 166,
+      "routing_counts": {
+        "xgboost_term_count": 924,
+        "xgboost_ngram_count": 32,
+        "vote": 20
+      }
+    }
+  },
+  "test_differences_from_published": {
+    "precision": {
+      "published": 0.951,
+      "experimental": 0.6,
+      "difference_experimental_minus_published": -0.351
+    },
+    "recall": {
+      "published": 0.674,
+      "experimental": 0.10843373493975904,
+      "difference_experimental_minus_published": -0.565566265060241
+    },
+    "f1": {
+      "published": 0.789,
+      "experimental": 0.1836734693877551,
+      "difference_experimental_minus_published": -0.605326530612245
+    }
+  }
+}
