@@ -3,36 +3,47 @@
 
 # Python
 __pycache__/
+**/__pycache__/
 *.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 .venv/
 venv/
 
 # Jupyter
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
-# Environment variables
+# Secrets and local environment
 .env
 .env.*
+!.env.example
+*.pem
+*.key
+secrets.*
 
-# Data files
+# Local datasets
 data/raw/
+data/interim/
 data/processed/
-*.csv
+data/external/
 *.parquet
+*.feather
+*.arrow
 
-# Model outputs
+# Model and experiment artifacts
+artifacts/
+checkpoints/
+/model_artifacts/
+results/temp/
+results/artifacts/
 *.pkl
 *.joblib
 *.onnx
-
-# Experiment outputs
-results/temp/
-
-# data folders
-data/raw/*
-data/interim/*
-data/processed/*
-data/raw/PonziDataset_20221114.csv
 
 # Documentation
 docs/reference
