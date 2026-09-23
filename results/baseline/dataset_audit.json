@@ -1,0 +1,174 @@
+{
+  "generated_at_utc": "2026-09-23T08:39:28.727026+00:00",
+  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "file_size_bytes": 307176676,
+  "sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "published_reference": {
+    "total_contracts": 6498,
+    "ponzi_contracts": 314
+  },
+  "row_count": 6498,
+  "columns": [
+    "address",
+    "opcode",
+    "code",
+    "contractCode",
+    "createdBlockNumber",
+    "createdTransactionHash",
+    "creationCode",
+    "creator",
+    "label",
+    "timestamp"
+  ],
+  "dtypes": {
+    "address": "str",
+    "createdBlockNumber": "float64",
+    "createdTransactionHash": "str",
+    "creator": "str",
+    "label": "int64",
+    "timestamp": "str",
+    "opcode": "str",
+    "code": "str",
+    "contractCode": "str",
+    "creationCode": "str"
+  },
+  "label_values": [
+    0,
+    1
+  ],
+  "unexpected_label_values": [],
+  "class_counts": {
+    "0": 6184,
+    "1": 314
+  },
+  "null_counts": {
+    "address": 0,
+    "opcode": 0,
+    "code": 0,
+    "contractCode": 0,
+    "createdBlockNumber": 0,
+    "createdTransactionHash": 0,
+    "creationCode": 0,
+    "creator": 0,
+    "label": 0,
+    "timestamp": 0
+  },
+  "duplicate_addresses": 30,
+  "duplicate_transaction_hashes": 197,
+  "duplicate_block_address_combinations": 30,
+  "block_number_range": {
+    "min": 49880,
+    "max": 7136486
+  },
+  "timestamp_range": {
+    "min": "2015-08-07T20:48:27",
+    "max": "2019-01-27T23:52:51"
+  },
+  "chronological_ordering": {
+    "by_createdBlockNumber": true,
+    "by_timestamp": true
+  },
+  "unique_creators": 3360,
+  "creators_with_multiple_contracts": 1093,
+  "creators_with_multiple_positive_contracts": 55,
+  "top_creators_by_contract_count": [
+    {
+      "value": "0x6efd5665ab4b345a7ebe63c679b651f375dddb7e",
+      "count": 112
+    },
+    {
+      "value": "0xd68ba7734753e2ee54103116323aba2d94c78dc5",
+      "count": 61
+    },
+    {
+      "value": "0x51b9311eb6ec8beb049dafeafe389ee2818b1b20",
+      "count": 47
+    },
+    {
+      "value": "0x33daedabab9085bd1a94460a652e7ffff592dfe3",
+      "count": 35
+    },
+    {
+      "value": "0x000001f568875f378bf6d170b790967fe429c81a",
+      "count": 33
+    },
+    {
+      "value": "0xd19e13d40188a0123da1561c8f063ce5cadecd56",
+      "count": 32
+    },
+    {
+      "value": "0x1dba1131000664b884a1ba238464159892252d3a",
+      "count": 32
+    },
+    {
+      "value": "0xf55dfd2b02cf3282680c94bd01e9da044044e6a2",
+      "count": 31
+    },
+    {
+      "value": "0x92c5d6898abbd58e388aa94c816d4d17387a8859",
+      "count": 31
+    },
+    {
+      "value": "0x008cdc9b89ad677cef7f2c055efc97d3606a50bd",
+      "count": 29
+    }
+  ],
+  "top_creators_by_positive_contract_count": [
+    {
+      "value": "0x56f0bf1ff1c7526687fdf61b0e6889a105dfcfc5",
+      "count": 18
+    },
+    {
+      "value": "0xfaeeb28890c14f45e68a62e2e29b1b1e8d41c950",
+      "count": 9
+    },
+    {
+      "value": "0x7e6f7232ddddc7d5a075150db12e5235455d9432",
+      "count": 7
+    },
+    {
+      "value": "0x83e5203cd3e372c9c926ccec510e612b8bbc739c",
+      "count": 7
+    },
+    {
+      "value": "0x89a64c31240eee15e8884667ad1877761c63afe6",
+      "count": 6
+    },
+    {
+      "value": "0xab914e7b04f1b6ed397dbce175eec827563c91bd",
+      "count": 6
+    },
+    {
+      "value": "0x7a5db139dbb296eebff6e0b5f5ee7f29f21203bb",
+      "count": 6
+    },
+    {
+      "value": "0x0070eaaa4a0ddf3b57bffbd032d712d26bb0fbf3",
+      "count": 6
+    },
+    {
+      "value": "0xf2e6b44e0ffd524bd36cae1a58d9f6ee2edffb1e",
+      "count": 5
+    },
+    {
+      "value": "0x82ff243c78cdc6cbc2d1e71766a4480f331456bb",
+      "count": 5
+    }
+  ],
+  "opcode": {
+    "missing_or_empty_count": 0,
+    "exact_duplicate_rows": 712,
+    "exact_duplicate_groups": 195,
+    "memory_usage_bytes_deep": 100264775
+  },
+  "memory_usage_bytes": {
+    "metadata_only_deep": 2475870,
+    "opcode_deep": 100264775,
+    "raw_csv_file_size": 307176676,
+    "metadata_plus_opcode_deep": 102740645
+  },
+  "paper_discrepancies": {
+    "row_count_delta": 0,
+    "ponzi_count_delta": 0
+  }
+}
