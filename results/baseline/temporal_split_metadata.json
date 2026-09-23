@@ -1,0 +1,88 @@
+{
+  "generated_at_utc": "2026-09-23T09:42:39.141403+00:00",
+  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "ordering_column": "createdBlockNumber",
+  "split_fractions": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "row_count": 6498,
+  "split_counts": {
+    "train": {
+      "rows": 4548,
+      "positive_count": 140,
+      "negative_count": 4408,
+      "negative_to_positive_ratio": 31.485714285714284,
+      "block_min": 49880,
+      "block_max": 4572153
+    },
+    "validation": {
+      "rows": 974,
+      "positive_count": 8,
+      "negative_count": 966,
+      "negative_to_positive_ratio": 120.75,
+      "block_min": 4572291,
+      "block_max": 4955839
+    },
+    "test": {
+      "rows": 976,
+      "positive_count": 166,
+      "negative_count": 810,
+      "negative_to_positive_ratio": 4.879518072289157,
+      "block_min": 4957244,
+      "block_max": 7136486
+    }
+  },
+  "temporal_boundary_assertions": {
+    "max_train_block_lte_min_validation_block": true,
+    "max_validation_block_lte_min_test_block": true
+  },
+  "cross_split_duplicates": {
+    "address": {
+      "cross_split_duplicate_values": 0,
+      "cross_split_duplicate_rows": 0,
+      "rows_by_split": {
+        "train": 0,
+        "validation": 0,
+        "test": 0
+      }
+    },
+    "opcode": {
+      "cross_split_duplicate_values": 6,
+      "cross_split_duplicate_rows": 17,
+      "rows_by_split": {
+        "train": 7,
+        "validation": 7,
+        "test": 3
+      }
+    },
+    "code": {
+      "cross_split_duplicate_values": 10,
+      "cross_split_duplicate_rows": 35,
+      "rows_by_split": {
+        "train": 9,
+        "validation": 21,
+        "test": 5
+      }
+    },
+    "contractCode": {
+      "cross_split_duplicate_values": 5,
+      "cross_split_duplicate_rows": 13,
+      "rows_by_split": {
+        "train": 4,
+        "validation": 6,
+        "test": 3
+      }
+    },
+    "creationCode": {
+      "cross_split_duplicate_values": 1,
+      "cross_split_duplicate_rows": 2,
+      "rows_by_split": {
+        "train": 0,
+        "validation": 1,
+        "test": 1
+      }
+    }
+  }
+}
