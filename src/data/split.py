@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -224,7 +224,7 @@ def build_temporal_split(
     duplicate_frame["row_index"] = duplicate_frame.index.astype(int)
 
     metadata_json = {
-        "generated_at_utc": datetime.now(UTC).isoformat(),
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "dataset_path": str(config.dataset),
         "ordering_column": config.ordering_column,
         "split_fractions": {
