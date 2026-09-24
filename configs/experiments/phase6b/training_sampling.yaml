@@ -1,0 +1,43 @@
+phase: 6B
+experiment_name: controlled_training_data_sampling
+hypothesis: >-
+  H6B: Controlled random under-sampling or random over-sampling improves
+  Ponzi-class recall and F1 relative to the frozen Phase 5.5 validation
+  baseline while preserving useful precision.
+seed: 42
+dataset: data/raw/PonziDataset_20221114.csv
+split_membership: results/baseline/paper_aligned/split_membership.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+frozen_phase55_manifest: configs/experiments/phase6a/frozen_phase55_manifest.yaml
+frozen_phase6a_manifest: configs/experiments/phase6b/frozen_phase6a_manifest.yaml
+output_dir: results/experiments/phase6b
+selection:
+  cv_primary_metric: f1
+  minimum_cv_precision: 0.80
+  cv_tie_breakers: [recall, pr_auc, precision]
+  minimum_validation_precision: 0.80
+  final_test_usage: prohibited
+temporal_cv:
+  train_positive_ends: [50, 100, 150]
+  validation_positive_ends: [100, 150, 200]
+features:
+  ridge: opcode_term_count
+  svm: opcode_ngram_tfidf_1_3_df_filtered
+  xgboost: opcode_ngram_tfidf_1_3_df_filtered
+sampling_candidates:
+  - {name: natural, sampler: none, requested_ratio: natural, sampling_strategy: null}
+  - {name: under_1_to_10, sampler: random_under, requested_ratio: "1:10", sampling_strategy: 0.1}
+  - {name: under_1_to_5, sampler: random_under, requested_ratio: "1:5", sampling_strategy: 0.2}
+  - {name: under_1_to_2, sampler: random_under, requested_ratio: "1:2", sampling_strategy: 0.5}
+  - {name: under_1_to_1, sampler: random_under, requested_ratio: "1:1", sampling_strategy: 1.0}
+  - {name: over_1_to_10, sampler: random_over, requested_ratio: "1:10", sampling_strategy: 0.1}
+  - {name: over_1_to_5, sampler: random_over, requested_ratio: "1:5", sampling_strategy: 0.2}
+  - {name: over_1_to_2, sampler: random_over, requested_ratio: "1:2", sampling_strategy: 0.5}
+  - {name: over_1_to_1, sampler: random_over, requested_ratio: "1:1", sampling_strategy: 1.0}
+reference_validation:
+  label: frozen_phase_5_5_mulcas_validation
+  precision: 0.7931034482758621
+  recall: 0.92
+  f1: 0.8518518518518519
+  pr_auc: 0.870639987619326
