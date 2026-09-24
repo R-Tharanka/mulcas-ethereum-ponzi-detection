@@ -1,0 +1,10 @@
+dataset: data/raw/PonziDataset_20221114.csv
+output_dir: results/baseline/paper_aligned
+ordering_column: createdBlockNumber
+address_column: address
+label_column: label
+positive_label: 1
+positive_boundaries:
+  train: 200
+  validation: 250
+  test: 314

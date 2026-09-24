@@ -21,7 +21,11 @@ from src.features.developer import ChronologicalCreatorTransformer
 from src.features.reproduce import load_feature_config, load_feature_source
 from src.models.baselines import build_baseline_model
 from src.models.mulcas import MulCasCascade, ViewerPrediction, ViewerSpec
-from src.models.run_baselines import TEXT_FEATURE_ARTIFACTS, load_baseline_config
+from src.models.run_baselines import (
+    TEXT_FEATURE_ARTIFACTS,
+    load_baseline_config,
+    validate_evaluation_protocol,
+)
 from src.utils.paths import REPO_ROOT
 from src.utils.seed import set_random_seed
 
@@ -45,6 +49,13 @@ def load_mulcas_config(path: Path = DEFAULT_MULCAS_CONFIG_PATH) -> dict[str, Any
         "report_path",
     ):
         config[key] = _resolve_repo_path(config[key])
+    if "existing_reconstruction_results" in config:
+        config["existing_reconstruction_results"] = _resolve_repo_path(
+            config["existing_reconstruction_results"]
+        )
+    for key in ("split_metadata", "feature_summary", "individual_baseline_results"):
+        if key in config:
+            config[key] = _resolve_repo_path(config[key])
     config["config_path"] = path.resolve()
     config["config_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
     return config
@@ -95,7 +106,8 @@ def build_mulcas_feature_matrices(
         dict.fromkeys(viewer["feature_view"] for viewer in config["viewer_sequence"])
     )
     for feature_view in feature_views:
-        transformer_path = feature_artifact_dir / TEXT_FEATURE_ARTIFACTS[feature_view]
+        artifact_mapping = config.get("feature_artifacts", TEXT_FEATURE_ARTIFACTS)
+        transformer_path = feature_artifact_dir / artifact_mapping[feature_view]
         if not transformer_path.is_file():
             raise FileNotFoundError(
                 f"Missing feature transformer: {transformer_path}. "
@@ -236,8 +248,10 @@ def run_mulcas_reproduction(
     config: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, pd.DataFrame]]:
     """Train and evaluate the paper-aligned frozen reconstruction."""
+    validate_evaluation_protocol(config)
     set_random_seed(int(config["seed"]))
     baseline_config = load_baseline_config(config["baseline_config"])
+    validate_evaluation_protocol(baseline_config)
     feature_config = load_feature_config(baseline_config["feature_config"])
     frame = load_feature_source(
         feature_config["dataset"],
@@ -331,10 +345,11 @@ def run_mulcas_reproduction(
             "validation_policy": "Validation labels used for reporting only in Phase 5.",
             "test_policy": "Final-test labels used only after predictions for reporting.",
             "score_mapping": config["score_mapping"],
-            "reconstruction_note": (
+            "reconstruction_note": config.get(
+                "reconstruction_note",
                 "Algorithm and N/theta/lambda follow the paper. Existing 70/15/15 "
                 "chronological splits and independently reproduced features/classifiers "
-                "differ from the paper's experimental environment."
+                "differ from the paper's experimental environment.",
             ),
         },
         "cascade_training_trace": training_trace,
@@ -349,7 +364,9 @@ def run_mulcas_reproduction(
             "confusion_matrix": None,
         },
         "experimental_reconstruction": {
-            "label": "Our independent MulCas reconstruction",
+            "label": config.get(
+                "experimental_label", "Our independent MulCas reconstruction"
+            ),
             "validation": split_results["validation"],
             "test": split_results["test"],
         },
@@ -358,7 +375,87 @@ def run_mulcas_reproduction(
             published,
         ),
     }
+    previous_path = config.get("existing_reconstruction_results")
+    if previous_path is not None:
+        previous = json.loads(Path(previous_path).read_text(encoding="utf-8"))
+        result["existing_70_15_15_reconstruction"] = {
+            "label": "Existing 70/15/15 independent reconstruction",
+            "source_path": str(previous_path),
+            "test": previous["experimental_reconstruction"]["test"],
+        }
     return result, traces
+
+
+def _paper_aligned_protocol_section(config: dict[str, Any]) -> str:
+    required = ("split_metadata", "feature_summary", "individual_baseline_results")
+    if not all(key in config for key in required):
+        return ""
+    split_metadata = json.loads(config["split_metadata"].read_text(encoding="utf-8"))
+    feature_summary = json.loads(config["feature_summary"].read_text(encoding="utf-8"))
+    baseline_results = json.loads(
+        config["individual_baseline_results"].read_text(encoding="utf-8")
+    )
+    split_lines = []
+    for split_name in ("train", "validation", "test"):
+        values = split_metadata["split_counts"][split_name]
+        split_lines.append(
+            f"| {split_name} | {values['rows']} | {values['positive_count']} | "
+            f"{values['negative_count']} | {values['negative_to_positive_ratio']:.6f} | "
+            f"{values['block_min']} | {values['block_max']} |"
+        )
+    dimension_lines = [
+        f"| {name} | {dimension} |"
+        for name, dimension in feature_summary[
+            "dimensions_after_creator_concatenation"
+        ].items()
+    ]
+    validation_records = [
+        record
+        for record in baseline_results["records"]
+        if record["split"] == "validation"
+    ]
+    selected_lines = []
+    for family in ("ridge", "svm", "xgboost"):
+        selected = max(
+            (record for record in validation_records if record["model"] == family),
+            key=lambda record: record["f1"],
+        )
+        test_record = next(
+            record
+            for record in baseline_results["records"]
+            if record["split"] == "test"
+            and record["model"] == family
+            and record["feature_view"] == selected["feature_view"]
+        )
+        selected_lines.append(
+            f"| {family} | {selected['feature_view']} | {selected['f1']:.6f} | "
+            f"{test_record['precision']:.6f} | {test_record['recall']:.6f} | "
+            f"{test_record['f1']:.6f} | {test_record['pr_auc']:.6f} |"
+        )
+    return f"""
+## Corrected Partition Statistics
+
+| Split | Rows | Positive | Negative | Negative:positive | Block min | Block max |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+{chr(10).join(split_lines)}
+
+## Feature Dimensions
+
+Dimensions include the appended chronological creator feature.
+
+| Feature view | Dimensions |
+| --- | ---: |
+{chr(10).join(dimension_lines)}
+
+## Individual Baseline Summary
+
+One feature view per model family is selected by validation F1 only. The complete
+fixed matrix remains in `{config['individual_baseline_results'].as_posix()}`.
+
+| Model | Validation-selected feature | Validation F1 | Test precision | Test recall | Test F1 | Test PR-AUC |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+{chr(10).join(selected_lines)}
+"""
 
 
 def save_mulcas_outputs(
@@ -380,6 +477,22 @@ def save_mulcas_outputs(
     test = result["experimental_reconstruction"]["test"]
     published = result["published_mulcas"]
     differences = result["test_differences_from_published"]
+    previous_section = ""
+    if "existing_70_15_15_reconstruction" in result:
+        previous = result["existing_70_15_15_reconstruction"]["test"]
+        previous_section = f"""
+## Three-Way Result Distinction
+
+| Metric | Published paper | Existing 70/15/15 | Corrected paper-aligned |
+| --- | ---: | ---: | ---: |
+| Precision | {published['precision']:.3f} | {previous['precision']:.6f} | {test['precision']:.6f} |
+| Recall | {published['recall']:.3f} | {previous['recall']:.6f} | {test['recall']:.6f} |
+| F1 | {published['f1']:.3f} | {previous['f1']:.6f} | {test['f1']:.6f} |
+
+The paper also states F1 = 0.743 in nearby prose; this conflicts with Table 5
+and is retained as an unresolved source inconsistency.
+"""
+    protocol_section = _paper_aligned_protocol_section(config)
     report = f"""# Frozen MulCas Reproduction Baseline
 
 This report distinguishes published reference values from metrics generated by
@@ -424,6 +537,10 @@ trained classifiers differ from the original experimental environment.
 
 Detailed validation and final-test traces are stored under
 `{trace_dir.as_posix()}`.
+
+{previous_section}
+
+{protocol_section}
 """
     report_path.write_text(report, encoding="utf-8")
 

@@ -13,6 +13,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import yaml
+from scipy.sparse import hstack, issparse
 
 from src.evaluation.metrics import binary_classification_metrics
 from src.features.developer import ChronologicalCreatorTransformer
@@ -46,6 +47,14 @@ def load_baseline_config(path: Path = DEFAULT_BASELINE_CONFIG_PATH) -> dict[str,
     return config
 
 
+def validate_evaluation_protocol(config: dict[str, Any]) -> None:
+    """Reject configurations that authorize final-test-driven selection."""
+    if config.get("selection_split", "validation") != "validation":
+        raise ValueError("Model selection must use the validation split only.")
+    if config.get("final_test_usage", "reporting_only") != "reporting_only":
+        raise ValueError("Final-test labels may be used for reporting only.")
+
+
 def _partition_frame(frame: pd.DataFrame) -> dict[str, pd.DataFrame]:
     return {
         split_name: frame.loc[frame["split"] == split_name].copy()
@@ -57,6 +66,8 @@ def build_feature_matrices(
     feature_view: str,
     partitions: dict[str, pd.DataFrame],
     feature_artifact_dir: Path,
+    feature_artifacts: dict[str, str] | None = None,
+    append_creator: bool = False,
 ) -> dict[str, Any]:
     """Transform all splits using a training-fitted Phase 3 transformer."""
     if feature_view == "chronological_creator":
@@ -68,7 +79,8 @@ def build_feature_matrices(
             )
         return matrices
 
-    artifact_name = TEXT_FEATURE_ARTIFACTS[feature_view]
+    artifact_mapping = feature_artifacts or TEXT_FEATURE_ARTIFACTS
+    artifact_name = artifact_mapping[feature_view]
     artifact_path = feature_artifact_dir / artifact_name
     if not artifact_path.is_file():
         raise FileNotFoundError(
@@ -76,10 +88,24 @@ def build_feature_matrices(
             "Run python -m src.features.reproduce first."
         )
     transformer = joblib.load(artifact_path)
-    return {
+    matrices = {
         split_name: transformer.transform(partition["opcode"].astype(str).tolist())
         for split_name, partition in partitions.items()
     }
+    if append_creator:
+        creator = ChronologicalCreatorTransformer()
+        creator_values = {"train": creator.fit_transform(partitions["train"])}
+        for split_name in ("validation", "test"):
+            creator_values[split_name] = creator.transform(
+                partitions[split_name].loc[:, ["creator", "createdBlockNumber"]]
+            )
+        matrices = {
+            split_name: hstack([matrix, creator_values[split_name]], format="csr")
+            if issparse(matrix)
+            else np.column_stack([np.asarray(matrix), creator_values[split_name]])
+            for split_name, matrix in matrices.items()
+        }
+    return matrices
 
 
 def evaluate_model_splits(
@@ -107,6 +133,7 @@ def evaluate_model_splits(
 
 def run_individual_baselines(config: dict[str, Any]) -> dict[str, Any]:
     """Fit fixed baselines on train and evaluate unchanged on later splits."""
+    validate_evaluation_protocol(config)
     seed = int(config["seed"])
     set_random_seed(seed)
     feature_config = load_feature_config(config["feature_config"])
@@ -123,13 +150,21 @@ def run_individual_baselines(config: dict[str, Any]) -> dict[str, Any]:
     artifact_dir: Path = config["artifact_dir"]
     artifact_dir.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
-    feature_views = [*TEXT_FEATURE_ARTIFACTS, "chronological_creator"]
+    configured_artifacts = config.get("feature_artifacts")
+    feature_artifacts = configured_artifacts or TEXT_FEATURE_ARTIFACTS
+    feature_views = config.get(
+        "feature_views",
+        [*TEXT_FEATURE_ARTIFACTS, "chronological_creator"],
+    )
+    append_creator = bool(config.get("append_creator_to_static_views", False))
 
     for feature_view in feature_views:
         matrices = build_feature_matrices(
             feature_view,
             partitions,
             feature_config["artifact_dir"],
+            feature_artifacts,
+            append_creator=append_creator and feature_view != "chronological_creator",
         )
         for model_family, parameters in config["models"].items():
             model = build_baseline_model(model_family, parameters, seed)
@@ -164,6 +199,9 @@ def run_individual_baselines(config: dict[str, Any]) -> dict[str, Any]:
             "Fixed baseline parameters; no hyperparameter or threshold optimization. "
             "Final-test data is used only for reporting after fitting."
         ),
+        "developer_feature_policy": "appended_to_static_views"
+        if append_creator
+        else "standalone_historical_view",
         "records": records,
     }
 

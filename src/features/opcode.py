@@ -44,6 +44,28 @@ def make_opcode_ngram_tfidf_vectorizer() -> TfidfVectorizer:
     return TfidfVectorizer(ngram_range=(1, 3), **_common_vectorizer_args())
 
 
+def make_paper_aligned_ngram_count_vectorizer(min_df: int) -> CountVectorizer:
+    """Create a 1-3 gram count view with explicit document-frequency filtering."""
+    if min_df < 1:
+        raise ValueError("min_df must be at least 1.")
+    return CountVectorizer(
+        ngram_range=(1, 3),
+        min_df=min_df,
+        **_common_vectorizer_args(),
+    )
+
+
+def make_paper_aligned_ngram_tfidf_vectorizer(min_df: int) -> TfidfVectorizer:
+    """Create a 1-3 gram TF-IDF view with explicit DF filtering."""
+    if min_df < 1:
+        raise ValueError("min_df must be at least 1.")
+    return TfidfVectorizer(
+        ngram_range=(1, 3),
+        min_df=min_df,
+        **_common_vectorizer_args(),
+    )
+
+
 def fit_training_transformer(
     vectorizer: CountVectorizer | TfidfVectorizer,
     train_documents: Sequence[str],

@@ -1,0 +1,52 @@
+baseline_config: configs/paper_aligned_baseline_models.yaml
+results_json: results/baseline/paper_aligned/mulcas_results.json
+trace_dir: results/baseline/paper_aligned/mulcas_traces
+artifact_dir: results/artifacts/paper_aligned/mulcas
+report_path: docs/paper_aligned_baseline_report.md
+existing_reconstruction_results: results/baseline/mulcas_reproduction_results.json
+split_metadata: results/baseline/paper_aligned/split_metadata.json
+feature_summary: results/baseline/paper_aligned/feature_summary.json
+individual_baseline_results: results/baseline/paper_aligned/individual_baseline_results.json
+seed: 42
+frozen_baseline: true
+selection_split: validation
+final_test_usage: reporting_only
+complexity_control_n: 2
+score_mapping: sigmoid_decision_function
+voting_threshold: 0
+feature_artifacts:
+  opcode_term_count: opcode_term_count.joblib
+  opcode_tfidf: opcode_tfidf.joblib
+  opcode_ngram_count_1_3_df_filtered: opcode_ngram_count_1_3_df_filtered.joblib
+  opcode_ngram_tfidf_1_3_df_filtered: opcode_ngram_tfidf_1_3_df_filtered.joblib
+viewer_sequence:
+  - name: xgboost_term_count
+    feature_view: opcode_term_count
+    model: xgboost
+    negative_threshold: 0.05
+    positive_threshold: 0.95
+  - name: xgboost_ngram_count_df_filtered
+    feature_view: opcode_ngram_count_1_3_df_filtered
+    model: xgboost
+    negative_threshold: 0.05
+    positive_threshold: 0.51
+  - name: xgboost_ngram_tfidf_df_filtered
+    feature_view: opcode_ngram_tfidf_1_3_df_filtered
+    model: xgboost
+  - name: ridge_tfidf
+    feature_view: opcode_tfidf
+    model: ridge
+developer_feature:
+  concatenate_to_every_view: true
+  validation_test_state: frozen_training_state
+published_reference:
+  source: "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes, Table 5"
+  precision: 0.951
+  recall: 0.674
+  f1: 0.789
+experimental_label: "Corrected paper-aligned MulCas reconstruction"
+reconstruction_note: >-
+  Uses the 200/50/64 positive-occurrence development protocol, whole-block
+  boundaries, DF-filtered 1-3 grams, and leakage-safe developer concatenation.
+  The paper does not report the exact N-gram DF cutoff, model library versions,
+  all classifier parameters, or a validation protocol.

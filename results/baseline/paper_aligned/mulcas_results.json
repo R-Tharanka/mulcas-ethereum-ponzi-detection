@@ -1,0 +1,193 @@
+{
+  "generated_at_utc": "2026-09-24T06:27:05.860303+00:00",
+  "baseline_status": "frozen",
+  "configuration": {
+    "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\configs\\paper_aligned_mulcas.yaml",
+    "sha256": "13d298821aba34751d4039aba953a6653938413f3bb23b38005ec342ae8c12ee",
+    "snapshot": {
+      "baseline_config": "configs/paper_aligned_baseline_models.yaml",
+      "results_json": "results/baseline/paper_aligned/mulcas_results.json",
+      "trace_dir": "results/baseline/paper_aligned/mulcas_traces",
+      "artifact_dir": "results/artifacts/paper_aligned/mulcas",
+      "report_path": "docs/paper_aligned_baseline_report.md",
+      "existing_reconstruction_results": "results/baseline/mulcas_reproduction_results.json",
+      "split_metadata": "results/baseline/paper_aligned/split_metadata.json",
+      "feature_summary": "results/baseline/paper_aligned/feature_summary.json",
+      "individual_baseline_results": "results/baseline/paper_aligned/individual_baseline_results.json",
+      "seed": 42,
+      "frozen_baseline": true,
+      "selection_split": "validation",
+      "final_test_usage": "reporting_only",
+      "complexity_control_n": 2,
+      "score_mapping": "sigmoid_decision_function",
+      "voting_threshold": 0,
+      "feature_artifacts": {
+        "opcode_term_count": "opcode_term_count.joblib",
+        "opcode_tfidf": "opcode_tfidf.joblib",
+        "opcode_ngram_count_1_3_df_filtered": "opcode_ngram_count_1_3_df_filtered.joblib",
+        "opcode_ngram_tfidf_1_3_df_filtered": "opcode_ngram_tfidf_1_3_df_filtered.joblib"
+      },
+      "viewer_sequence": [
+        {
+          "name": "xgboost_term_count",
+          "feature_view": "opcode_term_count",
+          "model": "xgboost",
+          "negative_threshold": 0.05,
+          "positive_threshold": 0.95
+        },
+        {
+          "name": "xgboost_ngram_count_df_filtered",
+          "feature_view": "opcode_ngram_count_1_3_df_filtered",
+          "model": "xgboost",
+          "negative_threshold": 0.05,
+          "positive_threshold": 0.51
+        },
+        {
+          "name": "xgboost_ngram_tfidf_df_filtered",
+          "feature_view": "opcode_ngram_tfidf_1_3_df_filtered",
+          "model": "xgboost"
+        },
+        {
+          "name": "ridge_tfidf",
+          "feature_view": "opcode_tfidf",
+          "model": "ridge"
+        }
+      ],
+      "developer_feature": {
+        "concatenate_to_every_view": true,
+        "validation_test_state": "frozen_training_state"
+      },
+      "published_reference": {
+        "source": "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes, Table 5",
+        "precision": 0.951,
+        "recall": 0.674,
+        "f1": 0.789
+      },
+      "experimental_label": "Corrected paper-aligned MulCas reconstruction",
+      "reconstruction_note": "Uses the 200/50/64 positive-occurrence development protocol, whole-block boundaries, DF-filtered 1-3 grams, and leakage-safe developer concatenation. The paper does not report the exact N-gram DF cutoff, model library versions, all classifier parameters, or a validation protocol."
+    }
+  },
+  "methodology": {
+    "cascade_training": "Each of N=2 viewers fitted on residual training rows.",
+    "voting_training": "All voting viewers fitted on the full training partition.",
+    "developer_feature": "Leakage-safe creator flag concatenated to every view.",
+    "validation_policy": "Validation labels used for reporting only in Phase 5.",
+    "test_policy": "Final-test labels used only after predictions for reporting.",
+    "score_mapping": "sigmoid_decision_function",
+    "reconstruction_note": "Uses the 200/50/64 positive-occurrence development protocol, whole-block boundaries, DF-filtered 1-3 grams, and leakage-safe developer concatenation. The paper does not report the exact N-gram DF cutoff, model library versions, all classifier parameters, or a validation protocol."
+  },
+  "cascade_training_trace": [
+    {
+      "stage": 1,
+      "viewer": "xgboost_term_count",
+      "training_rows_in": 5839,
+      "confident_training_rows": 5602,
+      "training_rows_out": 237,
+      "positive_training_rows_in": 200,
+      "positive_training_rows_out": 121
+    },
+    {
+      "stage": 2,
+      "viewer": "xgboost_ngram_count_df_filtered",
+      "training_rows_in": 237,
+      "confident_training_rows": 160,
+      "training_rows_out": 77,
+      "positive_training_rows_in": 121,
+      "positive_training_rows_out": 0
+    }
+  ],
+  "published_mulcas": {
+    "label": "Published MulCas (paper reference; not generated here)",
+    "precision": 0.951,
+    "recall": 0.674,
+    "f1": 0.789,
+    "accuracy": null,
+    "pr_auc": null,
+    "balanced_accuracy": null,
+    "confusion_matrix": null
+  },
+  "experimental_reconstruction": {
+    "label": "Corrected paper-aligned MulCas reconstruction",
+    "validation": {
+      "accuracy": 0.8933333333333333,
+      "balanced_accuracy": 0.9,
+      "precision": 0.7931034482758621,
+      "recall": 0.92,
+      "f1": 0.8518518518518519,
+      "pr_auc": 0.870639987619326,
+      "roc_auc": 0.9435,
+      "tn": 88,
+      "fp": 12,
+      "fn": 4,
+      "tp": 46,
+      "support_negative": 100,
+      "support_positive": 50,
+      "routing_counts": {
+        "xgboost_term_count": 134,
+        "xgboost_ngram_count_df_filtered": 15,
+        "vote": 1
+      }
+    },
+    "test": {
+      "accuracy": 0.925343811394892,
+      "balanced_accuracy": 0.723191713483146,
+      "precision": 0.90625,
+      "recall": 0.453125,
+      "f1": 0.6041666666666666,
+      "pr_auc": 0.6624476140288026,
+      "roc_auc": 0.9092696629213483,
+      "tn": 442,
+      "fp": 3,
+      "fn": 35,
+      "tp": 29,
+      "support_negative": 445,
+      "support_positive": 64,
+      "routing_counts": {
+        "xgboost_term_count": 476,
+        "vote": 18,
+        "xgboost_ngram_count_df_filtered": 15
+      }
+    }
+  },
+  "test_differences_from_published": {
+    "precision": {
+      "published": 0.951,
+      "experimental": 0.90625,
+      "difference_experimental_minus_published": -0.044749999999999956
+    },
+    "recall": {
+      "published": 0.674,
+      "experimental": 0.453125,
+      "difference_experimental_minus_published": -0.22087500000000004
+    },
+    "f1": {
+      "published": 0.789,
+      "experimental": 0.6041666666666666,
+      "difference_experimental_minus_published": -0.1848333333333334
+    }
+  },
+  "existing_70_15_15_reconstruction": {
+    "label": "Existing 70/15/15 independent reconstruction",
+    "source_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\results\\baseline\\mulcas_reproduction_results.json",
+    "test": {
+      "accuracy": 0.8360655737704918,
+      "balanced_accuracy": 0.5468094600624721,
+      "precision": 0.6,
+      "recall": 0.10843373493975904,
+      "f1": 0.1836734693877551,
+      "pr_auc": 0.5221678810602857,
+      "roc_auc": 0.8613751301502306,
+      "tn": 798,
+      "fp": 12,
+      "fn": 148,
+      "tp": 18,
+      "support_negative": 810,
+      "support_positive": 166,
+      "routing_counts": {
+        "xgboost_term_count": 924,
+        "xgboost_ngram_count": 32,
+        "vote": 20
+      }
+    }
+  }
+}

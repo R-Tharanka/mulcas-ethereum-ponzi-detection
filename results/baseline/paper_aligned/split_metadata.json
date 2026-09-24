@@ -1,0 +1,46 @@
+{
+  "generated_at_utc": "2026-09-24T05:47:54.211402+00:00",
+  "protocol": "ponzi_occurrence_chronological_whole_block_boundaries",
+  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "positive_occurrence_boundaries": {
+    "train_through": 200,
+    "validation_through": 250,
+    "test_through": 314
+  },
+  "block_boundaries": {
+    "train_end_block": 5021809,
+    "validation_end_block": 5038334
+  },
+  "row_count": 6498,
+  "split_counts": {
+    "train": {
+      "rows": 5839,
+      "positive_count": 200,
+      "negative_count": 5639,
+      "negative_to_positive_ratio": 28.195,
+      "block_min": 49880,
+      "block_max": 5021809
+    },
+    "validation": {
+      "rows": 150,
+      "positive_count": 50,
+      "negative_count": 100,
+      "negative_to_positive_ratio": 2.0,
+      "block_min": 5021917,
+      "block_max": 5038334
+    },
+    "test": {
+      "rows": 509,
+      "positive_count": 64,
+      "negative_count": 445,
+      "negative_to_positive_ratio": 6.953125,
+      "block_min": 5038337,
+      "block_max": 7136486
+    }
+  },
+  "assertions": {
+    "chronology_preserved": true,
+    "splits_complete_and_disjoint": true,
+    "never_shuffled": true
+  }
+}

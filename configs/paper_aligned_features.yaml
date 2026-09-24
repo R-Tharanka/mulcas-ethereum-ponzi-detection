@@ -1,0 +1,15 @@
+dataset: data/raw/PonziDataset_20221114.csv
+split_membership: results/baseline/paper_aligned/split_membership.csv
+summary_output: results/baseline/paper_aligned/feature_summary.json
+artifact_dir: results/artifacts/paper_aligned/features
+ngram:
+  ngram_range: [1, 3]
+  min_df: 2
+  cutoff_status: explicit_reconstruction_assumption_not_reported_by_paper
+word2vec:
+  vector_size: 100
+  window: 5
+  min_count: 1
+  epochs: 10
+  seed: 42
+  workers: 1

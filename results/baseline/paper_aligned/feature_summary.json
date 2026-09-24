@@ -1,0 +1,321 @@
+{
+  "generated_at_utc": "2026-09-24T05:51:02.959480+00:00",
+  "protocol": "paper_aligned_phase_5_5",
+  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "split_membership_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\results\\baseline\\paper_aligned\\split_membership.csv",
+  "ngram_filter": {
+    "ngram_range": [
+      1,
+      3
+    ],
+    "min_df": 2,
+    "cutoff_status": "explicit_reconstruction_assumption_not_reported_by_paper"
+  },
+  "anti_leakage_policy": {
+    "all_learned_feature_state": "fit on training partition only",
+    "validation_test": "transform only",
+    "creator_training": "strictly earlier blocks",
+    "creator_later_splits": "frozen training state without labels"
+  },
+  "feature_views": {
+    "opcode_term_count": {
+      "fitted_on": "train",
+      "vocabulary_size": 142,
+      "document_frequency_minimum": 1,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 142,
+          "nonzero_values": 354334,
+          "density": 0.4273522622289655,
+          "sparsity": 0.5726477377710345,
+          "nonzero_per_contract": {
+            "min": 4,
+            "mean": 60.684021236513104,
+            "max": 102
+          }
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 142,
+          "nonzero_values": 10214,
+          "density": 0.4795305164319249,
+          "sparsity": 0.5204694835680751,
+          "nonzero_per_contract": {
+            "min": 49,
+            "mean": 68.09333333333333,
+            "max": 85
+          }
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 142,
+          "nonzero_values": 32808,
+          "density": 0.4539140540690113,
+          "sparsity": 0.5460859459309887,
+          "nonzero_per_contract": {
+            "min": 35,
+            "mean": 64.45579567779961,
+            "max": 93
+          }
+        }
+      }
+    },
+    "opcode_tfidf": {
+      "fitted_on": "train",
+      "vocabulary_size": 142,
+      "document_frequency_minimum": 1,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 142,
+          "nonzero_values": 354334,
+          "density": 0.4273522622289655,
+          "sparsity": 0.5726477377710345,
+          "nonzero_per_contract": {
+            "min": 4,
+            "mean": 60.684021236513104,
+            "max": 102
+          }
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 142,
+          "nonzero_values": 10214,
+          "density": 0.4795305164319249,
+          "sparsity": 0.5204694835680751,
+          "nonzero_per_contract": {
+            "min": 49,
+            "mean": 68.09333333333333,
+            "max": 85
+          }
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 142,
+          "nonzero_values": 32808,
+          "density": 0.4539140540690113,
+          "sparsity": 0.5460859459309887,
+          "nonzero_per_contract": {
+            "min": 35,
+            "mean": 64.45579567779961,
+            "max": 93
+          }
+        }
+      }
+    },
+    "opcode_ngram_count_1_3_df_filtered": {
+      "fitted_on": "train",
+      "vocabulary_size": 44671,
+      "document_frequency_minimum": 2,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 44671,
+          "nonzero_values": 6048782,
+          "density": 0.0231901620145189,
+          "sparsity": 0.976809837985481,
+          "nonzero_per_contract": {
+            "min": 15,
+            "mean": 1035.9277273505738,
+            "max": 3865
+          }
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 44671,
+          "nonzero_values": 173263,
+          "density": 0.02585764067665077,
+          "sparsity": 0.9741423593233492,
+          "nonzero_per_contract": {
+            "min": 385,
+            "mean": 1155.0866666666666,
+            "max": 2524
+          }
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 44671,
+          "nonzero_values": 556608,
+          "density": 0.024479694130486153,
+          "sparsity": 0.9755203058695139,
+          "nonzero_per_contract": {
+            "min": 164,
+            "mean": 1093.532416502947,
+            "max": 2916
+          }
+        }
+      }
+    },
+    "opcode_ngram_tfidf_1_3_df_filtered": {
+      "fitted_on": "train",
+      "vocabulary_size": 44671,
+      "document_frequency_minimum": 2,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 44671,
+          "nonzero_values": 6048782,
+          "density": 0.0231901620145189,
+          "sparsity": 0.976809837985481,
+          "nonzero_per_contract": {
+            "min": 15,
+            "mean": 1035.9277273505738,
+            "max": 3865
+          }
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 44671,
+          "nonzero_values": 173263,
+          "density": 0.02585764067665077,
+          "sparsity": 0.9741423593233492,
+          "nonzero_per_contract": {
+            "min": 385,
+            "mean": 1155.0866666666666,
+            "max": 2524
+          }
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 44671,
+          "nonzero_values": 556608,
+          "density": 0.024479694130486153,
+          "sparsity": 0.9755203058695139,
+          "nonzero_per_contract": {
+            "min": 164,
+            "mean": 1093.532416502947,
+            "max": 2916
+          }
+        }
+      }
+    },
+    "opcode_word2vec_mean": {
+      "fitted_on": "train",
+      "aggregation": "unweighted_mean",
+      "vocabulary_size": 142,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 100,
+          "nonzero_values": 583900,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 2.6807708740234375,
+            "mean": 4.167741298675537,
+            "max": 10.364957809448242
+          },
+          "zero_vector_contracts": 0
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 100,
+          "nonzero_values": 15000,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 3.3722119331359863,
+            "mean": 4.028229236602783,
+            "max": 4.7231125831604
+          },
+          "zero_vector_contracts": 0
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 100,
+          "nonzero_values": 50900,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 2.9853527545928955,
+            "mean": 4.177674770355225,
+            "max": 5.064145565032959
+          },
+          "zero_vector_contracts": 0
+        }
+      }
+    },
+    "opcode_word2vec_idf_weighted": {
+      "fitted_on": "train",
+      "aggregation": "idf_weighted_sum",
+      "vocabulary_size": 142,
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 100,
+          "nonzero_values": 583900,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 53.51717758178711,
+            "mean": 10801.029296875,
+            "max": 65090.90625
+          },
+          "zero_vector_contracts": 0
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 100,
+          "nonzero_values": 15000,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 1559.8837890625,
+            "mean": 11423.1484375,
+            "max": 45488.21484375
+          },
+          "zero_vector_contracts": 0
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 100,
+          "nonzero_values": 50900,
+          "density": 1.0,
+          "sparsity": 0.0,
+          "row_l2_norm": {
+            "min": 430.245361328125,
+            "mean": 13822.94140625,
+            "max": 77268.3125
+          },
+          "zero_vector_contracts": 0
+        }
+      }
+    },
+    "chronological_creator": {
+      "fitted_on": "train_prequential_strictly_earlier_blocks",
+      "use": "appended_to_every_static_opcode_view",
+      "splits": {
+        "train": {
+          "rows": 5839,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 149,
+          "unknown_creator_count": 5690,
+          "known_prior_positive_creator_share": 0.025518068162356567
+        },
+        "validation": {
+          "rows": 150,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 6,
+          "unknown_creator_count": 144,
+          "known_prior_positive_creator_share": 0.04
+        },
+        "test": {
+          "rows": 509,
+          "dimensions": 1,
+          "known_prior_positive_creator_count": 7,
+          "unknown_creator_count": 502,
+          "known_prior_positive_creator_share": 0.0137524557956778
+        }
+      }
+    }
+  },
+  "dimensions_after_creator_concatenation": {
+    "opcode_term_count": 143,
+    "opcode_tfidf": 143,
+    "opcode_ngram_count_1_3_df_filtered": 44672,
+    "opcode_ngram_tfidf_1_3_df_filtered": 44672,
+    "opcode_word2vec_mean": 101,
+    "opcode_word2vec_idf_weighted": 101
+  }
+}

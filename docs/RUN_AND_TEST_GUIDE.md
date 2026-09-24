@@ -152,6 +152,23 @@ Stage and voting models are written under `results/artifacts/mulcas/`. The JSON
 result embeds the exact configuration and its SHA-256. Traces preserve sample
 indices and show cascade decisions, voting-viewer predictions, and final routes.
 
+### Phase 5.5: paper-aligned protocol correction
+
+Phase 5.5 is a frozen correction, not an improvement experiment. It writes to a
+separate namespace and does not replace any Phase 1-5 result:
+
+```powershell
+python -m src.data.paper_aligned_split --config configs/paper_aligned_split.yaml
+python -m src.features.paper_aligned --config configs/paper_aligned_features.yaml
+python -m src.models.run_baselines --config configs/paper_aligned_baseline_models.yaml
+python -m src.models.run_mulcas --config configs/paper_aligned_mulcas.yaml
+```
+
+Machine-readable outputs are stored under
+`results/baseline/paper_aligned/`. Large fitted artifacts are stored under
+`results/artifacts/paper_aligned/` and ignored by Git. The corrected report is
+`docs/paper_aligned_baseline_report.md`.
+
 ## 6. Run Automated Tests
 
 Run the complete test suite:
@@ -160,7 +177,7 @@ Run the complete test suite:
 python -m pytest -q
 ```
 
-The current suite contains 27 tests. It covers imports, deterministic seeds,
+The current suite contains 32 tests. It covers imports, deterministic seeds,
 dataset validation, chronological leakage checks, feature leakage controls,
 evaluation metrics, baseline construction, and MulCas routing and voting.
 
@@ -300,4 +317,3 @@ git diff -- configs results/baseline
 
 Do not resolve unexpected changes by editing result files manually. Regenerate
 them through the corresponding module after identifying the cause.
-
