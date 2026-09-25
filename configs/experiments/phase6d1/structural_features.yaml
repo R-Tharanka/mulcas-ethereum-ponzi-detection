@@ -1,0 +1,45 @@
+phase: 6D1
+experiment_name: controlled_structural_static_features
+hypothesis: >-
+  H6D1: Compact structural features derived only from each contract's EVM
+  opcode sequence improve Ponzi detection while preserving creation-time use.
+seed: 42
+dataset: data/raw/PonziDataset_20221114.csv
+split_membership: results/baseline/paper_aligned/split_membership.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_phase55_manifest: configs/experiments/phase6a/frozen_phase55_manifest.yaml
+frozen_phase6a_manifest: configs/experiments/phase6b/frozen_phase6a_manifest.yaml
+frozen_phase6b_manifest: configs/experiments/phase6c/frozen_phase6b_manifest.yaml
+frozen_phase6c_manifest: configs/experiments/phase6d1/frozen_phase6c_manifest.yaml
+output_dir: results/experiments/phase6d1
+selection:
+  minimum_cv_precision: 0.80
+  final_test_usage: prohibited
+temporal_cv:
+  train_positive_ends: [50, 100, 150]
+  validation_positive_ends: [100, 150, 200]
+baseline_features:
+  ridge: opcode_term_count
+  svm: opcode_ngram_tfidf_1_3_df_filtered
+  xgboost: opcode_ngram_tfidf_1_3_df_filtered
+representations:
+  - {id: structural_only, baseline: false, groups: [A, B, C, D, E]}
+  - {id: frozen_baseline, baseline: true, groups: []}
+  - {id: baseline_plus_all_structural, baseline: true, groups: [A, B, C, D, E]}
+  - {id: baseline_plus_group_a, baseline: true, groups: [A]}
+  - {id: baseline_plus_group_b, baseline: true, groups: [B]}
+  - {id: baseline_plus_group_c, baseline: true, groups: [C]}
+  - {id: baseline_plus_group_d, baseline: true, groups: [D]}
+  - {id: baseline_plus_group_e, baseline: true, groups: [E]}
+reference_validation:
+  precision: 0.7931034482758621
+  recall: 0.92
+  f1: 0.8518518518518519
+  pr_auc: 0.870639987619326
+  balanced_accuracy: 0.9
+  tn: 88
+  fp: 12
+  fn: 4
+  tp: 46
