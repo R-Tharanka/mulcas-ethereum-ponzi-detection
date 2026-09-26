@@ -1,0 +1,45 @@
+phase: 7A
+hypothesis: >-
+  The frozen paper-aligned MulCas reconstruction retains useful effectiveness
+  when predicting contracts created later than its historical training data.
+dataset: data/raw/PonziDataset_20221114.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_manifest: configs/phase7/frozen_phase6_manifest.yaml
+output_dir: results/experiments/phase7a
+seed: 42
+periods:
+  positive_ends: [50, 100, 150, 200, 250]
+  expected_total_positives: 314
+  whole_creation_blocks: true
+scenarios:
+  - train_periods: [P0, P1]
+    prediction_period: P2
+  - train_periods: [P0, P1, P2]
+    prediction_period: P3
+  - train_periods: [P0, P1, P2, P3]
+    prediction_period: P4
+  - train_periods: [P0, P1, P2, P3, P4]
+    prediction_period: P5
+protocol:
+  intervention: none
+  optimization: prohibited
+  phase6_interventions_enabled: false
+  model_behavior: frozen_phase55_mulcas
+  prediction_period_usage: evaluation_only
+paper_reference:
+  citation: "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes, DOI 10.1145/3571847"
+  location: "Section 5.2.1, Table 4"
+  temporal_numeric_metrics_available: true
+  reported_p0_to_p4_rows: 5990
+  reported_p5_rows: 508
+  mulcas_metrics:
+    P2: {precision: 0.88, recall: 0.38, f1: 0.53}
+    P3: {precision: 0.96, recall: 0.32, f1: 0.48}
+    P4: {precision: 0.81, recall: 0.94, f1: 0.87}
+    P5: {precision: 0.95, recall: 0.67, f1: 0.79}
+  note: >-
+    Table 4 reports precision, recall, and F1 for P2-P5. It does not report
+    accuracy, balanced accuracy, PR-AUC, ROC-AUC, or confusion counts. Values
+    absent from the publication are not inferred.

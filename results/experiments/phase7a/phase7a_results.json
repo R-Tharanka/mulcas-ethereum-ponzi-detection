@@ -1,0 +1,568 @@
+{
+  "generated_at_utc": "2026-09-26T09:29:49.295287+00:00",
+  "phase": "7A",
+  "research_question": "RQ5: Does reconstructed MulCas retain effectiveness on later contracts?",
+  "analysis_only": true,
+  "optimization_performed": false,
+  "git_commit": "ebf2389b24fd66dc8adffc7c726a0c29f561aca6",
+  "random_seed": 42,
+  "dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "config_sha256": "2b03d49f8fa3e90b91e47240beecf0c2c780657f02dff4786a7b4fb07693b69c",
+  "frozen_artifact_hashes": {
+    "configs/paper_aligned_mulcas.yaml": "13d298821aba34751d4039aba953a6653938413f3bb23b38005ec342ae8c12ee",
+    "configs/paper_aligned_baseline_models.yaml": "14a49a119c33af08feefc1ff849327a8639214ab899363aac62486c4984ba505",
+    "configs/paper_aligned_features.yaml": "956a1c043aa8b8d936978ef5c9c1cff2c7266dd9935bb7cc6dd2a186f6dd9c4d",
+    "configs/paper_aligned_split.yaml": "8fd57afd0c1bca64aa4ac583618ec36aca3f0ccb1134f1672bdd56a5f10877fb",
+    "results/baseline/paper_aligned/mulcas_results.json": "c3ef8b9762be18c9780bc0e8b6756b6bcc0b07bd772e32c687def3c3276f9c97",
+    "results/experiments/phase6_summary.json": "f30472a0080cb25b15b15fd456a989b1828db484447bf2426b76b85c2a3be72c",
+    "docs/phase6_summary.md": "1159a95352ece0453f7e5ac12957d7ad98a226e8665400143faf692aa2873326",
+    "configs/experiments/phase6a/frozen_phase55_manifest.yaml": "30f9e9b4488a3fb8ca8e3683a6b0d33107d70c503fc0f94b06b7c8d4842622e1",
+    "configs/experiments/phase6b/frozen_phase6a_manifest.yaml": "b66869c08ac3049df9ff8aaef1d17534cc19e95cd03402ba7b710d28cdc29c47",
+    "configs/experiments/phase6c/frozen_phase6b_manifest.yaml": "3ecd37b7648618f5afe602004f721d7e3681e6b5af30a25beb1d5437dd4a64ad",
+    "configs/experiments/phase6d1/frozen_phase6c_manifest.yaml": "99a24f71fc3c6b90163f104535c80eaacb185eae128fe0d0be59de0ee74006b0",
+    "configs/experiments/phase6d2/frozen_phase6d1_manifest.yaml": "624b04a545547058adf2e342ea3d833a598494b179e36b6018f2f18ca6e691b5",
+    "configs/experiments/phase6e/frozen_phase6d2_manifest.yaml": "8fd860e574133976f54ea2cccf3897fe95795a35ddfe51c5bba3b4e953fa1926"
+  },
+  "frozen_mulcas_config_sha256": "13d298821aba34751d4039aba953a6653938413f3bb23b38005ec342ae8c12ee",
+  "period_definitions": [
+    {
+      "period": "P0",
+      "row_count": 104,
+      "positive_count": 50,
+      "negative_count": 54,
+      "negative_to_positive_ratio": 1.08,
+      "block_min": 49880,
+      "block_max": 1287252,
+      "intended_positive_count": 50,
+      "positive_count_difference": 0,
+      "boundary_block": 1287252
+    },
+    {
+      "period": "P1",
+      "row_count": 305,
+      "positive_count": 50,
+      "negative_count": 255,
+      "negative_to_positive_ratio": 5.1,
+      "block_min": 1287353,
+      "block_max": 2000473,
+      "intended_positive_count": 50,
+      "positive_count_difference": 0,
+      "boundary_block": 2000473
+    },
+    {
+      "period": "P2",
+      "row_count": 5141,
+      "positive_count": 50,
+      "negative_count": 5091,
+      "negative_to_positive_ratio": 101.82,
+      "block_min": 2008140,
+      "block_max": 4963650,
+      "intended_positive_count": 50,
+      "positive_count_difference": 0,
+      "boundary_block": 4963650
+    },
+    {
+      "period": "P3",
+      "row_count": 289,
+      "positive_count": 50,
+      "negative_count": 239,
+      "negative_to_positive_ratio": 4.78,
+      "block_min": 4964082,
+      "block_max": 5021809,
+      "intended_positive_count": 50,
+      "positive_count_difference": 0,
+      "boundary_block": 5021809
+    },
+    {
+      "period": "P4",
+      "row_count": 150,
+      "positive_count": 50,
+      "negative_count": 100,
+      "negative_to_positive_ratio": 2.0,
+      "block_min": 5021917,
+      "block_max": 5038334,
+      "intended_positive_count": 50,
+      "positive_count_difference": 0,
+      "boundary_block": 5038334
+    },
+    {
+      "period": "P5",
+      "row_count": 509,
+      "positive_count": 64,
+      "negative_count": 445,
+      "negative_to_positive_ratio": 6.953125,
+      "block_min": 5038337,
+      "block_max": 7136486,
+      "intended_positive_count": 64,
+      "positive_count_difference": 0,
+      "boundary_block": null
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "train_P0_to_P1__predict_P2",
+      "train_periods": [
+        "P0",
+        "P1"
+      ],
+      "prediction_period": "P2",
+      "train": {
+        "row_count": 409,
+        "positive_count": 100,
+        "negative_count": 309,
+        "negative_to_positive_ratio": 3.09,
+        "block_range": [
+          49880,
+          2000473
+        ]
+      },
+      "prediction": {
+        "row_count": 5141,
+        "positive_count": 50,
+        "negative_count": 5091,
+        "negative_to_positive_ratio": 101.82,
+        "block_range": [
+          2008140,
+          4963650
+        ]
+      },
+      "metrics": {
+        "accuracy": 0.9439797704726707,
+        "balanced_accuracy": 0.6053486544883127,
+        "precision": 0.04924242424242424,
+        "recall": 0.26,
+        "f1": 0.08280254777070063,
+        "pr_auc": 0.046218232749443394,
+        "roc_auc": 0.6387841288548418,
+        "tn": 4840,
+        "fp": 251,
+        "fn": 37,
+        "tp": 13,
+        "support_negative": 5091,
+        "support_positive": 50
+      },
+      "routing_counts": {
+        "xgboost_term_count": 4859,
+        "xgboost_ngram_count_df_filtered": 263,
+        "vote": 19
+      },
+      "feature_fit_audit": {
+        "feature_fit_rows": 409,
+        "feature_fit_block_range": [
+          49880,
+          2000473
+        ],
+        "target_transform_rows": 5141,
+        "target_block_range": [
+          2008140,
+          4963650
+        ],
+        "historical_only": true,
+        "creator_positive_state_size": 52,
+        "feature_dimensions": {
+          "opcode_term_count": 142,
+          "opcode_ngram_count_1_3_df_filtered": 14101,
+          "opcode_ngram_tfidf_1_3_df_filtered": 14101,
+          "opcode_tfidf": 142
+        },
+        "vocabulary_sizes": {
+          "opcode_term_count": 141,
+          "opcode_ngram_count_1_3_df_filtered": 14100,
+          "opcode_ngram_tfidf_1_3_df_filtered": 14100,
+          "opcode_tfidf": 141
+        },
+        "word2vec_fit": false,
+        "word2vec_reason": "not present in the frozen MulCas viewer sequence"
+      },
+      "cascade_training_trace": [
+        {
+          "stage": 1,
+          "viewer": "xgboost_term_count",
+          "training_rows_in": 409,
+          "positive_training_rows_in": 100,
+          "confident_training_rows": 378,
+          "training_rows_out": 31,
+          "positive_training_rows_out": 18
+        },
+        {
+          "stage": 2,
+          "viewer": "xgboost_ngram_count_df_filtered",
+          "training_rows_in": 31,
+          "positive_training_rows_in": 18,
+          "confident_training_rows": 20,
+          "training_rows_out": 11,
+          "positive_training_rows_out": 0
+        }
+      ],
+      "runtime_seconds": 7.425889600010123
+    },
+    {
+      "scenario_id": "train_P0_to_P2__predict_P3",
+      "train_periods": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "prediction_period": "P3",
+      "train": {
+        "row_count": 5550,
+        "positive_count": 150,
+        "negative_count": 5400,
+        "negative_to_positive_ratio": 36.0,
+        "block_range": [
+          49880,
+          4963650
+        ]
+      },
+      "prediction": {
+        "row_count": 289,
+        "positive_count": 50,
+        "negative_count": 239,
+        "negative_to_positive_ratio": 4.78,
+        "block_range": [
+          4964082,
+          5021809
+        ]
+      },
+      "metrics": {
+        "accuracy": 0.8304498269896193,
+        "balanced_accuracy": 0.5574476987447698,
+        "precision": 0.5384615384615384,
+        "recall": 0.14,
+        "f1": 0.2222222222222222,
+        "pr_auc": 0.4785713036145207,
+        "roc_auc": 0.8511297071129706,
+        "tn": 233,
+        "fp": 6,
+        "fn": 43,
+        "tp": 7,
+        "support_negative": 239,
+        "support_positive": 50
+      },
+      "routing_counts": {
+        "xgboost_term_count": 271,
+        "xgboost_ngram_count_df_filtered": 13,
+        "vote": 5
+      },
+      "feature_fit_audit": {
+        "feature_fit_rows": 5550,
+        "feature_fit_block_range": [
+          49880,
+          4963650
+        ],
+        "target_transform_rows": 289,
+        "target_block_range": [
+          4964082,
+          5021809
+        ],
+        "historical_only": true,
+        "creator_positive_state_size": 85,
+        "feature_dimensions": {
+          "opcode_term_count": 143,
+          "opcode_ngram_count_1_3_df_filtered": 43487,
+          "opcode_ngram_tfidf_1_3_df_filtered": 43487,
+          "opcode_tfidf": 143
+        },
+        "vocabulary_sizes": {
+          "opcode_term_count": 142,
+          "opcode_ngram_count_1_3_df_filtered": 43486,
+          "opcode_ngram_tfidf_1_3_df_filtered": 43486,
+          "opcode_tfidf": 142
+        },
+        "word2vec_fit": false,
+        "word2vec_reason": "not present in the frozen MulCas viewer sequence"
+      },
+      "cascade_training_trace": [
+        {
+          "stage": 1,
+          "viewer": "xgboost_term_count",
+          "training_rows_in": 5550,
+          "positive_training_rows_in": 150,
+          "confident_training_rows": 5374,
+          "training_rows_out": 176,
+          "positive_training_rows_out": 87
+        },
+        {
+          "stage": 2,
+          "viewer": "xgboost_ngram_count_df_filtered",
+          "training_rows_in": 176,
+          "positive_training_rows_in": 87,
+          "confident_training_rows": 127,
+          "training_rows_out": 49,
+          "positive_training_rows_out": 0
+        }
+      ],
+      "runtime_seconds": 29.950472399999853
+    },
+    {
+      "scenario_id": "train_P0_to_P3__predict_P4",
+      "train_periods": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "prediction_period": "P4",
+      "train": {
+        "row_count": 5839,
+        "positive_count": 200,
+        "negative_count": 5639,
+        "negative_to_positive_ratio": 28.195,
+        "block_range": [
+          49880,
+          5021809
+        ]
+      },
+      "prediction": {
+        "row_count": 150,
+        "positive_count": 50,
+        "negative_count": 100,
+        "negative_to_positive_ratio": 2.0,
+        "block_range": [
+          5021917,
+          5038334
+        ]
+      },
+      "metrics": {
+        "accuracy": 0.8933333333333333,
+        "balanced_accuracy": 0.9,
+        "precision": 0.7931034482758621,
+        "recall": 0.92,
+        "f1": 0.8518518518518519,
+        "pr_auc": 0.870639987619326,
+        "roc_auc": 0.9435,
+        "tn": 88,
+        "fp": 12,
+        "fn": 4,
+        "tp": 46,
+        "support_negative": 100,
+        "support_positive": 50
+      },
+      "routing_counts": {
+        "xgboost_term_count": 134,
+        "xgboost_ngram_count_df_filtered": 15,
+        "vote": 1
+      },
+      "feature_fit_audit": {
+        "feature_fit_rows": 5839,
+        "feature_fit_block_range": [
+          49880,
+          5021809
+        ],
+        "target_transform_rows": 150,
+        "target_block_range": [
+          5021917,
+          5038334
+        ],
+        "historical_only": true,
+        "creator_positive_state_size": 119,
+        "feature_dimensions": {
+          "opcode_term_count": 143,
+          "opcode_ngram_count_1_3_df_filtered": 44672,
+          "opcode_ngram_tfidf_1_3_df_filtered": 44672,
+          "opcode_tfidf": 143
+        },
+        "vocabulary_sizes": {
+          "opcode_term_count": 142,
+          "opcode_ngram_count_1_3_df_filtered": 44671,
+          "opcode_ngram_tfidf_1_3_df_filtered": 44671,
+          "opcode_tfidf": 142
+        },
+        "word2vec_fit": false,
+        "word2vec_reason": "not present in the frozen MulCas viewer sequence"
+      },
+      "cascade_training_trace": [
+        {
+          "stage": 1,
+          "viewer": "xgboost_term_count",
+          "training_rows_in": 5839,
+          "positive_training_rows_in": 200,
+          "confident_training_rows": 5602,
+          "training_rows_out": 237,
+          "positive_training_rows_out": 121
+        },
+        {
+          "stage": 2,
+          "viewer": "xgboost_ngram_count_df_filtered",
+          "training_rows_in": 237,
+          "positive_training_rows_in": 121,
+          "confident_training_rows": 160,
+          "training_rows_out": 77,
+          "positive_training_rows_out": 0
+        }
+      ],
+      "runtime_seconds": 32.07143370003905
+    },
+    {
+      "scenario_id": "train_P0_to_P4__predict_P5",
+      "train_periods": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "prediction_period": "P5",
+      "train": {
+        "row_count": 5989,
+        "positive_count": 250,
+        "negative_count": 5739,
+        "negative_to_positive_ratio": 22.956,
+        "block_range": [
+          49880,
+          5038334
+        ]
+      },
+      "prediction": {
+        "row_count": 509,
+        "positive_count": 64,
+        "negative_count": 445,
+        "negative_to_positive_ratio": 6.953125,
+        "block_range": [
+          5038337,
+          7136486
+        ]
+      },
+      "metrics": {
+        "accuracy": 0.9194499017681729,
+        "balanced_accuracy": 0.7064431179775281,
+        "precision": 0.8709677419354839,
+        "recall": 0.421875,
+        "f1": 0.5684210526315789,
+        "pr_auc": 0.6673582481680086,
+        "roc_auc": 0.9122893258426967,
+        "tn": 441,
+        "fp": 4,
+        "fn": 37,
+        "tp": 27,
+        "support_negative": 445,
+        "support_positive": 64
+      },
+      "routing_counts": {
+        "xgboost_term_count": 454,
+        "xgboost_ngram_count_df_filtered": 29,
+        "vote": 26
+      },
+      "feature_fit_audit": {
+        "feature_fit_rows": 5989,
+        "feature_fit_block_range": [
+          49880,
+          5038334
+        ],
+        "target_transform_rows": 509,
+        "target_block_range": [
+          5038337,
+          7136486
+        ],
+        "historical_only": true,
+        "creator_positive_state_size": 141,
+        "feature_dimensions": {
+          "opcode_term_count": 143,
+          "opcode_ngram_count_1_3_df_filtered": 45104,
+          "opcode_ngram_tfidf_1_3_df_filtered": 45104,
+          "opcode_tfidf": 143
+        },
+        "vocabulary_sizes": {
+          "opcode_term_count": 142,
+          "opcode_ngram_count_1_3_df_filtered": 45103,
+          "opcode_ngram_tfidf_1_3_df_filtered": 45103,
+          "opcode_tfidf": 142
+        },
+        "word2vec_fit": false,
+        "word2vec_reason": "not present in the frozen MulCas viewer sequence"
+      },
+      "cascade_training_trace": [
+        {
+          "stage": 1,
+          "viewer": "xgboost_term_count",
+          "training_rows_in": 5989,
+          "positive_training_rows_in": 250,
+          "confident_training_rows": 5682,
+          "training_rows_out": 307,
+          "positive_training_rows_out": 162
+        },
+        {
+          "stage": 2,
+          "viewer": "xgboost_ngram_count_df_filtered",
+          "training_rows_in": 307,
+          "positive_training_rows_in": 162,
+          "confident_training_rows": 207,
+          "training_rows_out": 100,
+          "positive_training_rows_out": 1
+        }
+      ],
+      "runtime_seconds": 36.21849100000691
+    }
+  ],
+  "descriptive_period_changes": [
+    {
+      "from_period": "P2",
+      "to_period": "P3",
+      "delta_accuracy": -0.11352994348305134,
+      "delta_balanced_accuracy": -0.047900955743542806,
+      "delta_precision": 0.4892191142191142,
+      "delta_recall": -0.12,
+      "delta_f1": 0.1394196744515216,
+      "delta_pr_auc": 0.43235307086507735,
+      "delta_roc_auc": 0.21234557825812883
+    },
+    {
+      "from_period": "P3",
+      "to_period": "P4",
+      "delta_accuracy": 0.06288350634371398,
+      "delta_balanced_accuracy": 0.3425523012552302,
+      "delta_precision": 0.25464190981432366,
+      "delta_recall": 0.78,
+      "delta_f1": 0.6296296296296297,
+      "delta_pr_auc": 0.3920686840048053,
+      "delta_roc_auc": 0.09237029288702936
+    },
+    {
+      "from_period": "P4",
+      "to_period": "P5",
+      "delta_accuracy": 0.02611656843483956,
+      "delta_balanced_accuracy": -0.1935568820224719,
+      "delta_precision": 0.07786429365962177,
+      "delta_recall": -0.49812500000000004,
+      "delta_f1": -0.2834307992202729,
+      "delta_pr_auc": -0.20328173945131744,
+      "delta_roc_auc": -0.031210674157303275
+    }
+  ],
+  "published_paper_reference": {
+    "citation": "Zheng et al., Securing the Ethereum from Smart Ponzi Schemes, DOI 10.1145/3571847",
+    "location": "Section 5.2.1, Table 4",
+    "temporal_numeric_metrics_available": true,
+    "reported_p0_to_p4_rows": 5990,
+    "reported_p5_rows": 508,
+    "mulcas_metrics": {
+      "P2": {
+        "precision": 0.88,
+        "recall": 0.38,
+        "f1": 0.53
+      },
+      "P3": {
+        "precision": 0.96,
+        "recall": 0.32,
+        "f1": 0.48
+      },
+      "P4": {
+        "precision": 0.81,
+        "recall": 0.94,
+        "f1": 0.87
+      },
+      "P5": {
+        "precision": 0.95,
+        "recall": 0.67,
+        "f1": 0.79
+      }
+    },
+    "note": "Table 4 reports precision, recall, and F1 for P2-P5. It does not report accuracy, balanced accuracy, PR-AUC, ROC-AUC, or confusion counts. Values absent from the publication are not inferred."
+  },
+  "known_comparability_limits": [
+    "The exact N-gram document-frequency cutoff is not reported by the paper.",
+    "The publication does not fully specify all model/library settings.",
+    "Whole-block assignment can differ from occurrence slicing when positives share a boundary block.",
+    "Paper metrics absent from Table 4 were not inferred."
+  ]
+}
