@@ -4,6 +4,7 @@ scipy
 
 scikit-learn
 xgboost
+lightgbm==4.7.0
 imbalanced-learn
 
 gensim

@@ -1,0 +1,44 @@
+[
+  {
+    "fold": 1,
+    "train_rows": 104,
+    "train_positive": 50,
+    "train_negative": 54,
+    "train_block_min": 49880,
+    "train_block_max": 1287252,
+    "validation_rows": 305,
+    "validation_positive": 50,
+    "validation_negative": 255,
+    "validation_block_min": 1287353,
+    "validation_block_max": 2000473,
+    "chronology_assertion": true
+  },
+  {
+    "fold": 2,
+    "train_rows": 409,
+    "train_positive": 100,
+    "train_negative": 309,
+    "train_block_min": 49880,
+    "train_block_max": 2000473,
+    "validation_rows": 5141,
+    "validation_positive": 50,
+    "validation_negative": 5091,
+    "validation_block_min": 2008140,
+    "validation_block_max": 4963650,
+    "chronology_assertion": true
+  },
+  {
+    "fold": 3,
+    "train_rows": 5550,
+    "train_positive": 150,
+    "train_negative": 5400,
+    "train_block_min": 49880,
+    "train_block_max": 4963650,
+    "validation_rows": 289,
+    "validation_positive": 50,
+    "validation_negative": 239,
+    "validation_block_min": 4964082,
+    "validation_block_max": 5021809,
+    "chronology_assertion": true
+  }
+]

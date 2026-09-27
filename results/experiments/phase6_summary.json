@@ -1,0 +1,123 @@
+{
+  "phase": "6_research_closure",
+  "experiment_execution": false,
+  "new_models_trained": false,
+  "final_test_evaluated": false,
+  "conclusion": "None of the tested Phase 6 interventions demonstrated a reliable improvement under the predefined temporal evaluation protocol.",
+  "interpretation_limit": "The Phase 6 results do not establish that improvement is impossible; they apply to the tested, predeclared interventions and protocol.",
+  "protocol": {
+    "selection": "three forward-only temporal folds within the Phase 5.5 training partition",
+    "eligibility": "mean temporal-CV precision >= 0.80",
+    "external_validation": "one-time Phase 5.5 validation evaluation after temporal-CV selection",
+    "final_test_usage": "not evaluated"
+  },
+  "frozen_phase55_baseline_carried_into_phase7": {
+    "model": "paper-aligned MulCas baseline",
+    "precision": 0.7931034482758621,
+    "recall": 0.92,
+    "f1": 0.8518518518518519,
+    "pr_auc": 0.870639987619326,
+    "balanced_accuracy": 0.9,
+    "tn": 88,
+    "fp": 12,
+    "fn": 4,
+    "tp": 46,
+    "config": "configs/paper_aligned_mulcas.yaml",
+    "results": "results/baseline/paper_aligned/mulcas_results.json"
+  },
+  "phases": [
+    {
+      "phase": "6A",
+      "hypothesis": "Cost-sensitive learning improves Ponzi recall and F1 while preserving strong precision.",
+      "intervention": "Class weighting for Ridge/SVM and scale_pos_weight for XGBoost.",
+      "temporal_cv_conclusion": "No selected model-family variant met the predefined mean-CV precision floor; selections were diagnostic fallbacks.",
+      "validation_conclusion": "No selected variant improved frozen precision, recall, and F1; PR-AUC was lower for the reported selected variants.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6a/phase6a_results.json",
+        "results/experiments/phase6a/phase6a_candidates.csv",
+        "results/experiments/phase6a/phase6a_validation.csv",
+        "results/experiments/phase6a/temporal_cv_folds.json"
+      ]
+    },
+    {
+      "phase": "6B",
+      "hypothesis": "Controlled random under/over-sampling improves Ponzi recall and F1 while preserving useful precision.",
+      "intervention": "Training-only random under-sampling and random over-sampling.",
+      "temporal_cv_conclusion": "Only the selected SVM candidate met the CV precision criterion; CV evidence did not establish a reliable family-level improvement.",
+      "validation_conclusion": "Ridge and SVM matched frozen precision/recall/F1 but reduced PR-AUC; XGBoost reduced precision and F1.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6b/phase6b_results.json",
+        "results/experiments/phase6b/phase6b_cv_runs.csv",
+        "results/experiments/phase6b/phase6b_candidates.csv",
+        "results/experiments/phase6b/phase6b_validation.csv"
+      ]
+    },
+    {
+      "phase": "6C",
+      "hypothesis": "Temporal-CV classifier operating-threshold selection improves F1 and/or recall while maintaining useful precision.",
+      "intervention": "Native-score threshold selection from pooled temporal out-of-fold predictions.",
+      "temporal_cv_conclusion": "Ridge had no eligible threshold; eligible SVM/XGBoost thresholds achieved precision by sacrificing nearly all recall.",
+      "validation_conclusion": "Selected SVM/XGBoost thresholds predicted no positives; the Ridge fallback reduced precision and F1 despite higher recall.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6c/phase6c_results.json",
+        "results/experiments/phase6c/phase6c_threshold_search.csv",
+        "results/experiments/phase6c/phase6c_candidates.csv",
+        "results/experiments/phase6c/phase6c_validation.csv"
+      ]
+    },
+    {
+      "phase": "6D1",
+      "hypothesis": "Compact opcode-sequence structural features improve the frozen static representations.",
+      "intervention": "Contract-local structural opcode counts, ratios, stack patterns, and complexity features.",
+      "temporal_cv_conclusion": "No representation met the mean-CV precision floor; reported selections were diagnostic fallbacks.",
+      "validation_conclusion": "Selected Ridge/SVM representations matched classification metrics but lowered PR-AUC; XGBoost selected the frozen control.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6d1/phase6d1_results.json",
+        "results/experiments/phase6d1/phase6d1_cv_runs.csv",
+        "results/experiments/phase6d1/phase6d1_candidates.csv",
+        "results/experiments/phase6d1/phase6d1_validation.csv",
+        "results/experiments/phase6d1/phase6d1_feature_schema.json"
+      ]
+    },
+    {
+      "phase": "6D2",
+      "hypothesis": "Normalized operand-derived static features recover useful information discarded by opcode-only preprocessing.",
+      "intervention": "Normalized deployed-runtime PUSH operand volume, value-structure, width, and size-pattern features.",
+      "temporal_cv_conclusion": "No representation met the mean-CV precision floor; reported selections were diagnostic fallbacks.",
+      "validation_conclusion": "SVM/XGBoost width features matched classification metrics but lowered PR-AUC; operand-only Ridge degraded substantially.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6d2/phase6d2_results.json",
+        "results/experiments/phase6d2/phase6d2_cv_runs.csv",
+        "results/experiments/phase6d2/phase6d2_candidates.csv",
+        "results/experiments/phase6d2/phase6d2_validation.csv",
+        "results/experiments/phase6d2/phase6d2_operand_audit.json"
+      ]
+    },
+    {
+      "phase": "6E",
+      "hypothesis": "Selected alternative classifiers exploit frozen paper-aligned views more effectively.",
+      "intervention": "Logistic Regression and LightGBM on the five frozen Phase 5.5 feature views.",
+      "temporal_cv_conclusion": "Neither classifier family produced a candidate satisfying the mean-CV precision floor.",
+      "validation_conclusion": "Logistic Regression matched classification metrics but lowered PR-AUC; LightGBM raised precision slightly while lowering recall, F1, PR-AUC, and balanced accuracy.",
+      "supported": false,
+      "machine_readable_outputs": [
+        "results/experiments/phase6e/phase6e_results.json",
+        "results/experiments/phase6e/phase6e_cv_runs.csv",
+        "results/experiments/phase6e/phase6e_candidates.csv",
+        "results/experiments/phase6e/phase6e_validation.csv",
+        "results/experiments/phase6e/environment_versions.json"
+      ]
+    },
+    {
+      "phase": "6F",
+      "planned_intervention": "Combine independently supported Phase 6 improvements.",
+      "status": "not_executed",
+      "reason": "Not executed because no independently supported intervention existed to combine."
+    }
+  ]
+}

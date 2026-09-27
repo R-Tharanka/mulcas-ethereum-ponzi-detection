@@ -1,0 +1,54 @@
+{
+  "source": "configs/paper_aligned_mulcas.yaml",
+  "cascade_depth": 2,
+  "voting_threshold": 0.0,
+  "score_mapping": "sigmoid_decision_function",
+  "viewers": [
+    {
+      "position": 1,
+      "name": "xgboost_term_count",
+      "feature_representation": "opcode_term_count",
+      "classifier_family": "xgboost",
+      "cascade_stage": 1,
+      "negative_threshold": 0.05,
+      "positive_threshold": 0.95,
+      "voting_stage_participant": true
+    },
+    {
+      "position": 2,
+      "name": "xgboost_ngram_count_df_filtered",
+      "feature_representation": "opcode_ngram_count_1_3_df_filtered",
+      "classifier_family": "xgboost",
+      "cascade_stage": 2,
+      "negative_threshold": 0.05,
+      "positive_threshold": 0.51,
+      "voting_stage_participant": true
+    },
+    {
+      "position": 3,
+      "name": "xgboost_ngram_tfidf_df_filtered",
+      "feature_representation": "opcode_ngram_tfidf_1_3_df_filtered",
+      "classifier_family": "xgboost",
+      "cascade_stage": null,
+      "negative_threshold": null,
+      "positive_threshold": null,
+      "voting_stage_participant": true
+    },
+    {
+      "position": 4,
+      "name": "ridge_tfidf",
+      "feature_representation": "opcode_tfidf",
+      "classifier_family": "ridge",
+      "cascade_stage": null,
+      "negative_threshold": null,
+      "positive_threshold": null,
+      "voting_stage_participant": true
+    }
+  ],
+  "voting_participants": [
+    "xgboost_term_count",
+    "xgboost_ngram_count_df_filtered",
+    "xgboost_ngram_tfidf_df_filtered",
+    "ridge_tfidf"
+  ]
+}
