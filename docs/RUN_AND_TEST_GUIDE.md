@@ -1,8 +1,10 @@
 # Running and Testing Guide
 
-This guide describes how to reproduce and verify the implemented research
-pipeline through the frozen Phase 5 MulCas baseline. Run all commands from the
-repository root in Windows PowerShell.
+This guide describes how to reproduce and verify the frozen baseline. The
+project now continues through Phase 7C; see
+[Project Progress Report](PROJECT_PROGRESS_REPORT.md) for current Phase 6/7
+results and commands. Run all commands from the repository root in Windows
+PowerShell.
 
 ## 1. Scope
 
@@ -14,8 +16,8 @@ The implemented workflow covers:
 4. Ridge, SVM, and XGBoost individual baselines.
 5. The independently reconstructed MulCas cascade and voting baseline.
 
-The improvement experiments, ablation study, and final model evaluation in
-notebooks `06` through `08` are not part of the frozen baseline yet.
+Phase 6 improvement experiments are closed and Phase 7A-7C analyses are
+implemented. Notebook `08` remains reserved for future final evaluation.
 
 ## 2. Prerequisites
 
@@ -177,9 +179,9 @@ Run the complete test suite:
 python -m pytest -q
 ```
 
-The current suite contains 32 tests. It covers imports, deterministic seeds,
-dataset validation, chronological leakage checks, feature leakage controls,
-evaluation metrics, baseline construction, and MulCas routing and voting.
+The current suite contains 100 tests. It covers imports, deterministic seeds,
+data and feature leakage controls, frozen manifests, model construction,
+MulCas routing/voting, Phase 6 experiments, and Phase 7 temporal ablations.
 
 Run focused suites while changing one area:
 
@@ -201,9 +203,10 @@ Start Jupyter from the activated environment:
 python -m jupyter notebook
 ```
 
-Open notebooks `00` through `05` in numerical order. They are presentation
-layers over reusable code in `src`; research logic should not be added only to
-notebook cells.
+Open notebooks `00` through `07` in numerical order for the implemented work.
+They are presentation layers over reusable code in `src`; research logic
+should not be added only to notebook cells. Notebook `08` remains reserved for
+future final evaluation.
 
 To verify a notebook non-interactively without replacing the source notebook:
 
