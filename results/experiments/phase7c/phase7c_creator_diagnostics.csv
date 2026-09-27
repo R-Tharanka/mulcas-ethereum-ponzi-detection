@@ -1,0 +1,5 @@
+prediction_period,prediction_count,previously_observed_creator_count,historical_ponzi_creator_count,true_ponzi_with_creator_feature_1,benign_with_creator_feature_1,true_ponzi_with_creator_feature_0,with_creator_tp_creator_feature_1,with_creator_fn_creator_feature_1,with_creator_tp_creator_feature_0,with_creator_fn_creator_feature_0,without_creator_tp_creator_feature_1,without_creator_fn_creator_feature_1,without_creator_tp_creator_feature_0,without_creator_fn_creator_feature_0
+P2,5141,148,1,0,1,50,0,0,13,37,0,0,11,39
+P3,289,49,2,1,1,49,0,1,7,42,0,1,11,38
+P4,150,20,6,4,2,46,4,0,42,4,4,0,42,4
+P5,509,85,11,4,7,60,3,1,24,36,3,1,26,34

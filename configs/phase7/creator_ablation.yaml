@@ -1,0 +1,33 @@
+phase: 7C
+research_question: >-
+  RQ4: How strongly does the chronological creator feature contribute to the
+  frozen MulCas reconstruction across temporal periods?
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_manifest: configs/phase7/frozen_phase7b_manifest.yaml
+output_dir: results/experiments/phase7c
+seed: 42
+protocol:
+  purpose: creator_feature_contribution_analysis_only
+  optimization: prohibited
+  retuning: prohibited
+  phase6_interventions_enabled: false
+  periods: exact_phase7a_reuse
+  static_feature_fitting: historical_training_only
+  creator_history: historical_training_labels_only
+conditions:
+  - id: with_creator
+    creator_feature: enabled
+  - id: without_creator
+    creator_feature: disabled
+creator_ablation:
+  operation: remove_final_creator_column
+  replacement_column: none
+  expected_dimension_difference: 1
+viewer_level_diagnostics:
+  enabled: true
+  source: full_historical_training_voting_copies
+  decision: native_model_prediction
