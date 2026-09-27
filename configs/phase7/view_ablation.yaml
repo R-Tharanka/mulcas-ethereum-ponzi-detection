@@ -1,0 +1,41 @@
+phase: 7B
+research_question: >-
+  RQ4: Which frozen MulCas viewers and routing components contribute to
+  temporal detection performance?
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_manifest: configs/phase7/frozen_phase7a_manifest.yaml
+output_dir: results/experiments/phase7b
+seed: 42
+protocol:
+  purpose: component_contribution_analysis_only
+  optimization: prohibited
+  retuning: prohibited
+  phase6_interventions_enabled: false
+  periods: exact_phase7a_reuse
+  feature_fitting: historical_training_only
+ablation_semantics:
+  removed_viewer_scope: cascade_and_voting
+  no_voting_fallback: last_cascade_viewer_native_prediction
+  standalone_viewer_source: full_historical_training_voting_copy
+  standalone_decision: native_model_prediction
+ablations:
+  - id: full_frozen_mulcas
+    operation: none
+  - id: remove_first_cascade_viewer
+    operation: remove_viewer
+    viewer_position: 1
+  - id: remove_second_cascade_viewer
+    operation: remove_viewer
+    viewer_position: 2
+  - id: remove_voting_stage
+    operation: remove_voting
+  - id: first_viewer_only
+    operation: standalone_viewer
+    viewer_position: 1
+  - id: second_viewer_only
+    operation: standalone_viewer
+    viewer_position: 2
