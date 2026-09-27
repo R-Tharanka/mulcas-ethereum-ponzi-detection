@@ -4,9 +4,13 @@ Reproducing and improving the MulCas multi-view cascade ensemble for Ethereum
 smart Ponzi scheme detection through feature engineering, model fine-tuning, and
 performance evaluation.
 
-The repository currently implements the research workflow through Phase 5: a
-dataset audit, leakage-safe temporal splitting, reproduced feature views,
-individual model baselines, and a frozen independent MulCas reconstruction.
+The repository currently implements the research workflow through Phase 7C:
+the frozen paper-aligned baseline, controlled Phase 6 improvement experiments,
+temporal robustness analysis, viewer ablation, and creator-feature ablation.
+
+See [Project Progress Report](docs/PROJECT_PROGRESS_REPORT.md) for the complete,
+presentation-ready account of the methodology, results through Phase 7C, and
+current run/test commands.
 
 See [Running and Testing Guide](docs/RUN_AND_TEST_GUIDE.md) for the complete
 setup, phase-by-phase execution, notebook, testing, reproducibility, and do/don't
