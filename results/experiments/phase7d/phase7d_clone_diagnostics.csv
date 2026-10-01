@@ -1,0 +1,17 @@
+period,error_type,count,opcode_clone_count,opcode_clone_proportion,runtime_clone_count,runtime_clone_proportion,creation_clone_count,creation_clone_proportion
+P2,false_negative,37,0,0.0,0,0.0,0,0.0
+P2,false_positive,251,0,0.0,0,0.0,0,0.0
+P2,true_negative,4840,29,0.005991735537190083,3,0.0006198347107438017,2,0.00041322314049586776
+P2,true_positive,13,0,0.0,0,0.0,0,0.0
+P3,false_negative,43,0,0.0,0,0.0,0,0.0
+P3,false_positive,6,0,0.0,0,0.0,0,0.0
+P3,true_negative,233,1,0.004291845493562232,1,0.004291845493562232,0,0.0
+P3,true_positive,7,0,0.0,0,0.0,0,0.0
+P4,false_negative,4,0,0.0,0,0.0,0,0.0
+P4,false_positive,12,0,0.0,0,0.0,0,0.0
+P4,true_negative,88,1,0.011363636363636364,0,0.0,0,0.0
+P4,true_positive,46,14,0.30434782608695654,14,0.30434782608695654,14,0.30434782608695654
+P5,false_negative,37,0,0.0,0,0.0,0,0.0
+P5,false_positive,4,1,0.25,1,0.25,1,0.25
+P5,true_negative,441,6,0.013605442176870748,3,0.006802721088435374,1,0.0022675736961451248
+P5,true_positive,27,1,0.037037037037037035,1,0.037037037037037035,1,0.037037037037037035
