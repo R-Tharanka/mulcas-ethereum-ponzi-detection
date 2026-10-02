@@ -1,0 +1,90 @@
+phase: 8R1A
+hypothesis: >-
+  H8R1: Recency-aware historical training improves forward-period Ponzi
+  detection relative to equal-weight expanding-history training.
+dataset: data/raw/PonziDataset_20221114.csv
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+phase7e_clone_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_phase7_manifest: configs/extension/frozen_phase7_manifest.yaml
+frozen_phase8r0_manifest: configs/extension/frozen_phase8r0_manifest.yaml
+output_dir: results/extension/phase8r1a
+seed: 42
+
+periods:
+  allowed_training: [P0, P1, P2, P3]
+  allowed_prediction: [P2, P3, P4]
+  prohibited: [P5]
+  reuse_exact_phase7_membership: true
+
+strategies:
+  - id: expanding_history
+    family: control
+    window_periods: null
+    alpha: null
+  - id: recent_1_period
+    family: hard_window
+    window_periods: 1
+    alpha: null
+  - id: recent_2_periods
+    family: hard_window
+    window_periods: 2
+    alpha: null
+  - id: recent_3_periods
+    family: hard_window
+    window_periods: 3
+    alpha: null
+  - id: exponential_decay_0.25
+    family: exponential_decay
+    window_periods: null
+    alpha: 0.25
+  - id: exponential_decay_0.50
+    family: exponential_decay
+    window_periods: null
+    alpha: 0.50
+  - id: exponential_decay_0.75
+    family: exponential_decay
+    window_periods: null
+    alpha: 0.75
+
+sample_weight:
+  newest_historical_period: 1.0
+  formula: alpha ** period_age
+  estimator_fit_only: true
+  weight_idf: false
+  class_weight: null
+  sampling: none
+
+selection:
+  periods: [P2, P3, P4]
+  aggregation: macro_equal_period_weight
+  precision_floor: 0.80
+  ranking:
+    - mean_f1_desc
+    - mean_recall_desc
+    - mean_balanced_accuracy_desc
+    - simpler_policy
+  pooled_metrics_for_selection: false
+  p5_usage: prohibited
+  fallback: same_ranking_without_precision_eligibility_diagnostic_only
+
+control:
+  tolerance: 1.0e-12
+  stop_on_mismatch: true
+  reference_periods: [P2, P3, P4]
+
+frozen_behavior:
+  phase6_interventions_enabled: false
+  class_weighting: false
+  sampling: false
+  threshold_optimization: false
+  feature_changes: false
+  viewer_order_changes: false
+  cascade_threshold_changes: false
+  voting_changes: false
+
