@@ -1,0 +1,133 @@
+{
+  "phase": "7",
+  "status": "complete",
+  "closure_type": "research_analysis_closure",
+  "analysis_only": true,
+  "new_model_training_performed": false,
+  "optimization_performed": false,
+  "threshold_tuning_performed": false,
+  "replacement_model_selected": false,
+  "reference_system": "Frozen Phase 5.5 paper-aligned MulCas reconstruction",
+  "research_questions": {
+    "RQ4": "Which feature groups and MulCas components contribute most strongly to the reconstructed model?",
+    "RQ5": "Does the reconstructed MulCas retain effectiveness when predicting contracts created later than its historical training data?"
+  },
+  "phase7a": {
+    "title": "Temporal robustness and model aging",
+    "period_metrics": [
+      {"period": "P2", "precision": 0.0492, "recall": 0.26, "f1": 0.0828, "pr_auc": 0.0462, "balanced_accuracy": 0.6053, "tn": 4840, "fp": 251, "fn": 37, "tp": 13},
+      {"period": "P3", "precision": 0.5385, "recall": 0.14, "f1": 0.2222, "pr_auc": 0.4786, "balanced_accuracy": 0.5574, "tn": 233, "fp": 6, "fn": 43, "tp": 7},
+      {"period": "P4", "precision": 0.7931, "recall": 0.92, "f1": 0.8519, "pr_auc": 0.8706, "balanced_accuracy": 0.9, "tn": 88, "fp": 12, "fn": 4, "tp": 46},
+      {"period": "P5", "precision": 0.871, "recall": 0.4219, "f1": 0.5684, "pr_auc": 0.6674, "balanced_accuracy": 0.7064, "tn": 441, "fp": 4, "fn": 37, "tp": 27}
+    ],
+    "published_comparison": [
+      {"period": "P2", "published_precision": 0.88, "published_recall": 0.38, "published_f1": 0.53, "reconstruction_f1_difference": -0.4472},
+      {"period": "P3", "published_precision": 0.96, "published_recall": 0.32, "published_f1": 0.48, "reconstruction_f1_difference": -0.2578},
+      {"period": "P4", "published_precision": 0.81, "published_recall": 0.94, "published_f1": 0.87, "reconstruction_f1_difference": -0.0181},
+      {"period": "P5", "published_precision": 0.95, "published_recall": 0.67, "published_f1": 0.79, "reconstruction_f1_difference": -0.2216}
+    ],
+    "conclusion": "Performance is strongly non-monotonic and temporally unstable; this is descriptive variation and does not prove concept drift.",
+    "rq5_evidence": "The frozen reconstruction retains useful effectiveness in P4 and P5 but not consistently across P2-P5."
+  },
+  "phase7b": {
+    "title": "Frozen MulCas component and viewer ablation",
+    "f1_deltas_without_component": {
+      "first_cascade_viewer": {"P2": -0.0073, "P3": -0.0437, "P4": 0.0, "P5": -0.1981},
+      "second_cascade_viewer": {"P2": 0.0156, "P3": -0.0768, "P4": 0.0, "P5": -0.074},
+      "voting_stage": {"P2": -0.0005, "P3": 0.0, "P4": 0.0, "P5": -0.0152}
+    },
+    "conclusion": "The first viewer is particularly important in P5, the second viewer has mixed period-dependent effects, voting contributes only marginally, and standalone viewers are not temporally reliable.",
+    "rq4_evidence": "Viewer contributions are complementary and period-dependent rather than uniformly positive."
+  },
+  "phase7c": {
+    "title": "Chronological creator feature ablation",
+    "creator_feature_prevalence": {
+      "P2": {"flagged": 1, "rows": 5141},
+      "P3": {"flagged": 2, "rows": 289},
+      "P4": {"flagged": 6, "rows": 150},
+      "P5": {"flagged": 11, "rows": 509}
+    },
+    "without_minus_with_creator": [
+      {"period": "P2", "delta_precision": 0.0195, "delta_recall": -0.04, "delta_f1": 0.022, "delta_pr_auc": 0.0261, "delta_fp": -102, "delta_fn": 2},
+      {"period": "P3", "delta_precision": -0.0147, "delta_recall": 0.08, "delta_f1": 0.0876, "delta_pr_auc": 0.1453, "delta_fp": 4, "delta_fn": -4},
+      {"period": "P4", "delta_precision": 0.0, "delta_recall": 0.0, "delta_f1": 0.0, "delta_pr_auc": -0.0087, "delta_fp": 0, "delta_fn": 0},
+      {"period": "P5", "delta_precision": 0.0078, "delta_recall": 0.0312, "delta_f1": 0.0295, "delta_pr_auc": 0.0165, "delta_fp": 0, "delta_fn": -2}
+    ],
+    "conclusion": "Creator history is sparse and not uniformly beneficial; its effect changes by period and P4 classifications are unchanged."
+  },
+  "phase7d": {
+    "title": "Systematic error analysis",
+    "errors": [
+      {"period": "P2", "fp": 251, "fn": 37, "unseen_creator_error_percentage": 98.3, "dominant_route": "second_viewer_false_positive"},
+      {"period": "P3", "fp": 6, "fn": 43, "unseen_creator_error_percentage": 98.0, "dominant_route": "first_viewer_false_negative"},
+      {"period": "P4", "fp": 12, "fn": 4, "unseen_creator_error_percentage": 87.5, "dominant_route": "first_viewer_error"},
+      {"period": "P5", "fp": 4, "fn": 37, "unseen_creator_error_percentage": 92.7, "dominant_route": "first_viewer_error"}
+    ],
+    "p5_false_negatives": {
+      "count": 37,
+      "unseen_creator": 36,
+      "without_historical_ponzi_creator_flag": 36,
+      "without_exact_historical_opcode_clone": 37,
+      "without_exact_historical_runtime_clone": 37,
+      "confident_wrong_first_viewer": 28,
+      "confident_wrong_second_viewer": 1,
+      "wrong_after_voting": 8,
+      "near_boundary": 3
+    },
+    "conclusion": "Errors are mostly handled before voting and their structure changes by period; the evidence is consistent with temporal distribution variation but does not prove concept drift."
+  },
+  "phase7e": {
+    "title": "Historical clone and novelty sensitivity",
+    "period_analysis": [
+      {"period": "P2", "clone_count": 29, "row_count": 5141, "cloned_ponzi": 0, "ponzi_count": 50, "recall_cloned_ponzi": null, "recall_novel_ponzi": 0.26},
+      {"period": "P3", "clone_count": 1, "row_count": 289, "cloned_ponzi": 0, "ponzi_count": 50, "recall_cloned_ponzi": null, "recall_novel_ponzi": 0.14},
+      {"period": "P4", "clone_count": 15, "row_count": 150, "cloned_ponzi": 14, "ponzi_count": 50, "recall_cloned_ponzi": 1.0, "recall_novel_ponzi": 0.8889},
+      {"period": "P5", "clone_count": 8, "row_count": 509, "cloned_ponzi": 1, "ponzi_count": 64, "recall_cloned_ponzi": 1.0, "recall_novel_ponzi": 0.4127}
+    ],
+    "p5_creator_clone_interaction": [
+      {"creator_status": "seen", "clone_status": "historical_clone", "positive_count": 1, "tp": 1, "fn": 0, "recall": 1.0},
+      {"creator_status": "seen", "clone_status": "novel", "positive_count": 3, "tp": 2, "fn": 1, "recall": 0.6667},
+      {"creator_status": "unseen", "clone_status": "novel", "positive_count": 60, "tp": 24, "fn": 36, "recall": 0.4}
+    ],
+    "limitations": "Exact-clone subgroups are very small, P2 and P3 contain no cloned positives, and observed associations are not causal.",
+    "conclusion": "Code reuse is associated with easier detection where cloned Ponzi contracts occur, but clone prevalence does not fully explain temporal performance variation."
+  },
+  "consolidated_evidence": [
+    {
+      "research_question": "RQ4",
+      "evidence": "The first viewer is especially important in P5; the second viewer has mixed effects; voting contributes little; creator history is sparse and period-dependent.",
+      "answer": "Component and creator-feature contributions are complementary and period-dependent, with no uniformly beneficial component across P2-P5."
+    },
+    {
+      "research_question": "RQ5",
+      "evidence": "F1 varies from 0.0828 in P2 and 0.2222 in P3 to 0.8519 in P4 and 0.5684 in P5; later errors concentrate among unseen creators and novel code.",
+      "answer": "The model retains useful performance in some periods but is not temporally stable; concept drift is not proven."
+    },
+    {
+      "research_question": "RQ4_RQ5_interaction",
+      "evidence": "P5 depends strongly on viewer 1, yet many P5 novel-positive errors are confident first-viewer errors. P4 remains strong on novel positives.",
+      "answer": "No single examined component, creator signal, or clone-prevalence factor fully explains temporal performance variation."
+    }
+  ],
+  "overall_conclusion": "The reconstructed MulCas model exhibits substantial temporal performance variation. Component and creator-feature contributions are period-dependent. Later-period errors are concentrated among contracts with unseen creators and historically novel code, and many are confidently misclassified. Exact historical code reuse is associated with easier detection where cloned Ponzi contracts occur, but clone prevalence does not fully explain temporal performance variation.",
+  "claims_not_made": [
+    "Concept drift has not been proven.",
+    "Novel code is not claimed to cause misclassification.",
+    "Creator identity is not claimed to cause Ponzi behavior.",
+    "Clone status is not claimed to fully explain temporal performance."
+  ],
+  "archived_outputs": {
+    "phase7a": "results/experiments/phase7a/phase7a_results.json",
+    "phase7b": "results/experiments/phase7b/phase7b_results.json",
+    "phase7c": "results/experiments/phase7c/phase7c_results.json",
+    "phase7d": "results/experiments/phase7d/phase7d_results.json",
+    "phase7e": "results/experiments/phase7e/phase7e_results.json"
+  },
+  "archived_output_sha256": {
+    "phase7a": "41767a78c3630605cdbbaaa5e5db1d7d263bd63fa7853ffbc645d48c9ff2b8a8",
+    "phase7b": "48f844e2ea6e96782f57a4133051ef585b4499b53dacdfa27ebefedd4fe4aa1b",
+    "phase7c": "61141d359bfd74acba4661a36748004e3ec5cb675a07f9047e233f6cc45af6c4",
+    "phase7d": "b990dd40598623f87701c7558203a38aedc1c5bafe7a30f932234ab97fda3737",
+    "phase7e": "3d5cd1ef30c77419fce64b68bc0eee59a0af8896174dc39a9f31639d3f10cc11"
+  }
+}
