@@ -1,0 +1,44 @@
+phase: 7E
+research_question: >-
+  Does frozen MulCas performance differ between contracts with exact
+  historical code matches and historically novel contracts?
+dataset: data/raw/PonziDataset_20221114.csv
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_manifest: configs/phase7/frozen_phase7d_manifest.yaml
+output_dir: results/experiments/phase7e
+seed: 42
+protocol:
+  purpose: historical_clone_novelty_sensitivity_only
+  optimization: prohibited
+  retraining: prohibited
+  retuning: prohibited
+  fuzzy_matching: prohibited
+  reference_predictions: exact_phase7a_full_system
+  periods: [P2, P3, P4, P5]
+  historical_scope: strictly_earlier_training_periods
+  labels_used_for_clone_status: false
+  phase6_interventions_enabled: false
+normalization:
+  opcode: uppercase_tokens_with_single_spaces
+  runtime_bytecode: lowercase_hex_without_0x_prefix
+  creation_code: lowercase_hex_without_0x_prefix
+  empty_values_match: false
+clone_definitions:
+  opcode_clone: exact_normalized_opcode_sequence
+  runtime_clone: exact_normalized_contractCode
+  creation_clone: exact_normalized_creationCode
+  any_exact_code_clone: opcode_or_runtime_or_creation
+novelty_group_precedence:
+  - exact_runtime_clone
+  - exact_opcode_clone_only
+  - exact_creation_code_clone_only
+  - no_exact_historical_clone
+metric_groups:
+  - all_contracts
+  - historical_opcode_clone
+  - historical_runtime_clone
+  - any_exact_code_clone
+  - no_exact_historical_clone

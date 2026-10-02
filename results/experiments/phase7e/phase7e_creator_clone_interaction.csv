@@ -1,0 +1,17 @@
+period,creator_status,clone_status,positive_count,tp,fn,recall
+P2,seen_creator,historical_code_clone,0,0,0,
+P2,seen_creator,novel_code,0,0,0,
+P2,unseen_creator,historical_code_clone,0,0,0,
+P2,unseen_creator,novel_code,50,13,37,0.26
+P3,seen_creator,historical_code_clone,0,0,0,
+P3,seen_creator,novel_code,1,0,1,0.0
+P3,unseen_creator,historical_code_clone,0,0,0,
+P3,unseen_creator,novel_code,49,7,42,0.14285714285714285
+P4,seen_creator,historical_code_clone,1,1,0,1.0
+P4,seen_creator,novel_code,3,3,0,1.0
+P4,unseen_creator,historical_code_clone,13,13,0,1.0
+P4,unseen_creator,novel_code,33,29,4,0.8787878787878788
+P5,seen_creator,historical_code_clone,1,1,0,1.0
+P5,seen_creator,novel_code,3,2,1,0.6666666666666666
+P5,unseen_creator,historical_code_clone,0,0,0,
+P5,unseen_creator,novel_code,60,24,36,0.4
