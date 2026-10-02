@@ -1,0 +1,13 @@
+period,routing_error_category,count,percentage_of_period_errors,false_positive_count,false_negative_count,near_boundary_count
+P2,confident_wrong_first_viewer,33,11.458333333333334,0,33,0
+P2,confident_wrong_second_viewer,250,86.80555555555556,250,0,0
+P2,unresolved_until_voting_wrong,5,1.7361111111111112,1,4,1
+P3,confident_wrong_first_viewer,41,83.6734693877551,0,41,0
+P3,confident_wrong_second_viewer,6,12.244897959183673,6,0,0
+P3,unresolved_until_voting_wrong,2,4.081632653061225,0,2,0
+P4,confident_wrong_first_viewer,11,68.75,8,3,0
+P4,confident_wrong_second_viewer,4,25.0,4,0,0
+P4,unresolved_until_voting_wrong,1,6.25,0,1,0
+P5,confident_wrong_first_viewer,29,70.73170731707317,1,28,2
+P5,confident_wrong_second_viewer,4,9.75609756097561,3,1,1
+P5,unresolved_until_voting_wrong,8,19.51219512195122,0,8,0

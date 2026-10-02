@@ -1,0 +1,5 @@
+period,positive_count,positive_opcode_clone_count,positive_opcode_clone_percentage,positive_runtime_clone_count,positive_runtime_clone_percentage,positive_any_clone_count,positive_any_clone_percentage,cloned_ponzi_tp,cloned_ponzi_fn,recall_on_cloned_ponzi,novel_ponzi_tp,novel_ponzi_fn,recall_on_novel_ponzi,negative_count,negative_any_clone_count,negative_any_clone_percentage,cloned_benign_fp,cloned_benign_tn,novel_benign_fp,novel_benign_tn,cloned_benign_fp_rate,novel_benign_fp_rate
+P2,50,0,0.0,0,0.0,0,0.0,0,0,,13,37,0.26,5091,29,0.5696326851306227,0,29,251,4811,0.0,0.049585144211774006
+P3,50,0,0.0,0,0.0,0,0.0,0,0,,7,43,0.14,239,1,0.41841004184100417,0,1,6,232,0.0,0.025210084033613446
+P4,50,14,28.000000000000004,14,28.000000000000004,14,28.0,14,0,1.0,32,4,0.8888888888888888,100,1,1.0,0,1,12,87,0.0,0.12121212121212122
+P5,64,1,1.5625,1,1.5625,1,1.5625,1,0,1.0,26,37,0.4126984126984127,445,7,1.5730337078651686,1,6,3,435,0.14285714285714285,0.00684931506849315

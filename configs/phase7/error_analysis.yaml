@@ -1,0 +1,53 @@
+phase: 7D
+research_question: >-
+  What descriptive characteristics, historical novelty, and routing behavior
+  distinguish errors made by the frozen reconstructed MulCas over P2-P5?
+dataset: data/raw/PonziDataset_20221114.csv
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+frozen_manifest: configs/phase7/frozen_phase7c_manifest.yaml
+output_dir: results/experiments/phase7d
+seed: 42
+protocol:
+  purpose: systematic_error_analysis_only
+  optimization: prohibited
+  retraining: prohibited
+  retuning: prohibited
+  reference_predictions: exact_phase7a_full_system
+  periods: [P2, P3, P4, P5]
+  clone_reference: strictly_earlier_training_periods
+  diagnostic_features: contract_local_existing_extractors_only
+  phase6_interventions_enabled: false
+diagnostics:
+  structural_features:
+    - opcode_count
+    - unique_opcode_count
+    - unique_opcode_ratio
+    - opcode_entropy
+    - category_control_flow_ratio
+    - category_storage_ratio
+    - push_count
+    - push_ratio
+    - push_width_mean
+    - push_width_max
+    - opcode_call_count
+    - opcode_callcode_count
+    - opcode_delegatecall_count
+    - opcode_staticcall_count
+    - opcode_log_family_count
+  operand_features:
+    - parseable_operand_count
+    - total_operand_bytes
+    - operand_width_mean
+    - operand_width_median
+    - operand_width_std
+    - operand_width_max
+    - selector_sized_4byte_count
+    - address_sized_20byte_count
+  small_constant_max: 255
+  near_boundary_margin: 0.01
+statistical_tests:
+  enabled: false
+  reason: descriptive analysis is sufficient and avoids low-powered multiple testing
