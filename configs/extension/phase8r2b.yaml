@@ -1,0 +1,69 @@
+phase: 8R2B
+hypothesis: >-
+  H8R2: A static EVM CFG representation captures useful discriminative
+  structure not adequately represented by flat opcode count/N-gram views.
+dataset: data/raw/PonziDataset_20221114.csv
+graph_manifest: results/extension/phase8r2a/graph_manifest.json
+graph_schema: results/extension/phase8r2a/graph_schema.json
+graph_statistics: results/extension/phase8r2a/graph_statistics.csv
+period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+phase7e_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+frozen_phase7_manifest: configs/extension/frozen_phase7_manifest.yaml
+frozen_phase8r0_manifest: configs/extension/frozen_phase8r0_manifest.yaml
+frozen_phase8r1a_manifest: configs/extension/frozen_phase8r1a_manifest.yaml
+frozen_phase8r2a_manifest: configs/extension/frozen_phase8r2a_manifest.yaml
+output_dir: results/extension/phase8r2b
+
+frozen_graph:
+  corpus_sha256: ece393232abad38fb329f4ccbe12e617d9c3ec90ba5f265d867ccf5670fec680
+  schema_sha256: 13cf8f4be61e83da99f31649de57f7e65d2d8e2a7cba960ba4f24dbae3e69ec0
+  graph_count: 6498
+  node_feature_dimension: 55
+  edge_type_count: 3
+
+periods:
+  scenarios:
+    - {train: [P0, P1], predict: P2}
+    - {train: [P0, P1, P2], predict: P3}
+    - {train: [P0, P1, P2, P3], predict: P4}
+  prohibited: P5
+
+aggregate_baseline:
+  model: LogisticRegression
+  penalty: l2
+  C: 1.0
+  solver: liblinear
+  class_weight: null
+  max_iter: 2000
+  threshold: 0.5
+  scaler: StandardScaler
+
+gin:
+  layers: [2, 3]
+  hidden_dimensions: [64, 128]
+  dropouts: [0.2, 0.5]
+  seeds: [7, 42, 123, 2026, 999]
+  pooling: [mean, max]
+  optimizer: Adam
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  max_epochs: 200
+  early_stopping_patience: 20
+  early_stopping_metric: validation_loss
+  inner_validation_fraction: 0.15
+  batch_size: 32
+  evaluation_batch_size: 64
+  threshold: 0.5
+  loss: BCEWithLogitsLoss
+  pos_weight: inner_train_negative_to_positive_ratio
+  deterministic_algorithms: true
+
+selection:
+  periods: [P2, P3, P4]
+  minimum_macro_precision: 0.80
+  ranking: [macro_f1, macro_recall, macro_balanced_accuracy, smaller_architecture]
+  subgroup_metrics_are_diagnostic_only: true
+  p5_prohibited: true
+  hypothesis_support: eligible_gin_and_macro_f1_above_frozen_mulcas
