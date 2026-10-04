@@ -1,0 +1,78 @@
+phase: 8R4B
+hypothesis: >-
+  H8R4: Creation/deployment bytecode contains discriminative information not
+  adequately represented by deployed runtime bytecode alone.
+random_seed: 42
+periods: [P0, P1, P2, P3, P4]
+prediction_periods: [P2, P3, P4]
+prohibited_period: P5
+
+inputs:
+  dataset: data/raw/PonziDataset_20221114.csv
+  period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+  phase7_predictions: results/experiments/phase7a/phase7a_predictions.csv
+  phase7_clone_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+  creation_feature_summary: results/extension/phase8r4a/creation_feature_summary.csv
+  creation_feature_schema: results/extension/phase8r4a/creation_feature_schema.json
+  creation_feature_matrix: data/processed/phase8r4a_creation/schema_v1/creation_features.npz
+  expected_matrix_sha256: ecc80b2ab83c5954eb8790e7f693619441116506d64f8c6e3aa8aec87bcdf897
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+  - configs/extension/frozen_phase8r4a_manifest.yaml
+
+feature_views:
+  creation_full: 85
+  deployment_init: 90
+  combined: 183
+
+models:
+  logistic_regression:
+    penalty: l2
+    C: 1.0
+    class_weight: null
+    solver: liblinear
+    max_iter: 2000
+    threshold: 0.5
+    scaler: StandardScaler
+  xgboost:
+    objective: binary:logistic
+    eval_metric: logloss
+    n_estimators: 100
+    learning_rate: 0.1
+    max_depth: 3
+    min_child_weight: 1
+    subsample: 1.0
+    colsample_bytree: 1.0
+    reg_lambda: 1.0
+    scale_pos_weight: 1.0
+    tree_method: hist
+    n_jobs: 1
+    threshold: 0.5
+
+selection:
+  precision_floor: 0.80
+  periods: [P2, P3, P4]
+  aggregation: macro_period_mean
+  ranking: [f1, recall, balanced_accuracy, simplicity]
+  simplicity_order:
+    - logistic_regression__creation_full
+    - logistic_regression__deployment_init
+    - logistic_regression__combined
+    - xgboost__creation_full
+    - xgboost__deployment_init
+    - xgboost__combined
+
+preflight:
+  train_periods: [P0, P1, P2, P3]
+  prediction_period: P4
+  feature_view: combined
+  maximum_estimated_runtime_seconds: 1800
+
+output_dir: results/extension/phase8r4b

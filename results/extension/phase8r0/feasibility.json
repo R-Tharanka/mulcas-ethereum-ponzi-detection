@@ -1,0 +1,226 @@
+{
+  "phase": "8R0",
+  "research_question": "RQ6: Can a temporal-adaptive, graph-augmented detector improve detection of historically novel and unseen-creator Ponzi contracts relative to the frozen MulCas reconstruction while retaining high precision?",
+  "hypotheses": {
+    "H8R1": "Recency-aware training improves later-period generalization relative to equal-weight expanding-history training.",
+    "H8R2": "A static EVM control-flow graph representation captures discriminative information not represented adequately by flat opcode counts/N-grams.",
+    "H8R3": "A novelty-aware routing mechanism reduces confident false-negative decisions on historically novel contracts.",
+    "H8R4": "A temporally trained hybrid of MulCas and the graph view improves F1 and recall relative to frozen MulCas."
+  },
+  "tracks": {
+    "track_a": {
+      "name": "paper_comparable_exploratory_benchmark",
+      "dataset": "existing_6498_contract_dataset",
+      "status": "exploratory_only",
+      "p5_already_inspected": true,
+      "p5_selection_use": "prohibited",
+      "unbiased_external_generalization_claim": "prohibited"
+    },
+    "track_b": {
+      "name": "external_validation",
+      "labels_available_during_design": false,
+      "required_overlap_fields": [
+        "address",
+        "normalized_opcode",
+        "normalized_runtime_bytecode",
+        "normalized_creation_code"
+      ],
+      "report_overlap": true,
+      "create_overlap_free_evaluation_where_feasible": true
+    }
+  },
+  "published_reference": {
+    "precision": 0.951,
+    "recall": 0.674,
+    "f1": 0.789,
+    "source": "Zheng et al., Table 5"
+  },
+  "reference_reconciliation": {
+    "frozen_phase55_final_test": {
+      "precision": 0.90625,
+      "recall": 0.453125,
+      "f1": 0.6041666667,
+      "tn": 442,
+      "fp": 3,
+      "fn": 35,
+      "tp": 29,
+      "source": "results/baseline/paper_aligned/mulcas_results.json"
+    },
+    "phase7a_incremental_p5": {
+      "precision": 0.8709677419,
+      "recall": 0.421875,
+      "f1": 0.5684210526,
+      "tn": 441,
+      "fp": 4,
+      "fn": 37,
+      "tp": 27,
+      "source": "results/experiments/phase7a/phase7a_results.json"
+    },
+    "request_context_note": "The supplied metric triplet belongs to the frozen Phase 5.5 final-test run, while the supplied confusion counts belong to Phase 7A incremental P5. They are distinct training scenarios and must not be combined."
+  },
+  "p5_benchmark_interpretation": {
+    "positive_count": 64,
+    "approximate_joint_target": {
+      "minimum_true_positives": 44,
+      "maximum_false_positives": 2
+    },
+    "implied_metrics_at_boundary": {
+      "precision": 0.9565217391,
+      "recall": 0.6875,
+      "f1": 0.8
+    },
+    "use_as_tuning_rule": false
+  },
+  "temporal_adaptation": {
+    "sample_weight_support": {
+      "ridge": {
+        "supported": true,
+        "fit_signature": "(self, X, y, sample_weight=None)"
+      },
+      "svm": {
+        "supported": true,
+        "fit_signature": "(self, X, y, sample_weight=None)"
+      },
+      "xgboost": {
+        "supported": true,
+        "fit_signature": "(self, X: Any, y: Any, *, sample_weight: Optional[Any] = None, base_margin: Optional[Any] = None, eval_set: Optional[Sequence[Tuple[Any, Any]]] = None, verbose: Union[bool, int, NoneType] = True, xgb_model: Union[xgboost.core.Booster, str, xgboost.sklearn.XGBModel, NoneType] = None, sample_weight_eval_set: Optional[Sequence[Any]] = None, base_margin_eval_set: Optional[Sequence[Any]] = None, feature_weights: Optional[Any] = None) -> 'XGBClassifier'"
+      }
+    },
+    "candidate_strategies": [
+      {
+        "id": "expanding_history",
+        "description": "All periods strictly before the prediction period, equal row weights."
+      },
+      {
+        "id": "recent_1_period",
+        "description": "Most recent complete historical period only."
+      },
+      {
+        "id": "recent_2_periods",
+        "description": "Most recent two complete historical periods, or all available if fewer exist."
+      },
+      {
+        "id": "recent_3_periods",
+        "description": "Most recent three complete historical periods, or all available if fewer exist."
+      },
+      {
+        "id": "exponential_time_decay",
+        "description": "All historical periods with weight 0.5 ** period_age; newest historical period has age zero.",
+        "half_life_periods": 1.0
+      }
+    ],
+    "selection_periods": [
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "selection_rule": {
+      "eligibility": "mean temporal-backtest precision >= 0.80",
+      "rank": [
+        "highest mean temporal-backtest F1",
+        "highest mean temporal-backtest recall",
+        "highest mean temporal-backtest balanced accuracy",
+        "prefer simpler/equal-weight history if still tied"
+      ],
+      "labels_allowed": [
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "labels_prohibited": [
+        "P5",
+        "external_validation"
+      ]
+    },
+    "p5_selection_use": "prohibited"
+  },
+  "graph_model_plan": {
+    "status": "design_only",
+    "framework": "PyTorch Geometric",
+    "preferred_family": "GIN",
+    "alternative_family": "GAT",
+    "graph_layers": [
+      2,
+      3
+    ],
+    "hidden_dimensions": [
+      64,
+      128
+    ],
+    "pooling": "global_add_or_mean_pool",
+    "head": "small_binary_mlp",
+    "dropout": 0.2,
+    "deterministic_seed": 42,
+    "node_unit": "EVM_basic_block",
+    "node_features": [
+      "opcode_category_histogram",
+      "block_instruction_count",
+      "call_family_indicators",
+      "storage_operation_counts",
+      "stack_operation_summaries",
+      "control_flow_type",
+      "push_summaries"
+    ],
+    "prohibited_inputs": [
+      "labels",
+      "Solidity source",
+      "transaction history",
+      "future contracts"
+    ]
+  },
+  "novelty_routing_plan": {
+    "status": "design_only",
+    "embedding_fit_scope": "historical_training_graphs_only",
+    "candidate_methods": [
+      "kNN_embedding_distance",
+      "regularized_Mahalanobis_distance",
+      "IsolationForest_on_training_embeddings"
+    ],
+    "evaluation_embeddings_may_fit_novelty_parameters": false,
+    "conceptual_route": {
+      "familiar": "frozen_MulCas_or_predeclared_hybrid_normal_route",
+      "high_novelty": "graph_informed_route_or_predeclared_hybrid_decision"
+    },
+    "novelty_threshold_selected": false,
+    "future_selection_scope": "P2-P4 temporal backtesting only"
+  },
+  "dependencies": {
+    "current": {
+      "torch_installed": false,
+      "torch_geometric_installed": false
+    },
+    "phase8r1_candidate_additions": [
+      "torch",
+      "torch-geometric"
+    ],
+    "installation_deferred": true
+  },
+  "frozen_artifacts": {
+    "verified": true,
+    "artifact_count": 18,
+    "sha256": {
+      "data/raw/PonziDataset_20221114.csv": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+      "configs/paper_aligned_split.yaml": "8fd57afd0c1bca64aa4ac583618ec36aca3f0ccb1134f1672bdd56a5f10877fb",
+      "configs/paper_aligned_features.yaml": "956a1c043aa8b8d936978ef5c9c1cff2c7266dd9935bb7cc6dd2a186f6dd9c4d",
+      "configs/paper_aligned_baseline_models.yaml": "14a49a119c33af08feefc1ff849327a8639214ab899363aac62486c4984ba505",
+      "configs/paper_aligned_mulcas.yaml": "13d298821aba34751d4039aba953a6653938413f3bb23b38005ec342ae8c12ee",
+      "results/baseline/paper_aligned/split_metadata.json": "8441f002f935250b7c524e04d33679115a68ed93f3204f8f8665ee4d3eb9a3a3",
+      "results/baseline/paper_aligned/feature_summary.json": "ad722be5153b220db4c0dcda8869f2a6ab0d16151fe0659eab4397d33ab427b6",
+      "results/baseline/paper_aligned/individual_baseline_results.json": "d5002619275503a006e17e0ddcca18b2fc67029768251b3d09ed679e95943237",
+      "results/baseline/paper_aligned/mulcas_results.json": "c3ef8b9762be18c9780bc0e8b6756b6bcc0b07bd772e32c687def3c3276f9c97",
+      "docs/phase6_summary.md": "1159a95352ece0453f7e5ac12957d7ad98a226e8665400143faf692aa2873326",
+      "results/experiments/phase6_summary.json": "f30472a0080cb25b15b15fd456a989b1828db484447bf2426b76b85c2a3be72c",
+      "docs/phase7_summary.md": "1836a8c607f2712ea6b86df40bab93e36d28dfcc34a2bce8ff92573bca0609f5",
+      "results/experiments/phase7_summary.json": "0850335bf9ea8192a94191c458ed7901a25f26d766d68d29c4f19a3b83603446",
+      "results/experiments/phase7a/phase7a_results.json": "41767a78c3630605cdbbaaa5e5db1d7d263bd63fa7853ffbc645d48c9ff2b8a8",
+      "results/experiments/phase7b/phase7b_results.json": "48f844e2ea6e96782f57a4133051ef585b4499b53dacdfa27ebefedd4fe4aa1b",
+      "results/experiments/phase7c/phase7c_results.json": "61141d359bfd74acba4661a36748004e3ec5cb675a07f9047e233f6cc45af6c4",
+      "results/experiments/phase7d/phase7d_results.json": "b990dd40598623f87701c7558203a38aedc1c5bafe7a30f932234ab97fda3737",
+      "results/experiments/phase7e/phase7e_results.json": "3d5cd1ef30c77419fce64b68bc0eee59a0af8896174dc39a9f31639d3f10cc11"
+    }
+  },
+  "raw_dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "model_training_performed": false,
+  "p5_labels_used_for_selection": false,
+  "deterministic": true
+}

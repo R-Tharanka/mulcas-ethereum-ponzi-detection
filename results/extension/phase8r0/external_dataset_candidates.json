@@ -1,0 +1,62 @@
+{
+  "audit_date": "2026-10-02",
+  "large_datasets_downloaded": false,
+  "candidates": [
+    {
+      "id": "ponziguard_public_ground_truth",
+      "source": "https://github.com/PonziDetection/PonziGuard/tree/main/dataset",
+      "reported_class_counts": {
+        "total": 6498,
+        "ponzi": 314,
+        "non_ponzi": 6184
+      },
+      "fields_available": "Solidity contract files in separate Ponzi/non-Ponzi archives; result address lists are also present",
+      "deployment_period": "same XBlock/Zheng ground-truth corpus; exact range requires archive audit",
+      "bytecode_availability": "not directly documented in repository listing; source compilation or chain retrieval would be required",
+      "source_code_availability": true,
+      "labeling_provenance": "XBlock/Zheng dataset crawled from Etherscan and manually cross-checked, as reported by the PonziGuard paper",
+      "likely_overlap_risk": "effectively the same 6498-contract corpus; unsuitable as independent Track B evidence",
+      "license_access_notes": "public GitHub repository; no explicit repository license observed in the inspected root",
+      "suitability": "overlap/reference audit only"
+    },
+    {
+      "id": "xblock_smart_ponzi_scheme_labels",
+      "source": "https://www.kaggle.com/datasets/xblock/smart-ponzi-scheme-labels",
+      "reported_class_counts": {
+        "total": 6498,
+        "ponzi": 314,
+        "non_ponzi": 6184
+      },
+      "fields_available": "labels/addresses; current local release additionally contains opcode, runtime bytecode, creation code, creator, block and timestamp",
+      "deployment_period": "local release block range 49880-7136486; no verified newer compatible labeled snapshot found during this audit",
+      "bytecode_availability": "requires joining labels to XBlock contract attributes or retrieving on-chain code",
+      "source_code_availability": "not guaranteed by label file",
+      "labeling_provenance": "XBlock/Zheng Etherscan crawl and manual cross-checking",
+      "likely_overlap_risk": "same source as the current dataset; very high",
+      "license_access_notes": "public Kaggle/XBlock listing; dataset-specific reuse terms must be checked before redistribution",
+      "suitability": "not independent unless a demonstrably newer, separately labeled snapshot is obtained"
+    },
+    {
+      "id": "ponziguard_recent_detection_lists",
+      "source": "https://github.com/PonziDetection/PonziGuard/tree/main/dataset/Result",
+      "reported_class_counts": {
+        "ponzi": "not_verified_without_downloading_and_auditing_lists",
+        "non_ponzi": "unavailable"
+      },
+      "fields_available": "text address lists including a 2022-July 2023 result file and a verified subdirectory",
+      "deployment_period": "2022 through July 2023 for one named result list",
+      "bytecode_availability": "no, must be retrieved from Ethereum",
+      "source_code_availability": "not established by listing",
+      "labeling_provenance": "PonziGuard detection results; independent manual confirmation status must be audited",
+      "likely_overlap_risk": "unknown; address/code overlap audit mandatory",
+      "license_access_notes": "public small lists, but ground-truth status and redistribution terms require verification",
+      "suitability": "positive-only candidate; requires a defensible benign cohort and independent label audit"
+    }
+  ],
+  "required_overlap_audit": [
+    "normalized_address",
+    "exact_normalized_opcode",
+    "exact_normalized_runtime_bytecode",
+    "exact_normalized_creation_code"
+  ]
+}

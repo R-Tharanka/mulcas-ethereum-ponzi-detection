@@ -1,0 +1,31 @@
+{
+  "score_semantics": {
+    "cascade_rows": "accepted frozen viewer positive-class score",
+    "voting_rows": "maximum positive-class score among frozen voting viewers",
+    "calibrated_probability": false
+  },
+  "feature_sets": {
+    "hybrid_a": [
+      "mulcas_score",
+      "gin_mean_probability",
+      "absolute_score_disagreement"
+    ],
+    "hybrid_b": [
+      "mulcas_score",
+      "gin_mean_probability",
+      "absolute_score_disagreement",
+      "route_first_viewer",
+      "route_second_viewer",
+      "route_voting_stage",
+      "historically_novel_code",
+      "unseen_creator",
+      "creator_history_feature"
+    ]
+  },
+  "route_categories": [
+    "first_viewer",
+    "second_viewer",
+    "voting_stage"
+  ],
+  "scaling": "StandardScaler fitted only on meta-training rows"
+}

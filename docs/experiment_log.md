@@ -22,3 +22,24 @@ The frozen Phase 5.5 paper-aligned MulCas baseline is carried forward into
 Phase 7. See [Phase 6 Research Closure](phase6_summary.md) and the
 machine-readable record at
 [`results/experiments/phase6_summary.json`](../results/experiments/phase6_summary.json).
+
+## Phase 7 Closure
+
+**Status:** Complete as a frozen-system analysis phase.
+
+Phases 7A-7E evaluated the unchanged Phase 5.5 MulCas reconstruction through
+forward temporal testing, viewer ablation, creator-feature ablation, error
+analysis, and exact historical-clone sensitivity. No model was optimized,
+replaced, or selected from these analyses.
+
+The reconstructed system exhibits substantial temporal performance variation.
+Component and creator-feature contributions are period-dependent. Later errors
+are concentrated among contracts with unseen creators and historically novel
+code, and many are confidently misclassified. Exact historical code reuse is
+associated with easier detection where cloned Ponzi contracts occur, but clone
+prevalence does not fully explain the temporal results.
+
+This closure does not claim that concept drift was proven, that novel code
+causes misclassification, or that creator identity causes Ponzi behavior. See
+[Phase 7 Research Closure](phase7_summary.md) and the machine-readable record
+at [`results/experiments/phase7_summary.json`](../results/experiments/phase7_summary.json).

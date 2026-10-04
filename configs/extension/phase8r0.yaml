@@ -1,0 +1,234 @@
+phase: 8R0
+title: Targeted performance-improvement extension protocol and feasibility audit
+dataset: data/raw/PonziDataset_20221114.csv
+frozen_manifest: configs/extension/frozen_phase7_manifest.yaml
+output_dir: results/extension/phase8r0
+seed: 42
+
+research_question: >-
+  RQ6: Can a temporal-adaptive, graph-augmented detector improve detection of
+  historically novel and unseen-creator Ponzi contracts relative to the frozen
+  MulCas reconstruction while retaining high precision?
+hypotheses:
+  H8R1: >-
+    Recency-aware training improves later-period generalization relative to
+    equal-weight expanding-history training.
+  H8R2: >-
+    A static EVM control-flow graph representation captures discriminative
+    information not represented adequately by flat opcode counts/N-grams.
+  H8R3: >-
+    A novelty-aware routing mechanism reduces confident false-negative decisions
+    on historically novel contracts.
+  H8R4: >-
+    A temporally trained hybrid of MulCas and the graph view improves F1 and recall
+    relative to frozen MulCas.
+
+tracks:
+  track_a:
+    name: paper_comparable_exploratory_benchmark
+    dataset: existing_6498_contract_dataset
+    status: exploratory_only
+    p5_already_inspected: true
+    p5_selection_use: prohibited
+    unbiased_external_generalization_claim: prohibited
+  track_b:
+    name: external_validation
+    labels_available_during_design: false
+    required_overlap_fields:
+      - address
+      - normalized_opcode
+      - normalized_runtime_bytecode
+      - normalized_creation_code
+    report_overlap: true
+    create_overlap_free_evaluation_where_feasible: true
+
+published_reference:
+  precision: 0.951
+  recall: 0.674
+  f1: 0.789
+  source: Zheng et al., Table 5
+reference_reconciliation:
+  frozen_phase55_final_test:
+    precision: 0.90625
+    recall: 0.453125
+    f1: 0.6041666667
+    tn: 442
+    fp: 3
+    fn: 35
+    tp: 29
+    source: results/baseline/paper_aligned/mulcas_results.json
+  phase7a_incremental_p5:
+    precision: 0.8709677419
+    recall: 0.421875
+    f1: 0.5684210526
+    tn: 441
+    fp: 4
+    fn: 37
+    tp: 27
+    source: results/experiments/phase7a/phase7a_results.json
+  request_context_note: >-
+    The supplied metric triplet belongs to the frozen Phase 5.5 final-test run,
+    while the supplied confusion counts belong to Phase 7A incremental P5.
+    They are distinct training scenarios and must not be combined.
+p5_benchmark_interpretation:
+  positive_count: 64
+  approximate_joint_target:
+    minimum_true_positives: 44
+    maximum_false_positives: 2
+  implied_metrics_at_boundary:
+    precision: 0.9565217391
+    recall: 0.6875
+    f1: 0.8
+  use_as_tuning_rule: false
+
+temporal_adaptation:
+  selection_periods: [P2, P3, P4]
+  holdout_period: P5
+  candidate_strategies:
+    - id: expanding_history
+      description: All periods strictly before the prediction period, equal row weights.
+    - id: recent_1_period
+      description: Most recent complete historical period only.
+    - id: recent_2_periods
+      description: Most recent two complete historical periods, or all available if fewer exist.
+    - id: recent_3_periods
+      description: Most recent three complete historical periods, or all available if fewer exist.
+    - id: exponential_time_decay
+      description: All historical periods with weight 0.5 ** period_age; newest historical period has age zero.
+      half_life_periods: 1.0
+  backtests:
+    - train_available: [P0, P1]
+      predict: P2
+    - train_available: [P0, P1, P2]
+      predict: P3
+    - train_available: [P0, P1, P2, P3]
+      predict: P4
+  selection_rule:
+    eligibility: mean temporal-backtest precision >= 0.80
+    rank:
+      - highest mean temporal-backtest F1
+      - highest mean temporal-backtest recall
+      - highest mean temporal-backtest balanced accuracy
+      - prefer simpler/equal-weight history if still tied
+    labels_allowed: [P2, P3, P4]
+    labels_prohibited: [P5, external_validation]
+
+graph_audit:
+  runtime_source: contractCode
+  creation_source: creationCode
+  solidity_source_allowed: false
+  metadata_policy: preserve_full_bytecode_matching_frozen_reproduction
+  basic_block_leaders:
+    - first instruction
+    - JUMPDEST
+    - instruction following a terminating or branching instruction
+  static_jump_resolution: >-
+    Resolve only PUSH-immediately-before-JUMP/JUMPI targets that point to a
+    JUMPDEST. Record other targets as dynamic/unresolved.
+  malformed_policy: retain contract and report invalid hex or truncated PUSH
+
+graph_model_plan:
+  status: design_only
+  framework: PyTorch Geometric
+  preferred_family: GIN
+  alternative_family: GAT
+  graph_layers: [2, 3]
+  hidden_dimensions: [64, 128]
+  pooling: global_add_or_mean_pool
+  head: small_binary_mlp
+  dropout: 0.2
+  deterministic_seed: 42
+  node_unit: EVM_basic_block
+  node_features:
+    - opcode_category_histogram
+    - block_instruction_count
+    - call_family_indicators
+    - storage_operation_counts
+    - stack_operation_summaries
+    - control_flow_type
+    - push_summaries
+  prohibited_inputs:
+    - labels
+    - Solidity source
+    - transaction history
+    - future contracts
+
+novelty_routing_plan:
+  status: design_only
+  embedding_fit_scope: historical_training_graphs_only
+  candidate_methods:
+    - kNN_embedding_distance
+    - regularized_Mahalanobis_distance
+    - IsolationForest_on_training_embeddings
+  evaluation_embeddings_may_fit_novelty_parameters: false
+  conceptual_route:
+    familiar: frozen_MulCas_or_predeclared_hybrid_normal_route
+    high_novelty: graph_informed_route_or_predeclared_hybrid_decision
+  novelty_threshold_selected: false
+  future_selection_scope: P2-P4 temporal backtesting only
+
+dependencies:
+  current:
+    torch_installed: false
+    torch_geometric_installed: false
+  phase8r1_candidate_additions:
+    - torch
+    - torch-geometric
+  installation_deferred: true
+
+external_dataset_audit:
+  audit_date: '2026-10-02'
+  required_overlap_audit:
+    - normalized_address
+    - exact_normalized_opcode
+    - exact_normalized_runtime_bytecode
+    - exact_normalized_creation_code
+  candidates:
+    - id: ponziguard_public_ground_truth
+      source: https://github.com/PonziDetection/PonziGuard/tree/main/dataset
+      reported_class_counts:
+        total: 6498
+        ponzi: 314
+        non_ponzi: 6184
+      fields_available: Solidity contract files in separate Ponzi/non-Ponzi archives; result address lists are also present
+      deployment_period: same XBlock/Zheng ground-truth corpus; exact range requires archive audit
+      bytecode_availability: not directly documented in repository listing; source compilation or chain retrieval would be required
+      source_code_availability: yes
+      labeling_provenance: XBlock/Zheng dataset crawled from Etherscan and manually cross-checked, as reported by the PonziGuard paper
+      likely_overlap_risk: effectively the same 6498-contract corpus; unsuitable as independent Track B evidence
+      license_access_notes: public GitHub repository; no explicit repository license observed in the inspected root
+      suitability: overlap/reference audit only
+    - id: xblock_smart_ponzi_scheme_labels
+      source: https://www.kaggle.com/datasets/xblock/smart-ponzi-scheme-labels
+      reported_class_counts:
+        total: 6498
+        ponzi: 314
+        non_ponzi: 6184
+      fields_available: labels/addresses; current local release additionally contains opcode, runtime bytecode, creation code, creator, block and timestamp
+      deployment_period: local release block range 49880-7136486; no verified newer compatible labeled snapshot found during this audit
+      bytecode_availability: requires joining labels to XBlock contract attributes or retrieving on-chain code
+      source_code_availability: not guaranteed by label file
+      labeling_provenance: XBlock/Zheng Etherscan crawl and manual cross-checking
+      likely_overlap_risk: same source as the current dataset; very high
+      license_access_notes: public Kaggle/XBlock listing; dataset-specific reuse terms must be checked before redistribution
+      suitability: not independent unless a demonstrably newer, separately labeled snapshot is obtained
+    - id: ponziguard_recent_detection_lists
+      source: https://github.com/PonziDetection/PonziGuard/tree/main/dataset/Result
+      reported_class_counts:
+        ponzi: not_verified_without_downloading_and_auditing_lists
+        non_ponzi: unavailable
+      fields_available: text address lists including a 2022-July 2023 result file and a verified subdirectory
+      deployment_period: 2022 through July 2023 for one named result list
+      bytecode_availability: no, must be retrieved from Ethereum
+      source_code_availability: not established by listing
+      labeling_provenance: PonziGuard detection results; independent manual confirmation status must be audited
+      likely_overlap_risk: unknown; address/code overlap audit mandatory
+      license_access_notes: public small lists, but ground-truth status and redistribution terms require verification
+      suitability: positive-only candidate; requires a defensible benign cohort and independent label audit
+
+execution:
+  train_models: false
+  fit_novelty_detector: false
+  select_thresholds: false
+  use_p5_labels_for_selection: false
+  download_external_datasets: false

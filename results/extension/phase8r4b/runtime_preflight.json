@@ -1,0 +1,25 @@
+{
+  "cpu_model": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "physical_cpu_count": 10,
+  "logical_cpu_count": 16,
+  "system_ram_bytes": 16866508800,
+  "torch_version": "2.14.1+cpu",
+  "cuda_available": false,
+  "execution_device": "cpu",
+  "representative_train_periods": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "representative_prediction_period": "P4",
+  "representative_feature_view": "combined",
+  "representative_runtime_seconds": {
+    "logistic_regression": 0.2963875999994343,
+    "xgboost": 2.3058765000023413
+  },
+  "estimated_full_runtime_seconds": 23.42037690001598,
+  "stop_limit_seconds": 1800.0,
+  "full_experiment_authorized": true,
+  "actual_full_runtime_seconds": 7.017896400007885
+}

@@ -1,0 +1,7 @@
+boundary_status,contract_count,fraction_of_corpus,mean_runtime_occurrences,median_bytes_before_first_match,median_bytes_after_last_match,init_region_available_count
+unique,6497,0.9998461064943059,1.0,314.0,0.0,6497
+ambiguous,0,0.0,0.0,,,0
+not_found,1,0.0001538935056940597,0.0,,,0
+invalid_creation,0,0.0,0.0,,,0
+invalid_runtime,0,0.0,0.0,,,0
+empty_runtime,0,0.0,0.0,,,0

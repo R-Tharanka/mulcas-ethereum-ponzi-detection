@@ -1,0 +1,48 @@
+phase: 8R4A
+hypothesis_for_later_modeling: >-
+  H8R4: Creation/deployment bytecode contains discriminative initialization
+  information not represented adequately by deployed runtime bytecode alone.
+dataset: data/raw/PonziDataset_20221114.csv
+period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+output_dir: results/extension/phase8r4a
+artifact_path: data/processed/phase8r4a_creation/schema_v1/creation_features.npz
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+
+sources:
+  creation_bytecode: creationCode
+  runtime_bytecode: contractCode
+  solidity_source: prohibited
+  transaction_history: prohibited
+
+boundary_policy:
+  match: exact_normalized_byte_substring
+  init_available_only_when: exactly_one_nonempty_runtime_occurrence
+  init_region: bytes_before_unique_runtime_occurrence
+  ambiguous_init_boundary: unavailable
+  trailing_region: bytes_after_last_exact_runtime_occurrence
+  constructor_argument_parsing: prohibited
+
+features:
+  schema_version: phase8r4a-creation-v1
+  small_constant_max_inclusive: 255
+  raw_constants_emitted: false
+  views: [creation_full, deployment_init, creation_full_plus_init_and_boundary]
+
+preflight:
+  sample_size: 100
+  sample_policy: first_100_after_createdBlockNumber_row_index_sort
+  maximum_estimated_runtime_seconds: 1800
+
+execution:
+  classifier_training: false
+  model_evaluation: false
+  p5_model_evaluation: false
+  gpu_required: false

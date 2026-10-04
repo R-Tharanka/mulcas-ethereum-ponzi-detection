@@ -1,0 +1,5 @@
+candidate_id,period,row_count,both_correct,both_wrong,mulcas_only_correct,creation_only_correct,positive_support,tp_by_both,mulcas_only_tp,creation_only_tp,fn_by_both,mulcas_recall,creation_recall,oracle_union_recall,oracle_non_deployable
+logistic_regression__creation_full,P2,5141,4642,49,211,239,50,3,10,1,36,0.26,0.08,0.28,True
+logistic_regression__creation_full,P3,289,233,43,7,6,50,0,7,0,43,0.14,0.0,0.14,True
+logistic_regression__creation_full,P4,150,130,15,4,1,50,42,4,0,4,0.92,0.84,0.92,True
+logistic_regression__creation_full,P2-P4,5580,5005,107,222,246,150,45,21,1,83,0.44,0.30666666666666664,0.44666666666666666,True

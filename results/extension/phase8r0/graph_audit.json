@@ -1,0 +1,99 @@
+{
+  "contract_count": 6498,
+  "fields_loaded": [
+    "contractCode",
+    "creationCode"
+  ],
+  "labels_loaded": false,
+  "runtime": {
+    "contracts_audited": 6498,
+    "disassemblable_contracts": 6498,
+    "invalid_hex_contracts": 0,
+    "empty_contracts": 0,
+    "contracts_with_truncated_pushes": 3425,
+    "truncated_push_count": 3425,
+    "contracts_with_unsupported_opcodes": 5708,
+    "unsupported_opcode_count": 42382,
+    "graphs_with_basic_blocks": 6498,
+    "graphs_with_fallthrough_edges": 6496,
+    "graphs_with_static_unconditional_jump_edges": 6331,
+    "graphs_with_static_conditional_jump_edges": 6469,
+    "graphs_with_unresolved_jump_targets": 6468,
+    "edge_totals": {
+      "fallthrough": 746822,
+      "static_unconditional_jump": 226005,
+      "static_conditional_jump": 491923,
+      "unresolved_jump_targets": 245971
+    },
+    "instruction_count": {
+      "min": 8,
+      "median": 2206.0,
+      "mean": 2665.2008310249307,
+      "p95": 6756.849999999993,
+      "max": 18059
+    },
+    "basic_block_count": {
+      "min": 2,
+      "median": 190.0,
+      "mean": 239.23976608187135,
+      "p95": 593.0,
+      "max": 1306
+    },
+    "identified_edge_count": {
+      "min": 0,
+      "median": 175.0,
+      "mean": 225.41551246537395,
+      "p95": 558.0,
+      "max": 1801
+    }
+  },
+  "creation": {
+    "contracts_audited": 6498,
+    "disassemblable_contracts": 6498,
+    "invalid_hex_contracts": 0,
+    "empty_contracts": 0,
+    "contracts_with_truncated_pushes": 3052,
+    "truncated_push_count": 3052,
+    "contracts_with_unsupported_opcodes": 5906,
+    "unsupported_opcode_count": 67339,
+    "graphs_with_basic_blocks": 6498,
+    "graphs_with_fallthrough_edges": 6498,
+    "graphs_with_static_unconditional_jump_edges": 4505,
+    "graphs_with_static_conditional_jump_edges": 5941,
+    "graphs_with_unresolved_jump_targets": 6487,
+    "edge_totals": {
+      "fallthrough": 830197,
+      "static_unconditional_jump": 28112,
+      "static_conditional_jump": 47780,
+      "unresolved_jump_targets": 990115
+    },
+    "instruction_count": {
+      "min": 19,
+      "median": 2518.0,
+      "mean": 3070.221298861188,
+      "p95": 7666.449999999999,
+      "max": 18450
+    },
+    "basic_block_count": {
+      "min": 3,
+      "median": 238.0,
+      "mean": 307.0004616805171,
+      "p95": 729.4499999999989,
+      "max": 2402
+    },
+    "identified_edge_count": {
+      "min": 1,
+      "median": 106.0,
+      "mean": 139.44121268082486,
+      "p95": 347.2999999999993,
+      "max": 1164
+    }
+  },
+  "metadata_policy": "preserve full bytecode, matching the frozen reproduction policy",
+  "jump_resolution_policy": "resolve only PUSH-immediately-before-JUMP/JUMPI targets that point to JUMPDEST; record all other dynamic targets as unresolved",
+  "authoritative_runtime_source": "contractCode",
+  "creation_source": "creationCode",
+  "raw_dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "deterministic": true,
+  "model_training_performed": false
+}

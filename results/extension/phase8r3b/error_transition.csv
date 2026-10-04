@@ -1,0 +1,16 @@
+system,period,transition,count
+hybrid_a,P3,mulcas_fn_detected_by_gin_recovered,0
+hybrid_a,P3,mulcas_fp_rejected_by_gin_suppressed,4
+hybrid_a,P3,new_false_positive_vs_mulcas,0
+hybrid_a,P3,new_false_negative_vs_mulcas,7
+hybrid_a,P3,both_components_wrong_hybrid_correct,2
+hybrid_a,P4,mulcas_fn_detected_by_gin_recovered,2
+hybrid_a,P4,mulcas_fp_rejected_by_gin_suppressed,2
+hybrid_a,P4,new_false_positive_vs_mulcas,13
+hybrid_a,P4,new_false_negative_vs_mulcas,4
+hybrid_a,P4,both_components_wrong_hybrid_correct,0
+hybrid_b,P3,mulcas_fn_detected_by_gin_recovered,0
+hybrid_b,P3,mulcas_fp_rejected_by_gin_suppressed,4
+hybrid_b,P3,new_false_positive_vs_mulcas,1
+hybrid_b,P3,new_false_negative_vs_mulcas,7
+hybrid_b,P3,both_components_wrong_hybrid_correct,2

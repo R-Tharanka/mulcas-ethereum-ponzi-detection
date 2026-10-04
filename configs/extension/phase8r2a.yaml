@@ -1,0 +1,64 @@
+phase: 8R2A
+hypothesis: >-
+  H8R2: A static EVM control-flow graph representation captures discriminative
+  program structure that is inadequately represented by flat opcode
+  count/N-gram views.
+dataset: data/raw/PonziDataset_20221114.csv
+phase7_period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+frozen_phase7_manifest: configs/extension/frozen_phase7_manifest.yaml
+frozen_phase8r0_manifest: configs/extension/frozen_phase8r0_manifest.yaml
+frozen_phase8r1a_manifest: configs/extension/frozen_phase8r1a_manifest.yaml
+output_dir: results/extension/phase8r2a
+artifact_dir: data/processed/phase8r2a_graphs/schema_v1
+seed: 42
+
+source:
+  bytecode_column: contractCode
+  address_column: address
+  block_column: createdBlockNumber
+  label_column: label
+  solidity_source: prohibited
+  transaction_history: prohibited
+  creation_code_primary_view: false
+
+schema:
+  version: phase8r2a-cfg-v1
+  chunk_size: 64
+  node_dtype: float32
+  edge_index_dtype: int64
+  edge_type_dtype: int8
+  compression: deterministic_deflate_npz
+
+basic_blocks:
+  leaders:
+    - program_entry
+    - JUMPDEST
+    - instruction_after_terminator_or_branch
+  terminating_opcodes:
+    - STOP
+    - RETURN
+    - REVERT
+    - SELFDESTRUCT
+    - JUMP
+    - JUMPI
+    - INVALID
+
+jump_resolution:
+  policy: immediate_preceding_push_to_valid_jumpdest
+  local_constant_propagation: false
+  symbolic_execution: false
+  unresolved_fanout: false
+
+edge_types:
+  FALL_THROUGH: 0
+  STATIC_JUMP: 1
+  CONDITIONAL_JUMP: 2
+
+execution:
+  train_classifier: false
+  train_gnn: false
+  evaluate_model: false
+  evaluate_p5_model_performance: false
+  torch_required: false
+  torch_geometric_required: false
+

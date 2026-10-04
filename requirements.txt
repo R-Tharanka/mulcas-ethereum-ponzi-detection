@@ -18,3 +18,7 @@ joblib
 pyyaml
 
 pytest
+
+# Phase 8R2B graph experiments (Python 3.13 compatible)
+torch==2.14.1
+torch-geometric==2.8.0.post1
