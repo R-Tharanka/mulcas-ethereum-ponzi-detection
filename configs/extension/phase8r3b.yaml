@@ -1,0 +1,70 @@
+phase: 8R3B
+hypothesis: >-
+  A small temporally trained meta-classifier using frozen MulCas and GIN
+  outputs plus deployment-available novelty context improves forward-period
+  Ponzi classification relative to either frozen component alone.
+periods: [P2, P3, P4]
+prohibited_period: P5
+random_seed: 42
+
+inputs:
+  aligned_predictions: results/extension/phase8r3a/aligned_predictions.csv
+  gin_seeds: [7, 42, 123, 2026, 999]
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+
+meta_classifier:
+  family: LogisticRegression
+  penalty: l2
+  C: 1.0
+  class_weight: null
+  solver: liblinear
+  max_iter: 2000
+  threshold: 0.5
+  scaler: StandardScaler
+
+feature_sets:
+  hybrid_a:
+    - mulcas_score
+    - gin_mean_probability
+    - absolute_score_disagreement
+  hybrid_b:
+    - mulcas_score
+    - gin_mean_probability
+    - absolute_score_disagreement
+    - route_first_viewer
+    - route_second_viewer
+    - route_voting_stage
+    - historically_novel_code
+    - unseen_creator
+    - creator_history_feature
+
+selection:
+  meta_train_periods: [P2]
+  selection_period: P3
+  precision_floor: 0.80
+  ranking: [f1, recall, balanced_accuracy, simpler_feature_set]
+  diagnostic_fallback_ranking: [f1, recall, balanced_accuracy, simpler_feature_set]
+
+confirmation:
+  meta_train_periods: [P2, P3]
+  evaluation_period: P4
+
+hypothesis_support:
+  selected_candidate_must_be_eligible_on_p3: true
+  p4_precision_floor: 0.80
+  p4_f1_must_exceed_both_frozen_components: true
+
+preflight:
+  execution_device: cpu
+  maximum_estimated_runtime_seconds: 1800
+  conservative_fit_multiplier: 6
+  minimum_estimate_seconds: 5
+
+output_dir: results/extension/phase8r3b
