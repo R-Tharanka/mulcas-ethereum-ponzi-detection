@@ -1,0 +1,37 @@
+phase: 8R3A
+analysis_only: true
+periods: [P2, P3, P4]
+prohibited_period: P5
+
+inputs:
+  mulcas_predictions: results/experiments/phase7a/phase7a_predictions.csv
+  novelty_creator_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+  gin_predictions: results/extension/phase8r2b/gin_predictions.csv
+  gin_architecture: gin_l3_h128_d05
+  gin_seeds: [7, 42, 123, 2026, 999]
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+
+prediction_policy:
+  gin_ensemble: arithmetic_mean_probability_across_five_seeds
+  threshold: 0.5
+  threshold_optimization: false
+
+score_diagnostics:
+  confidently_benign_maximum: 0.10
+  strongly_positive_minimum: 0.90
+
+hybrid_feasibility_gate:
+  minimum_gin_only_ponzi_recoveries_in_one_period: 5
+  minimum_absolute_overall_union_recall_gain: 0.10
+  maximum_identical_failure_share_among_any_errors: 0.80
+  minimum_novel_or_unseen_gin_only_ponzi_recoveries: 5
+  all_conditions_required: true
+
+performance_preflight_policy: docs/research_extension_performance_preflight.md
+output_dir: results/extension/phase8r3a

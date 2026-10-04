@@ -1,0 +1,17 @@
+period,disagreement_category,row_count,true_ponzi_count,historically_novel_count,exact_clone_count,unseen_creator_count,seen_creator_count,creator_feature_positive_count,novel_true_ponzi_count,unseen_creator_true_ponzi_count
+P2,both_correct,4838,0,4809,29,4695,143,1,0,0
+P2,both_wrong,38,37,38,0,38,0,0,37,37
+P2,mulcas_correct_gin_wrong,15,13,15,0,15,0,0,13,13
+P2,gin_correct_mulcas_wrong,250,0,250,0,245,5,0,0,0
+P3,both_correct,231,2,230,1,183,48,1,2,2
+P3,both_wrong,19,17,19,0,18,1,1,17,16
+P3,mulcas_correct_gin_wrong,9,5,9,0,9,0,0,5,5
+P3,gin_correct_mulcas_wrong,30,26,30,0,30,0,0,26,26
+P4,both_correct,121,42,106,15,105,16,3,28,39
+P4,both_wrong,12,2,12,0,11,1,1,2,2
+P4,mulcas_correct_gin_wrong,13,4,13,0,11,2,1,4,3
+P4,gin_correct_mulcas_wrong,4,2,4,0,3,1,1,2,2
+P2-P4,both_correct,5190,44,5145,45,4983,207,5,30,41
+P2-P4,both_wrong,69,56,69,0,67,2,2,56,55
+P2-P4,mulcas_correct_gin_wrong,37,22,37,0,35,2,1,22,21
+P2-P4,gin_correct_mulcas_wrong,284,28,284,0,278,6,1,28,28

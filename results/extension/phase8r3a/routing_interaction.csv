@@ -1,0 +1,4 @@
+period,accepted_viewer,rescued_ponzi_count,cascade_stage_1_count,cascade_stage_2_count,voting_stage_count,mulcas_confidently_benign_count,mean_mulcas_score,mean_gin_probability
+P3,xgboost_term_count,26,26,0,0,26,0.013881661212788114,0.5506032840563702
+P4,xgboost_term_count,2,2,0,0,2,0.02145866304636,0.5415978252887725
+P2-P4,xgboost_term_count,28,28,0,0,28,0.014422875629471822,0.5499600370015417
