@@ -1,0 +1,77 @@
+phase: 8R5A
+hypothesis: >-
+  H8R5: A sequence representation learned through temporally restricted
+  self-supervised opcode pretraining improves forward-period Ponzi detection
+  relative to frozen MulCas and handcrafted static representations.
+random_seed: 42
+
+inputs:
+  dataset: data/raw/PonziDataset_20221114.csv
+  period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+  - configs/extension/frozen_phase8r4a_manifest.yaml
+  - configs/extension/frozen_phase8r4b_manifest.yaml
+
+tokenization:
+  source_field: opcode
+  bytecode_field: contractCode
+  canonical_opcode_names_only: true
+  raw_operands_allowed: false
+  special_tokens: [PAD, MASK, UNK]
+
+audit:
+  periods: [P0, P1, P2, P3, P4, P5]
+  design_periods: [P0, P1, P2, P3, P4]
+  p5_usage: descriptive_only
+  candidate_max_lengths: [512, 1024, 2048, 4096]
+  representation_policies: [prefix, prefix_suffix, fixed_chunking]
+  recommended_policy: fixed_chunking
+  recommended_chunk_length: 1024
+
+temporal_vocabulary:
+  - fold: P2
+    training_periods: [P0, P1]
+    evaluation_period: P2
+  - fold: P3
+    training_periods: [P0, P1, P2]
+    evaluation_period: P3
+  - fold: P4
+    training_periods: [P0, P1, P2, P3]
+    evaluation_period: P4
+
+benchmark:
+  historical_periods: [P0, P1]
+  sequence_lengths: [512, 1024, 2048]
+  batch_size: 1
+  fixed_batches: 1
+  mask_stride: 7
+  device: cpu
+  full_pretraining: false
+
+future_model:
+  objective: masked_opcode_prediction
+  embedding_dim: 128
+  encoder_layers: 2
+  attention_heads: 4
+  feed_forward_dim: 256
+  dropout: 0.1
+  planned_pretraining_epochs: 10
+  future_seeds: [7, 42, 123]
+  optimizer: Adam
+  learning_rate: 0.001
+
+execution:
+  supervised_classifier_training: false
+  full_self_supervised_pretraining: false
+  p5_model_evaluation: false
+  runtime_approval_threshold_seconds: 1800
+
+output_dir: results/extension/phase8r5a

@@ -1,0 +1,248 @@
+{
+  "phase": "8R5A",
+  "hypothesis": "H8R5: A sequence representation learned through temporally restricted self-supervised opcode pretraining improves forward-period Ponzi detection relative to frozen MulCas and handcrafted static representations.",
+  "hypothesis_evaluated": false,
+  "dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "config_sha256": "e710285bd14b0278495f172ea8b19d746b91091a869c38457b200cd097a1ee91",
+  "frozen_artifacts_verified": true,
+  "frozen_artifact_count": 129,
+  "contracts_audited": 6498,
+  "token_source": "deployed-runtime opcode field, canonical names with hexadecimal operands removed",
+  "special_tokens": [
+    "PAD",
+    "MASK",
+    "UNK"
+  ],
+  "global_opcode_token_count": {
+    "count": 6498,
+    "min": 8.0,
+    "median": 2206.0,
+    "mean": 2664.6737457679287,
+    "max": 18058.0,
+    "p75": 3503.0,
+    "p90": 5306.0,
+    "p95": 6756.849999999993,
+    "p99": 9298.839999999993
+  },
+  "period_opcode_token_count": {
+    "P0": {
+      "count": 104,
+      "min": 38.0,
+      "median": 712.0,
+      "mean": 1288.7596153846155,
+      "max": 7011.0,
+      "p75": 1330.0,
+      "p90": 3315.4,
+      "p95": 4447.549999999997,
+      "p99": 6889.19
+    },
+    "P1": {
+      "count": 305,
+      "min": 28.0,
+      "median": 1187.0,
+      "mean": 2007.6524590163935,
+      "max": 9150.0,
+      "p75": 3007.0,
+      "p90": 5318.6,
+      "p95": 5907.200000000003,
+      "p99": 7950.0
+    },
+    "P2": {
+      "count": 5141,
+      "min": 8.0,
+      "median": 2182.0,
+      "mean": 2662.633534331842,
+      "max": 16266.0,
+      "p75": 3526.0,
+      "p90": 5211.0,
+      "p95": 6550.0,
+      "p99": 9205.400000000001
+    },
+    "P3": {
+      "count": 289,
+      "min": 76.0,
+      "median": 2206.0,
+      "mean": 2687.6608996539794,
+      "max": 14983.0,
+      "p75": 3208.0,
+      "p90": 5198.2,
+      "p95": 6982.5999999999985,
+      "p99": 8299.52000000001
+    },
+    "P4": {
+      "count": 150,
+      "min": 387.0,
+      "median": 2380.0,
+      "mean": 2823.46,
+      "max": 10942.0,
+      "p75": 2989.5,
+      "p90": 4715.4,
+      "p95": 6818.1,
+      "p99": 9107.209999999981
+    },
+    "P5": {
+      "count": 509,
+      "min": 101.0,
+      "median": 2622.0,
+      "mean": 3300.2612966601178,
+      "max": 18058.0,
+      "p75": 4273.0,
+      "p90": 6509.399999999999,
+      "p95": 8186.0,
+      "p99": 10891.440000000002
+    }
+  },
+  "recommended_sequence_policy": "fixed 1024-token chunking followed by future chunk pooling",
+  "recommendation_basis": [
+    "P0-P4 coverage only",
+    "100% token retention",
+    "bounded quadratic attention cost",
+    "simplicity",
+    "determinism"
+  ],
+  "p5_usage": "descriptive_only",
+  "p5_model_evaluation": false,
+  "p5_in_model_design": false,
+  "supervised_classifier_trained": false,
+  "full_self_supervised_pretraining_run": false,
+  "compute": {
+    "environment": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "cpu_model": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+      "physical_cores": 10,
+      "logical_cores": 16,
+      "system_ram_gib": 15.708160400390625,
+      "torch_version": "2.14.1+cpu",
+      "torch_build_type": "cpu",
+      "torch_cuda_available": false,
+      "cuda_runtime_version": null,
+      "torch_geometric_version": "2.8.0.post1",
+      "execution_device": "cpu",
+      "gpu_status": "gpu_present_but_installed_torch_is_cpu_only",
+      "system_gpu_detected": true,
+      "gpu_model": "NVIDIA GeForce RTX 2050",
+      "gpu_vram_mib": 4096,
+      "gpu_driver": "610.78"
+    },
+    "benchmark": [
+      {
+        "sequence_length": 512,
+        "batch_size": 1,
+        "batches": 1,
+        "device": "cpu",
+        "elapsed_seconds": 1.5066841000079876,
+        "examples_per_second": 0.6637091345124692,
+        "tokens_per_second": 339.8190768703842,
+        "rss_delta_mib": 25.34765625,
+        "process_peak_working_set_mib": 1537.4921875,
+        "masked_tokens": 74,
+        "loss": 4.939776420593262,
+        "full_pretraining": false,
+        "supervised_training": false
+      },
+      {
+        "sequence_length": 1024,
+        "batch_size": 1,
+        "batches": 1,
+        "device": "cpu",
+        "elapsed_seconds": 0.14432039999519475,
+        "examples_per_second": 6.92902735880233,
+        "tokens_per_second": 7095.324015413586,
+        "rss_delta_mib": 139.6875,
+        "process_peak_working_set_mib": 1643.57421875,
+        "masked_tokens": 147,
+        "loss": 5.083737373352051,
+        "full_pretraining": false,
+        "supervised_training": false
+      },
+      {
+        "sequence_length": 2048,
+        "batch_size": 1,
+        "batches": 1,
+        "device": "cpu",
+        "elapsed_seconds": 0.5510956999933114,
+        "examples_per_second": 1.8145668710754537,
+        "tokens_per_second": 3716.232951962529,
+        "rss_delta_mib": 369.98046875,
+        "process_peak_working_set_mib": 2041.828125,
+        "masked_tokens": 293,
+        "loss": 5.079230785369873,
+        "full_pretraining": false,
+        "supervised_training": false
+      }
+    ],
+    "runtime_estimates": {
+      "basis": "linear estimate from one measured batch at the recommended 1024-token chunk length",
+      "limitations": "excludes data-loader, checkpoint, validation, and repeated-epoch caching effects",
+      "folds": [
+        {
+          "prediction_fold": "P2",
+          "historical_periods": [
+            "P0",
+            "P1"
+          ],
+          "historical_contracts": 409,
+          "estimated_chunks_per_epoch": 957,
+          "estimated_seconds_per_epoch_cpu": 138.11462279540137,
+          "planned_epochs": 10,
+          "estimated_seconds_one_fold_cpu": 1381.1462279540137
+        },
+        {
+          "prediction_fold": "P3",
+          "historical_periods": [
+            "P0",
+            "P1",
+            "P2"
+          ],
+          "historical_contracts": 5550,
+          "estimated_chunks_per_epoch": 16999,
+          "estimated_seconds_per_epoch_cpu": 2453.3024795183155,
+          "planned_epochs": 10,
+          "estimated_seconds_one_fold_cpu": 24533.024795183155
+        },
+        {
+          "prediction_fold": "P4",
+          "historical_periods": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ],
+          "historical_contracts": 5839,
+          "estimated_chunks_per_epoch": 17908,
+          "estimated_seconds_per_epoch_cpu": 2584.4897231139475,
+          "planned_epochs": 10,
+          "estimated_seconds_one_fold_cpu": 25844.897231139475
+        }
+      ],
+      "estimated_seconds_all_p2_p4_one_seed_cpu": 51759.068254276644,
+      "estimated_seconds_all_p2_p4_three_seeds_cpu": 155277.20476282993,
+      "gpu_estimate": null,
+      "gpu_estimate_reason": "No CUDA-capable PyTorch benchmark was available.",
+      "exceeds_30_minutes_one_seed": true,
+      "exceeds_30_minutes_three_seeds": true,
+      "recommendation": "Before Phase 8R5B, install a compatible CUDA PyTorch build in a separately verified environment, benchmark again, and seek explicit approval."
+    }
+  },
+  "model_plan": {
+    "objective": "masked_opcode_prediction",
+    "embedding_dim": 128,
+    "encoder_layers": 2,
+    "attention_heads": 4,
+    "feed_forward_dim": 256,
+    "dropout": 0.1,
+    "planned_pretraining_epochs": 10,
+    "future_seeds": [
+      7,
+      42,
+      123
+    ],
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "vocabulary_policy": "fit separately on each fold's historical periods only",
+    "sequence_policy": "deterministic 1024-token chunks with future chunk pooling",
+    "p5_allowed": false,
+    "architecture_search": false
+  },
+  "actual_phase_runtime_seconds": 20.32486529999005
+}

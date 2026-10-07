@@ -1,0 +1,20 @@
+{
+  "objective": "masked_opcode_prediction",
+  "embedding_dim": 128,
+  "encoder_layers": 2,
+  "attention_heads": 4,
+  "feed_forward_dim": 256,
+  "dropout": 0.1,
+  "planned_pretraining_epochs": 10,
+  "future_seeds": [
+    7,
+    42,
+    123
+  ],
+  "optimizer": "Adam",
+  "learning_rate": 0.001,
+  "vocabulary_policy": "fit separately on each fold's historical periods only",
+  "sequence_policy": "deterministic 1024-token chunks with future chunk pooling",
+  "p5_allowed": false,
+  "architecture_search": false
+}

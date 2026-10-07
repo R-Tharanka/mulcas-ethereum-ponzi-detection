@@ -1,0 +1,4 @@
+fold,training_periods,evaluation_period,historical_rows,evaluation_rows,historical_vocabulary_size_including_special_tokens,historical_opcode_vocabulary_size,evaluation_token_count,evaluation_oov_token_count,evaluation_oov_token_rate,evaluation_unique_oov_tokens,evaluation_tokens_used_for_fit
+P2,P0+P1,P2,409,5141,144,141,13688599,279,2.0381925133463255e-05,EXTCODEHASH,False
+P3,P0+P1+P2,P3,5550,289,145,142,776734,0,0.0,,False
+P4,P0+P1+P2+P3,P4,5839,150,145,142,423519,0,0.0,,False
