@@ -1,0 +1,10 @@
+{
+  "gate_passed": false,
+  "status": "stopped_after_observed_runtime_overrun",
+  "representative_estimate_limitation": true,
+  "attempted_candidate_pool": 18,
+  "observed_elapsed_lower_bound_seconds": 2220.0,
+  "runtime_gate_seconds": 1800.0,
+  "reason": "The representative XGBoost estimate passed, but the complete fixed pool remained unfinished after 37 minutes because the estimate did not capture the slow SVM/high-dimensional-view combination. The run was stopped and no partial candidate ranking is reported.",
+  "full_replay_status": "not_reproducible_from_available_specification"
+}

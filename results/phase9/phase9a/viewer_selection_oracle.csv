@@ -1,0 +1,2 @@
+status,selection_complete,partial_ranking_reported,reason,full_mulcas_replay_status
+stopped_by_runtime_gate,False,False,"The representative XGBoost estimate passed, but the complete fixed pool remained unfinished after 37 minutes because the estimate did not capture the slow SVM/high-dimensional-view combination. The run was stopped and no partial candidate ranking is reported.",not_reproducible_from_available_specification

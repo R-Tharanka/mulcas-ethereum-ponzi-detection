@@ -1,0 +1,6 @@
+check,observed,paper_value,status,note
+positive_count,50,50.0,MATCH,Paper defines each P0-P4 interval by 50 chronological Ponzi contracts.
+row_count,5141,,NOT VERIFIABLE FROM PAPER,Paper does not list P2 benign-row membership.
+block_range,2008140-4963650,,NOT VERIFIABLE FROM PAPER,Derived from released CSV with whole-block boundaries.
+first_positive,0x143e8bd26d95b230680c25300f93ef56f86eccac@2129975,,NOT VERIFIABLE FROM PAPER,First-principles reconstruction evidence.
+last_positive,0xe3f64dc522a66405c51d96aae234217a03502bb4@4963650,,NOT VERIFIABLE FROM PAPER,First-principles reconstruction evidence.
