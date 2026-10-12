@@ -1,0 +1,46 @@
+{
+  "status": "awaiting_provider_configuration",
+  "models_trained": false,
+  "detectors_evaluated": false,
+  "track_a_modified": false,
+  "candidate_count": 1490,
+  "enriched_count": 0,
+  "mulcas_ready_count": 0,
+  "static_runtime_ready_count": 0,
+  "creation_code_ready_count": 0,
+  "later_positive_count": 0,
+  "later_benign_count": 0,
+  "strict_independent_positive_count": 0,
+  "strict_independent_benign_count": 0,
+  "provisional_independent_positive_count": 0,
+  "provisional_independent_benign_count": 0,
+  "track_b_established": false,
+  "track_b_rating": "NONE",
+  "sealed_ready": false,
+  "manual_review_required": false,
+  "manual_review_count": 31,
+  "unresolved_external_conflicts": 30,
+  "provider_configuration": {
+    "configuration_class": "environment_variables_only",
+    "configured": {
+      "BLOCKSCOUT_API_URL": false,
+      "BLOCKSCOUT_API_KEY": false,
+      "ETH_RPC_URL": false
+    },
+    "all_required_configured": false,
+    "missing_required": [
+      "BLOCKSCOUT_API_URL",
+      "BLOCKSCOUT_API_KEY",
+      "ETH_RPC_URL"
+    ],
+    "credentials_serialized": false
+  },
+  "frozen_verification": {
+    "manifest_anchors": 31,
+    "external_raw_files": 5218,
+    "internal_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+    "verified": true
+  },
+  "zero_count_interpretation": "not observed because enrichment did not run; not evidence of absence",
+  "next_recommended_phase": "await_provider_approval"
+}

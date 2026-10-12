@@ -1,0 +1,2 @@
+rating,sealed_ready,strict_rows,provisional_rows,positive,benign,reason
+NONE,False,0,0,0,0,provider configuration required; zero observed is not evidence of absence

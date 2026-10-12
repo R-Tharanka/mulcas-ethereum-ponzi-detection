@@ -1,0 +1,8 @@
+{
+  "status": "NOT_RUN_PRECONDITION_FAILED",
+  "address_count": 100,
+  "reason": "20-address preflight did not run because reliable provider configuration is absent",
+  "completion_rate": null,
+  "http_429_rate": null,
+  "projected_full_runtime_minutes": null
+}

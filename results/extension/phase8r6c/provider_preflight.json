@@ -1,0 +1,33 @@
+{
+  "status": "NOT_RUN_PROVIDER_CONFIGURATION_REQUIRED",
+  "sample_positive": 10,
+  "sample_benign": 10,
+  "creation_success": 0,
+  "runtime_success": 0,
+  "full_field_success": 0,
+  "requests": 0,
+  "elapsed_seconds": 0,
+  "http_status_distribution": {},
+  "retry_events": 0,
+  "rate_limit_events": 0,
+  "reason": "Missing required provider environment variables: BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY, ETH_RPC_URL",
+  "previous_rate_limit_evidence": {
+    "attempted": 8,
+    "http_429": 8
+  },
+  "provider_configuration": {
+    "configuration_class": "environment_variables_only",
+    "configured": {
+      "BLOCKSCOUT_API_URL": false,
+      "BLOCKSCOUT_API_KEY": false,
+      "ETH_RPC_URL": false
+    },
+    "all_required_configured": false,
+    "missing_required": [
+      "BLOCKSCOUT_API_URL",
+      "BLOCKSCOUT_API_KEY",
+      "ETH_RPC_URL"
+    ],
+    "credentials_serialized": false
+  }
+}

@@ -1,0 +1,2 @@
+category,source,candidate_count,eligible_enriched_count,contamination_risk,upgrade_to_strong
+BENIGN_CURATED,ponzi_ml,927,0,unlabeled scams cannot be excluded,False
