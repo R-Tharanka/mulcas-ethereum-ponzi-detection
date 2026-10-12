@@ -1,0 +1,21 @@
+{
+  "BLOCKSCOUT_API_KEY": {
+    "authentication_required": true,
+    "configured": false,
+    "hostname": null,
+    "provider_class": "api_credential"
+  },
+  "BLOCKSCOUT_API_URL": {
+    "authentication_required": true,
+    "configured": false,
+    "hostname": null,
+    "provider_class": "blockscout_creation_api"
+  },
+  "ETH_RPC_URL": {
+    "authentication_required": true,
+    "configured": false,
+    "hostname": null,
+    "provider_class": "ethereum_json_rpc"
+  },
+  "credentials_serialized": false
+}
