@@ -1,0 +1,112 @@
+{
+  "checkpoints": [
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p2\\opcode_mlm_p2_seed42_epoch10.pt",
+      "fold": "P2",
+      "seed": 42,
+      "byte_size": 1748057,
+      "sha256": "60bb617af2a4c31510298699f84583392d51b1967961d87ebb48982b9277383f",
+      "vocabulary_hash": "1627ebcc9d70e07c4ab5c9f530ac7b4f454f7f581eaf4c3e126eec6c50c8c1ce",
+      "corpus_definition": "P0+P1",
+      "final_training_loss": 3.067678312526207,
+      "final_masked_token_accuracy": 0.24737095823885447,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p2\\opcode_mlm_p2_seed123_epoch10.pt",
+      "fold": "P2",
+      "seed": 123,
+      "byte_size": 1748091,
+      "sha256": "45890084dc6a2b57ea9ef74b4805120704847f4e297fdfda5d512ce1abad876b",
+      "vocabulary_hash": "1627ebcc9d70e07c4ab5c9f530ac7b4f454f7f581eaf4c3e126eec6c50c8c1ce",
+      "corpus_definition": "P0+P1",
+      "final_training_loss": 3.0780080076241245,
+      "final_masked_token_accuracy": 0.24617634730805932,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p2\\opcode_mlm_p2_seed2026_epoch10.pt",
+      "fold": "P2",
+      "seed": 2026,
+      "byte_size": 1748125,
+      "sha256": "fd4b90f45feb1c240811fede23da2967438830d6ca97e0c316615c66a36d6786",
+      "vocabulary_hash": "1627ebcc9d70e07c4ab5c9f530ac7b4f454f7f581eaf4c3e126eec6c50c8c1ce",
+      "corpus_definition": "P0+P1",
+      "final_training_loss": 3.0752118110150928,
+      "final_masked_token_accuracy": 0.24808350566925766,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p3\\opcode_mlm_p3_seed42_epoch10.pt",
+      "fold": "P3",
+      "seed": 42,
+      "byte_size": 1764569,
+      "sha256": "27ceabee8fb3d45cbb45bb50a9b506a8e651faeb6ce1a9b877402a2de8b011e8",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2",
+      "final_training_loss": 1.7418686790040616,
+      "final_masked_token_accuracy": 0.5235641886428761,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p3\\opcode_mlm_p3_seed123_epoch10.pt",
+      "fold": "P3",
+      "seed": 123,
+      "byte_size": 1764603,
+      "sha256": "72f2e2994a322ee9eab2aca0104bd10aa75d442386c41487689e72c876fc78f5",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2",
+      "final_training_loss": 1.6530064318933038,
+      "final_masked_token_accuracy": 0.5494814391190447,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p3\\opcode_mlm_p3_seed2026_epoch10.pt",
+      "fold": "P3",
+      "seed": 2026,
+      "byte_size": 1764637,
+      "sha256": "2bc206d50786a1d2022ea6d270c4d4e558b50ec151ad61b2254034ce72ce7658",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2",
+      "final_training_loss": 1.9181164053160875,
+      "final_masked_token_accuracy": 0.4745567695847983,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p4\\opcode_mlm_p4_seed42_epoch10.pt",
+      "fold": "P4",
+      "seed": 42,
+      "byte_size": 1765465,
+      "sha256": "b38b969fae795f9069c5b8334a5c293fce34a527575e2a0b82fc272e90bb2090",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2+P3",
+      "final_training_loss": 1.6164022306304646,
+      "final_masked_token_accuracy": 0.5581303613786139,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p4\\opcode_mlm_p4_seed123_epoch10.pt",
+      "fold": "P4",
+      "seed": 123,
+      "byte_size": 1765499,
+      "sha256": "3ea031c09adb6d188018f9bfd782fac5b8f05bd3f3fac4a84ee8b212fa3c57a2",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2+P3",
+      "final_training_loss": 1.6364564181246777,
+      "final_masked_token_accuracy": 0.5532305754708884,
+      "epoch": 10
+    },
+    {
+      "path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\artifacts\\phase8r5b\\schema_v1\\p4\\opcode_mlm_p4_seed2026_epoch10.pt",
+      "fold": "P4",
+      "seed": 2026,
+      "byte_size": 1765533,
+      "sha256": "ffce0c4ec62e5b0ee673127005adc2f99d7e88b7cb4a096fb28ac140912aa4f4",
+      "vocabulary_hash": "23f52bcfe1050bbe25a008431aa647fca433ba5eef11f7d2cb598d7393f0c3ec",
+      "corpus_definition": "P0+P1+P2+P3",
+      "final_training_loss": 1.8136679872502846,
+      "final_masked_token_accuracy": 0.49920137135509346,
+      "epoch": 10
+    }
+  ]
+}
