@@ -1,0 +1,8 @@
+source_name,rating,membership_frozen,hashes_frozen,labels_separable,development_access_prohibited,sealed_set_ready,blocker
+xblock_current,NONE,False,True,True,True,False,temporal enrichment and final membership freeze
+blockchain_unica,MODERATE,False,True,True,True,False,temporal enrichment and final membership freeze
+ctrf,NONE,False,True,True,True,False,temporal enrichment and final membership freeze
+ponzi_ml,NONE,False,True,True,True,False,temporal enrichment and final membership freeze
+ponziguard_verified,WEAK,False,True,True,True,False,temporal enrichment and final membership freeze
+ponziguard_predictions,NONE,False,True,True,True,False,temporal enrichment and final membership freeze
+ponziguard_later_predictions,NONE,False,True,True,True,False,temporal enrichment and final membership freeze

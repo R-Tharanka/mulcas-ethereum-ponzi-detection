@@ -1,0 +1,8 @@
+source_name,likely_bias,impact
+xblock_current,curated source availability and transaction-history sampling,documented; not used alone to reject source
+blockchain_unica,positive-list/verified-source selection,documented; not used alone to reject source
+ctrf,curated source availability and transaction-history sampling,documented; not used alone to reject source
+ponzi_ml,curated source availability and transaction-history sampling,documented; not used alone to reject source
+ponziguard_verified,positive-list/verified-source selection,documented; not used alone to reject source
+ponziguard_predictions,positive-list/verified-source selection,documented; not used alone to reject source
+ponziguard_later_predictions,positive-list/verified-source selection,documented; not used alone to reject source

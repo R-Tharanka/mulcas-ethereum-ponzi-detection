@@ -1,0 +1,8 @@
+source_name,new_positive,new_benign,provenance_class,positive_only,complete_benchmark,temporal_metadata_usable,rating,track_b_eligible_now,reason
+xblock_current,0,0,UNKNOWN,False,False,False,NONE,False,ineligible provenance
+blockchain_unica,65,0,A,True,False,False,MODERATE,False,temporal metadata absent; enrichment required
+ctrf,162,1,B,False,False,False,NONE,False,temporal metadata absent; enrichment required
+ponzi_ml,537,927,B,False,True,False,NONE,False,temporal metadata absent; enrichment required
+ponziguard_verified,9,0,A,True,False,False,WEAK,False,temporal metadata absent; enrichment required
+ponziguard_predictions,640,0,D,True,False,False,NONE,False,ineligible provenance
+ponziguard_later_predictions,31,0,D,True,False,False,NONE,False,ineligible provenance

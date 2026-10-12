@@ -1,0 +1,43 @@
+source_name,subset,row_count,fully_verifiable,reason
+xblock_current,S0,6498,True,
+xblock_current,S1,0,True,
+xblock_current,S2,0,True,
+xblock_current,S3,0,True,
+xblock_current,S4,0,True,
+xblock_current,S5,,False,required field missing
+blockchain_unica,S0,184,True,
+blockchain_unica,S1,67,True,
+blockchain_unica,S2,,False,required field missing
+blockchain_unica,S3,,False,required field missing
+blockchain_unica,S4,,False,required field missing
+blockchain_unica,S5,,False,required field missing
+ctrf,S0,3884,True,
+ctrf,S1,163,True,
+ctrf,S2,163,True,
+ctrf,S3,163,True,
+ctrf,S4,,False,required field missing
+ctrf,S5,,False,required field missing
+ponzi_ml,S0,4422,True,
+ponzi_ml,S1,1464,True,
+ponzi_ml,S2,,False,required field missing
+ponzi_ml,S3,,False,required field missing
+ponzi_ml,S4,,False,required field missing
+ponzi_ml,S5,,False,required field missing
+ponziguard_verified,S0,50,True,
+ponziguard_verified,S1,9,True,
+ponziguard_verified,S2,,False,required field missing
+ponziguard_verified,S3,,False,required field missing
+ponziguard_verified,S4,,False,required field missing
+ponziguard_verified,S5,,False,required field missing
+ponziguard_predictions,S0,805,True,
+ponziguard_predictions,S1,640,True,
+ponziguard_predictions,S2,,False,required field missing
+ponziguard_predictions,S3,,False,required field missing
+ponziguard_predictions,S4,,False,required field missing
+ponziguard_predictions,S5,,False,required field missing
+ponziguard_later_predictions,S0,31,True,
+ponziguard_later_predictions,S1,31,True,
+ponziguard_later_predictions,S2,,False,required field missing
+ponziguard_later_predictions,S3,,False,required field missing
+ponziguard_later_predictions,S4,,False,required field missing
+ponziguard_later_predictions,S5,,False,required field missing

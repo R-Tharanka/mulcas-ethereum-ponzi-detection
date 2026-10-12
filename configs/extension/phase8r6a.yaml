@@ -1,0 +1,58 @@
+phase: 8R6A
+title: External dataset provenance, overlap, and Track B qualification
+dataset: data/raw/PonziDataset_20221114.csv
+frozen_manifest: configs/extension/frozen_phase9a_manifest.yaml
+output_dir: results/extension/phase8r6a
+raw_external_dir: data/external/raw
+audit_date: '2026-10-13'
+original_end_block: 7136486
+original_end_timestamp: '2019-01-27T23:59:59Z'
+constraints:
+  models_trained: false
+  p5_evaluation: prohibited
+  external_labels_in_model_development: prohibited
+normalization:
+  address: lowercase_0x_40_hex
+  bytecode: lowercase_hex_without_0x_or_whitespace
+  opcode: collapse_whitespace_preserve_token_case
+  digest: sha256_utf8_normalized_value
+provenance_taxonomy:
+  A: STRONG MANUAL GROUND TRUTH
+  B: CURATED RESEARCH LABELS
+  C: WEAK / AGGREGATED LABELS
+  D: MODEL-GENERATED PREDICTIONS
+  UNKNOWN: ambiguous provenance
+track_b_thresholds:
+  strong_min_new_positive: 100
+  moderate_min_new_positive: 30
+  weak_min_new_positive: 1
+processing_gates:
+  maximum_single_download_gb: 5
+  maximum_projected_minutes: 30
+candidate_sources:
+  - id: xblock_current
+    local_path: data/raw/PonziDataset_20221114.csv
+    kind: internal_reference
+  - id: blockchain_unica
+    local_path: data/external/raw/blockchain_unica/ponzi-addresses.csv
+    kind: positive_csv
+  - id: ctrf
+    local_path: data/external/raw/ctrf/ContractAddr.csv
+    opcode_dir: data/external/raw/ctrf/opcode
+    kind: labeled_tsv_opcode
+  - id: ponzi_ml
+    local_path: data/external/raw/ponzi_ml/dataset/dataset.csv
+    bytecode_root: data/external/raw/ponzi_ml/bytecodes
+    kind: labeled_csv_bytecode
+  - id: ponziguard_verified
+    local_path: data/external/raw/ponziguard/dataset/Result/verified
+    kind: verified_positive_files
+  - id: ponziguard_predictions
+    local_path: data/external/raw/ponziguard/dataset/Result/Ponzi Contracts.txt
+    kind: predicted_positive_list
+  - id: ponziguard_later_predictions
+    local_path: data/external/raw/ponziguard/dataset/Result/Ponzi Contract_2022-July 2023.txt
+    kind: predicted_positive_list
+  - id: ponziguard_ground_truth_archives
+    local_path: data/external/raw/ponziguard/dataset
+    kind: metadata_only_archives

@@ -1,0 +1,9 @@
+source_name,class,eligible_primary_track_b,method,prediction_as_ground_truth,external_labels_used_in_phase0_to_9a
+xblock_current,UNKNOWN,False,"same frozen 6,498-row corpus",False,False
+blockchain_unica,A,True,manual inspection against explicit Ponzi criteria,False,False
+ctrf,B,True,curated expansion/correction of public datasets,False,False
+ponzi_ml,B,True,contracts manually labeled by source-code criteria; incorporates older datasets,False,False
+ponziguard_verified,A,True,random 50 detector hits independently manually inspected under documented criteria,False,False
+ponziguard_predictions,D,False,system-wide detector predictions; not independent ground truth,False,False
+ponziguard_later_predictions,D,False,later detector predictions; not independently validated,False,False
+ponziguard_ground_truth_archives,A,False,"139 manually retained Ponzi and 1,312 manually inspected non-Ponzi; archives lack address mapping",False,False
