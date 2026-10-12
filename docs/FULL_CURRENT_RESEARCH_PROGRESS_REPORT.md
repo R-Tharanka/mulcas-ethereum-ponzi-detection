@@ -2,16 +2,16 @@
 
 ## MulCas Ethereum Ponzi Smart-Contract Detection
 
-**Report date:** 2026-10-12  
-**Project status:** Phase 8 extension complete and formally closed
-**Current retained reference system:** Frozen Phase 5.5 paper-aligned MulCas  
-**Latest completed experiment:** Phase 8R5C1 frozen sequence-embedding linear probe  
-**Raw dataset status:** Unmodified and hash-verified
+- **Report date:** 2026-10-12
+- **Project status:** Complete through Phase 9A diagnostic protocol-gap analysis
+- **Current retained reference system:** Frozen Phase 5.5 paper-aligned MulCas
+- **Latest completed phase:** Phase 9A, complete with its D3 viewer-selection replay runtime-gated
+- **Raw dataset status:** Unmodified and hash-verified
 
 ## 1. Purpose of This Report
 
 This document gives one ordered, understandable account of the project from
-repository setup through the latest sequence-representation experiment. It
+repository setup through the Phase 8 closure and Phase 9A protocol-gap audit. It
 describes the project, execution flow, environment, dataset, preprocessing,
 splits, features, thresholds, models, each research phase, results,
 conclusions, tests, limitations, and remaining work.
@@ -27,7 +27,7 @@ multi-view cascade for detecting Ethereum Ponzi smart contracts. The detector
 uses contract bytecode/opcode information and a leakage-safe historical creator
 indicator. It does not rely on transaction behavior for the frozen baseline.
 
-The work completed four broad stages:
+The work completed five broad stages:
 
 1. **Reproduction foundation, Phases 0-5:** environment setup, dataset audit,
    chronological splitting, feature reproduction, individual classifiers, and
@@ -41,6 +41,9 @@ The work completed four broad stages:
 4. **Targeted research extension, Phase 8R0-8R5C1:** tested recency-aware
    learning, runtime control-flow graphs and GIN, score fusion, creation-code
    features, and temporally valid self-supervised opcode-sequence learning.
+5. **Closure and protocol-gap diagnosis:** formally closed Phase 8, then used
+   Phase 9A to separate known paper/reconstruction protocol differences from
+   deployable performance. Phase 9A introduced no new model family or threshold.
 
 The current frozen Phase 5.5 final-test result is:
 
@@ -64,6 +67,11 @@ contracts and one fewer false positive away from that benchmark interpretation.
 This is not a tuning rule.
 
 No Phase 6 or Phase 8 intervention met its predefined reliability criterion.
+Phase 9A did not search for a replacement; it verified frozen controls,
+measured a non-deployable creator-update oracle, audited N-gram dimensions and
+P2 false positives, and stopped the prescribed viewer-selection replay after
+it exceeded the resource gate.
+
 The main unresolved weakness is temporal generalization: performance is strong
 in P4 but poor or unstable in P2, P3, and P5. The project has nevertheless
 produced a reproducible baseline, extensive negative results, and clear evidence
@@ -98,7 +106,9 @@ about where and how the system fails.
 | 8R5B | Masked-opcode pretraining | Complete | Nine temporal checkpoints produced |
 | 8R5C1 | Frozen embedding linear probe | Complete | H8R5 not supported; fine-tuning gate failed |
 | Phase 8 closure | Consolidated extension closure | Complete | No accepted Phase 8 replacement; Phase 5.5 retained |
-| Phase 8R6A | External/later data provenance and overlap audit | Not started | Next recommended research phase |
+| 9A | Paper/reconstruction protocol-gap decomposition | Complete with D3 runtime-gated | Frozen controls exact; creator oracle diagnostic completed; no partial D3 ranking |
+| 9B | Any later model-development phase | Not started | Requires new preregistered rationale and preferably external/later evidence |
+| External/later data audit | Dataset provenance and overlap audit | Not started | Current recommended research direction |
 | Final synthesis | Notebook/report packaging | Pending | Notebook 08 remains empty |
 
 ### 2.2 Source Paper and Reproduction Target
@@ -243,6 +253,9 @@ The completed work addresses:
 - **RQ5:** Does reconstructed MulCas retain effectiveness on later contracts?
 - **RQ6:** Can temporal adaptation or richer graph/sequence/deployment-time
   representations improve historically novel and unseen-creator detection?
+- **Protocol-gap diagnostic:** Which known differences between the publication
+  and reconstruction can be measured without presenting non-deployable oracle
+  behavior as a real detector?
 
 ### 3.3 Supported High-Level Answers
 
@@ -255,6 +268,10 @@ The completed work addresses:
   concept drift.
 - **RQ6:** The completed recency, graph, fusion, creation-code, and frozen
   sequence-probe experiments did not meet the predefined improvement criteria.
+- **Protocol-gap diagnostic:** frozen controls were reproduced exactly. Online
+  true-label creator updates provided limited oracle gains in P2/P5, but are
+  non-deployable; the full viewer-selection/combined oracle was not completed
+  or invented because of the resource gate and incomplete paper specification.
 
 ## 4. How the System Works
 
@@ -669,12 +686,17 @@ false warnings.
 
 ## 11. Phase-by-Phase Progress and Results
 
+Each entry below separates implementation work from measured outcome and the
+research conclusion. A phase marked as construction, audit, feasibility, or
+closure should not be read as a supervised-model result.
+
 ### 11.1 Phase 0 - Repository and Environment
 
 **Work:** created `.venv` workflow, Python packages, path and deterministic seed
 helpers, import tests, `.gitignore`, and PowerShell instructions.  
 **Result:** local reproducible development foundation.  
-**ML performed:** none.
+**Conclusion:** the repository could support deterministic, path-safe research
+execution. No ML was performed.
 
 ### 11.2 Phase 1 - Dataset Integrity Audit
 
@@ -703,6 +725,12 @@ training-only fitting.
 
 ### 11.5 Phase 4 - Individual Baselines on Initial Split
 
+**Work:** trained fixed Ridge, linear SVM, and XGBoost baselines across the
+initial feature views. Validation selected the feature view for each model;
+the chronological test partition remained reporting-only.
+
+**Outcome:**
+
 | Model | Validation-selected view | Validation F1 | Test P | Test R | Test F1 |
 | --- | --- | ---: | ---: | ---: | ---: |
 | Ridge | N-gram TF-IDF | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
@@ -714,6 +742,11 @@ recall.
 
 ### 11.6 Phase 5 - Initial MulCas Reconstruction
 
+**Work:** implemented the confidence cascade, residual viewer training, final
+voting stage, probability/decision-score handling, and row-level routing traces.
+
+**Outcome:**
+
 | Split | Precision | Recall | F1 | PR-AUC | TN | FP | FN | TP |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Validation | 0.5714 | 0.5000 | 0.5333 | 0.4160 | 963 | 3 | 4 | 4 |
@@ -724,7 +757,8 @@ below the paper.
 
 ### 11.7 Phase 5.5 - Paper-Aligned Correction and Frozen Baseline
 
-**Corrections:** 200/50/64 positive-occurrence split, DF-filtered N-grams,
+**Work/corrections:** introduced the 200/50/64 positive-occurrence split,
+DF-filtered N-grams,
 IDF-weighted Word2Vec, and creator concatenation to every static view. Historical
 70/15/15 artifacts were preserved.
 
@@ -777,11 +811,95 @@ reference was P=0.7931, R=0.9200, F1=0.8519, PR-AUC=0.8706.
 | 6E | Logistic Regression and LightGBM | LR F1 0.8519; LightGBM F1 0.8491 | H6E not supported |
 | 6F | Combine independently supported changes | Not run because none existed | Not executed by design |
 
+#### Phase 6A - Cost-Sensitive Learning
+
+**Work:** evaluated predefined class weights for Ridge/SVM and neutral-to-weighted
+XGBoost settings using forward-only temporal CV.
+
+**Outcome:** selected variants reproduced P4 F1=0.8519 but reduced PR-AUC and did
+not demonstrate a reliable temporal-CV improvement.
+
+**Conclusion:** H6A not supported.
+
+#### Phase 6B - Sampling
+
+**Work:** tested predefined random under-sampling and over-sampling policies
+inside historical training folds only.
+
+**Outcome:** selected Ridge/SVM results matched P4 F1=0.8519; selected XGBoost
+reached F1=0.8142.
+
+**Conclusion:** H6B not supported.
+
+#### Phase 6C - Operating Thresholds
+
+**Work:** evaluated native-score threshold candidates selected only within
+forward temporal CV. P5 remained excluded.
+
+**Outcome:** the Ridge fallback reached P4 F1=0.6622; eligible SVM/XGBoost CV
+choices produced no P4 positives.
+
+**Conclusion:** H6C not supported; threshold adjustment was not retained.
+
+#### Phase 6D1 - Structural Opcode Features
+
+**Work:** constructed 74 compact structural and opcode-category features and
+tested them under the common temporal protocol.
+
+**Outcome:** Ridge/SVM could match P4 F1=0.8519, but no representation was
+eligible from temporal CV.
+
+**Conclusion:** H6D1 not supported; the features remain diagnostic only.
+
+#### Phase 6D2 - Normalized Operand Features
+
+**Work:** created 37 width/count/diversity features without exposing raw PUSH
+constants, addresses, or selectors.
+
+**Outcome:** Ridge fell to P4 F1=0.1429; SVM/XGBoost matched, but did not improve
+on, F1=0.8519.
+
+**Conclusion:** H6D2 not supported.
+
+#### Phase 6E - Alternative Classifiers
+
+**Work:** evaluated fixed Logistic Regression and predefined LightGBM candidates
+without threshold or class-weight search.
+
+**Outcome:** Logistic Regression matched P4 F1=0.8519 and LightGBM reached
+F1=0.8491.
+
+**Conclusion:** H6E not supported.
+
+#### Phase 6F - Supported-Change Combination
+
+**Work:** predefined a combination phase that could run only if earlier Phase 6
+interventions were independently supported.
+
+**Outcome:** no intervention passed that gate, so no post-hoc combination was
+trained or evaluated.
+
+**Conclusion:** not executed by design.
+
+#### Phase 6 Closure
+
+**Work:** consolidated Phase 6 evidence and froze its hypotheses, validation
+rules, and negative results.
+
+**Outcome:** no accepted improvement and no P5 evaluation.
+
+**Conclusion:** Phase 5.5 MulCas remained the reference entering Phase 7.
+
 **Phase 6 conclusion:** none of the tested interventions demonstrated a
 reliable improvement under the predefined temporal protocol. This does not mean
 improvement is impossible.
 
 ### 11.9 Phase 7A - Temporal Robustness
+
+**Work:** replayed the unchanged Phase 5.5 MulCas in expanding-history forward
+scenarios: P0-P1 to P2, P0-P2 to P3, P0-P3 to P4, and P0-P4 to P5.
+
+**Outcome:**
 
 | Predict | Training | Precision | Recall | F1 | PR-AUC | Balanced acc. | TN/FP/FN/TP |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -798,6 +916,11 @@ with distribution variation but does not prove concept drift.
 
 ### 11.10 Phase 7B - Viewer Ablation
 
+**Work:** removed the first cascade viewer, second cascade viewer, and voting
+stage one at a time while preserving all other frozen behavior.
+
+**Outcome:**
+
 F1 delta after removing each component:
 
 | Removed component | P2 | P3 | P4 | P5 |
@@ -810,6 +933,11 @@ F1 delta after removing each component:
 effects, and voting contributes only slightly.
 
 ### 11.11 Phase 7C - Creator Feature Ablation
+
+**Work:** compared the frozen model with and without the strictly historical
+creator feature, without replacing it with a constant placeholder.
+
+**Outcome:**
 
 Delta is without creator minus with creator:
 
@@ -826,6 +954,11 @@ behavior.
 
 ### 11.12 Phase 7D - Error Analysis
 
+**Work:** built row-level FP/FN inventories with routing stage, confidence,
+creator history, clone indicators, and compact static diagnostics.
+
+**Outcome:**
+
 | Period | FP | FN | Errors from unseen creators | Dominant route |
 | --- | ---: | ---: | ---: | --- |
 | P2 | 251 | 37 | 98.3% | second-viewer false positives |
@@ -838,7 +971,16 @@ historical opcode/runtime clone, 28 are confidently rejected by viewer 1, one
 by viewer 2, eight fail after voting, and only three are near the configured
 confidence boundary.
 
+**Conclusion:** errors are usually confident and occur before voting; unseen
+creator and historical novelty are descriptive associations, not proven causes.
+
 ### 11.13 Phase 7E - Clone/Novelty Sensitivity
+
+**Work:** compared each future contract only with historically available opcode,
+runtime-bytecode, and creation-code identities, then reported cloned and novel
+subgroups without using them for model selection.
+
+**Outcome:**
 
 | Period | Any clone prevalence | Cloned Ponzi | Recall cloned | Recall novel |
 | --- | ---: | ---: | ---: | ---: |
@@ -852,6 +994,17 @@ are concentrated among unseen creators and historically novel code, but exact
 clone prevalence does not fully explain the variation and novelty is not shown
 to cause errors.
 
+#### Phase 7 Closure
+
+**Work:** consolidated Phases 7A-7E into frozen answers for component
+contribution and temporal robustness.
+
+**Outcome:** no model was optimized or replaced; all row-level analyses retained
+the Phase 5.5 behavior.
+
+**Conclusion:** MulCas is temporally unstable and component effects are
+period-dependent. Concept drift was not proven.
+
 ### 11.14 Phase 8R0 - Extension Protocol and Feasibility
 
 **Work:** defined RQ6, exploratory Track A and external-validation Track B,
@@ -863,6 +1016,11 @@ public external candidates were overlapping or incomplete.
 remains a blocker.
 
 ### 11.15 Phase 8R1A - Recency-Aware MulCas
+
+**Work:** tested expanding history, one/two/three-period rolling windows, and
+three fixed exponential-decay values on P2-P4 using the frozen MulCas behavior.
+
+**Outcome:**
 
 | Strategy | Macro P | Macro R | Macro F1 | Macro PR-AUC | Eligible |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -879,6 +1037,12 @@ fallback but failed the 0.80 precision floor. **H8R1 not supported.**
 
 ### 11.16 Phase 8R2A - Frozen Runtime CFG Corpus
 
+**Work:** deterministically disassembled every `contractCode`, formed basic
+blocks, resolved only safe static jumps, created three edge types, and froze an
+ordered 55-feature node schema. No classifier was trained.
+
+**Outcome:**
+
 | Item | Result |
 | --- | ---: |
 | Graphs | 6,498 |
@@ -894,6 +1058,11 @@ fallback but failed the 0.80 precision floor. **H8R1 not supported.**
 trained in this phase.
 
 ### 11.17 Phase 8R2B - Graph Aggregate and GIN Backtesting
+
+**Work:** evaluated one fixed graph-aggregate Logistic Regression baseline and
+the predefined eight-architecture GIN grid with five seeds on P2-P4 only.
+
+**Outcome:**
 
 Graph-aggregate Logistic Regression F1 was 0.0537 on P2, 0 on P3, and 0.8411
 on P4.
@@ -915,7 +1084,11 @@ P2 and did not satisfy macro precision. **H8R2 not supported.**
 
 ### 11.18 Phase 8R3A - MulCas/GIN Complementarity
 
-No model was trained. Across P2-P4, GIN recovered 28 Ponzi contracts missed by
+**Work:** aligned frozen MulCas and five-seed GIN predictions, quantified
+positive/negative disagreement, subgroup interaction, routing, and explicitly
+non-deployable oracle headroom. No model was trained.
+
+**Outcome:** across P2-P4, GIN recovered 28 Ponzi contracts missed by
 MulCas, while MulCas recovered 22 that GIN missed. GIN correctly rejected 256
 benign contracts that MulCas misclassified.
 
@@ -931,6 +1104,12 @@ hybrid experiment was justified diagnostically, not proven effective.
 
 ### 11.19 Phase 8R3B - Lightweight Score Fusion
 
+**Work:** trained two fixed Logistic Regression meta-feature sets on P2,
+selected on P3 under the 0.80 precision gate, and forward-confirmed the selected
+diagnostic fallback once on P4. MulCas and GIN remained frozen.
+
+**Outcome:**
+
 P3 selection:
 
 | System | Precision | Recall | F1 | PR-AUC |
@@ -945,7 +1124,11 @@ R=0.8800, F1=0.7521, below MulCas F1=0.8519. **H8R3B not supported.**
 
 ### 11.20 Phase 8R4A - Creation-Code Features
 
-All 6,498 creation-code values were parseable. Runtime was found exactly once
+**Work:** audited complete `creationCode`, conservatively identified deployment
+init regions only when runtime appeared exactly once, and froze 85-, 90-, and
+183-dimensional views. No classifier was trained.
+
+**Outcome:** all 6,498 creation-code values were parseable. Runtime was found exactly once
 inside creationCode for 6,497 contracts; the remaining row received the frozen
 zero-filled init representation. Nonempty trailing data appeared in 2,604
 contracts. Frozen views were 85, 90, and 183 dimensions. Matrix SHA-256:
@@ -954,6 +1137,11 @@ contracts. Frozen views were 85, 90, and 183 dimensions. Matrix SHA-256:
 **Conclusion:** representation construction was feasible; no model was trained.
 
 ### 11.21 Phase 8R4B - Creation-Code Classification
+
+**Work:** evaluated fixed Logistic Regression and XGBoost on exactly the three
+frozen creation-code views under expanding P2-P4 temporal backtests.
+
+**Outcome:**
 
 | Candidate | Macro P | Macro R | Macro F1 | Macro PR-AUC | Eligible |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -970,7 +1158,11 @@ P2/P3/P4. It recovered only one Ponzi missed by MulCas over all three periods.
 
 ### 11.22 Phase 8R5A - Opcode-Sequence Feasibility
 
-Across all contracts, sequence length ranged from 8 to 18,058 tokens, median
+**Work:** audited deployed-runtime opcode lengths, fold-local vocabulary/OOV,
+truncation coverage, chunking alternatives, and CPU/GPU feasibility without
+supervised training or full self-supervised pretraining.
+
+**Outcome:** across all contracts, sequence length ranged from 8 to 18,058 tokens, median
 2,206, mean 2,664.7, P95 6,756.8. On P0-P4, simple 1,024-token truncation would
 truncate 80.92% of contracts and retain only 35.74% of tokens. Therefore
 deterministic 1,024-token chunking was frozen.
@@ -986,16 +1178,30 @@ Historical vocabulary/OOV:
 The CPU estimate was 14.4 hours for one seed and 43.1 hours for three, so full
 training was not launched.
 
+**Conclusion:** deterministic 1,024-token chunking and the small Transformer
+design were frozen, but CPU-only full pretraining was not practical.
+
 ### 11.23 Phase 8R5B0 - CUDA Validation
 
-CUDA-enabled PyTorch was validated on the RTX 2050. AMP batch 8 achieved about
+**Work:** installed and recorded a compatible CUDA PyTorch overlay, verified the
+RTX 2050, and benchmarked the frozen 1,024-token Transformer skeleton in FP32
+and AMP across conservative batch sizes. No full pretraining was run.
+
+**Outcome:** CUDA-enabled PyTorch was validated on the RTX 2050. AMP batch 8 achieved about
 261.66 examples/s and 267,940 tokens/s with 132 MiB peak reserved VRAM in the
 bounded benchmark. Estimated all-fold 10-epoch time was 22.8 minutes for one
 seed and 68.5 minutes for three. Feasibility was **GREEN**.
 
+**Conclusion:** CUDA/AMP execution was practical enough to request explicit
+approval for Phase 8R5B; this phase itself did not launch full pretraining.
+
 ### 11.24 Phase 8R5B - Masked-Opcode Pretraining
 
-Nine independent fold/seed runs completed using AdamW, learning rate 1e-4,
+**Work:** pretrained independent P2, P3, and P4 historical-only encoder families
+for seeds 42, 123, and 2026 with fold-local vocabularies, deterministic chunking,
+15% MLM masking, and no future-period or Ponzi labels.
+
+**Outcome:** nine independent fold/seed runs completed using AdamW, learning rate 1e-4,
 weight decay 1e-2, 10 epochs, CUDA AMP, and batch 8. No labels or P5 data were
 loaded.
 
@@ -1009,9 +1215,16 @@ Total summed run time was 72.32 minutes versus the 68.53-minute estimate.
 All nine final checkpoints were hash-recorded. This phase established
 representation-learning artifacts only; it did not test H8R5.
 
+**Conclusion:** the temporally valid representation-learning stage completed
+successfully, but no Ponzi-classification claim was made.
+
 ### 11.25 Phase 8R5C1 - Frozen Sequence Embeddings and Linear Probe
 
-The encoder was frozen. Contextual and non-contextual 128-dimensional contract
+**Work:** froze every encoder, extracted contextual mean-pooled and
+non-contextual token-table controls for all three seeds, trained only fixed
+scaled Logistic Regression probes on historical labels, and evaluated P2-P4.
+
+**Outcome:** the encoder was frozen. Contextual and non-contextual 128-dimensional contract
 embeddings were extracted for all three seeds, then evaluated with a fixed
 linear probe. P5 was excluded.
 
@@ -1048,6 +1261,87 @@ establish a reliable improvement. The contextual representation underperforms
 the control and MulCas. **H8R5 is not supported by Phase 8R5C1, and supervised
 fine-tuning in Phase 8R5C2 is not justified under the predefined gate.**
 
+### 11.26 Phase 8 Formal Closure
+
+**Work:** verified 199 frozen artifact anchors, all nine Phase 8R5B checkpoints,
+all 18 Phase 8R5C1 embedding caches, the raw dataset hash, and every Phase 8
+hypothesis conclusion. The closure consolidated evidence only; it ran no model
+and did not evaluate P5.
+
+**Outcome:** H8R1, H8R2, H8R3B, and H8R4 were recorded as not supported. H8R5
+was recorded as not supported by the frozen linear probe, without claiming that
+all sequence fine-tuning methods were disproven. Phase 8R5C2 was not executed.
+
+**Conclusion:** Phase 8 closed without an accepted replacement. The frozen
+Phase 5.5 MulCas remains the retained reference, Track A is heavily inspected,
+Track B is not established, and further unmotivated static-model shopping on
+the same corpus is not justified.
+
+### 11.27 Phase 9A - Paper/Reconstruction Protocol-Gap Decomposition
+
+**Purpose:** determine how much of the published/reconstructed difference could
+be associated with known protocol differences, without introducing a new model,
+feature family, threshold, resampling method, GNN, or Transformer. P5 was used
+only as previously observed exploratory Track A evidence.
+
+**Work completed:**
+
+- froze and verified the Phase 8 closure chain: 199 earlier anchors plus 11
+  Phase 8 closure anchors, with the raw dataset hash unchanged;
+- reproduced the Phase 5.5 and Phase 7A P5 controls exactly;
+- replayed frozen MulCas on P2-P5 with a non-deployable true-label online
+  creator oracle that predicts before revealing labels and delays updates until
+  the entire creation block has been processed;
+- audited paper protocol statements, N-gram dimensions/document frequencies,
+  P2 membership, and all 251 archived P2 false positives; and
+- attempted the fixed 18-candidate P5 viewer-selection oracle, then stopped it
+  when observed runtime exceeded the 30-minute resource policy.
+
+Frozen P5 controls:
+
+| Control | Precision | Recall | F1 | PR-AUC | TN/FP/FN/TP |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Phase 5.5, trained through P3 | 0.9063 | 0.4531 | 0.6042 | 0.6624 | 442/3/35/29 |
+| Phase 7A, trained through P4 | 0.8710 | 0.4219 | 0.5684 | 0.6674 | 441/4/37/27 |
+
+This difference is a descriptive training-history/protocol-coverage difference,
+not evidence that adding P4 causally worsened performance.
+
+Non-deployable creator-oracle results:
+
+| Period | Frozen P/R/F1 | Oracle P/R/F1 | Prediction effect |
+| --- | --- | --- | --- |
+| P2 | .0492/.2600/.0828 | .0538/.3000/.0912 | TP +2, FP +13 |
+| P3 | .5385/.1400/.2222 | .5385/.1400/.2222 | No binary prediction change |
+| P4 | .7931/.9200/.8519 | .7931/.9200/.8519 | No binary prediction change |
+| P5 | .8710/.4219/.5684 | .8824/.4688/.6122 | TP +3, FP unchanged |
+
+The frozen branch reproduced every archived Phase 7A P2-P5 prediction and score
+before the oracle comparison. The oracle is not deployable because target-period
+true labels are revealed after each prediction block.
+
+**Additional outcomes:** the P0-P4 raw unigram, unigram+bigram, and
+unigram+bigram+trigram dimensions were 142, 13,751, and 83,277, compared with
+the paper's 141, 7,211, and 52,532. Integer document-frequency cutoffs can match
+or nearly match the selected dimensions, but the paper's "less than 0.1" rule
+does not uniquely define the implementation. Of the 251 P2 false positives,
+250 were accepted by the second N-gram-count viewer and one reached voting;
+none had an exact historical opcode or runtime clone.
+
+**Runtime-gated work:** the representative XGBoost preflight underestimated
+the fixed pool's slow SVM/high-dimensional combination. The complete candidate
+pool remained unfinished after more than 37 minutes, so it was stopped. No
+partial viewer ranking was reported. A full paper-exact MulCas replay is also
+not uniquely reproducible because the paper says five final viewers but names
+only four and does not provide a unique fifth viewer or complete ordering.
+Consequently, the combined D4 oracle and recall/F1 gap-closure fractions are
+reported as unavailable rather than fabricated.
+
+**Conclusion:** Phase 9A completed with D3 runtime-gated. It explains and tests
+specific protocol gaps but does not produce a deployable replacement or change
+the Phase 8 closure. Phase 9B was not started. The recommended next research
+direction remains an external/later dataset provenance and overlap audit.
+
 ## 12. Consolidated Current Results
 
 ### 12.1 Original Paper vs Reconstructions
@@ -1082,14 +1376,18 @@ metric difference is caused only by model implementation.
   but precision was only 0.5297 and the representation was a scientific control,
   not an eligible winner.
 - No completed intervention has beaten the frozen baseline reliably across
-  P2-P4, and no extension candidate was evaluated on P5.
+  P2-P4, and no Phase 8 extension candidate was evaluated on P5.
+- Phase 9A's P5 creator update reached F1=0.6122 versus the Phase 7A P5 control
+  F1=0.5684, but it uses target-period true labels after prediction and is an
+  explicitly non-deployable oracle, not a replacement result.
 
 ### 12.3 Current Research Status
 
 The retained system remains Phase 5.5 MulCas. All Phase 6 hypotheses, H8R1,
 H8R2, H8R3B, H8R4, and the Phase 8R5C1 evaluation of H8R5 are not supported
 under their predefined criteria. Negative results are preserved rather than
-hidden or post-hoc combined.
+hidden or post-hoc combined. Phase 8 is formally closed. Phase 9A is complete
+with its D3 candidate replay runtime-gated; Phase 9B has not started.
 
 ## 13. Tests and Validation
 
@@ -1101,7 +1399,7 @@ Executed on 2026-10-12:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Result after Phase 8 closure: **256 passed, 65 warnings in 74.01 seconds**.
+Result after Phase 9A: **266 passed, 65 warnings in 116.46 seconds**.
 
 Warnings were non-failing deprecation/future warnings from PyTorch,
 PyTorch Geometric, and scikit-learn, plus a Windows permission warning when
@@ -1124,7 +1422,11 @@ pytest attempted to write `.pytest_cache`.
 - creation-code boundary and feature determinism;
 - sequence vocabulary, chunking, masking, pooling, CUDA gates, checkpoint
   hashes, embedding caches, and fixed linear-probe behavior;
-- explicit exclusion of P5 from extension selection/evaluation.
+- explicit exclusion of P5 from extension selection/evaluation;
+- Phase 8 closure manifest chaining and preservation of all prior conclusions;
+- exact Phase 9A frozen-control replay, same-block creator-update isolation,
+  non-deployable oracle labeling, P2 FP reconciliation, D3 runtime-gate status,
+  and prohibition of partial viewer rankings or fabricated combined results.
 
 ### 13.3 Validation Boundaries
 
@@ -1173,7 +1475,9 @@ Retraining is not required to inspect the project. Start with:
 - `docs/paper_aligned_baseline_report.md`
 - `docs/phase6_summary.md`
 - `docs/phase7_summary.md`
+- `docs/phase8_summary.md`
 - `results/extension/phase8r5c1/phase8r5c1_report.md`
+- `results/phase9/phase9a/phase9a_report.md`
 - this report
 
 ### 14.4 Notebooks
@@ -1205,12 +1509,15 @@ python -m src.experiments.phase6a
 python -m src.experiments.phase7a
 python -m src.extension.phase8r2a
 python -m src.extension.phase8r5c1
+python -m src.phase9.phase9a
 ```
 
 Do not rerun all phases merely to read existing results. In particular,
 Phase 8R2B graph training and Phase 8R5B nine-run GPU pretraining are expensive
 and already have frozen outputs. Read their reports/manifests first and rerun
-only as an intentional reproducibility exercise.
+only as an intentional reproducibility exercise. Phase 9A also performs several
+frozen refits; its D3 viewer pool is intentionally runtime-gated and should not
+be treated as routine model selection.
 
 ### 14.6 Important Do/Do-Not Rules
 
@@ -1219,7 +1526,8 @@ Do:
 - preserve raw data and frozen manifests;
 - use repository-relative path helpers;
 - fit learned preprocessing on historical training only;
-- keep P5 outside new model selection;
+- keep P5 outside deployable model selection and label any reuse as previously
+  observed exploratory Track A evidence;
 - label diagnostic fallbacks honestly;
 - record hashes, seeds, versions, and exact split memberships.
 
@@ -1283,6 +1591,14 @@ Do not:
     bit-identical retraining across GPU/software environments is not claimed.
 21. **No production validation:** the detector is a research artifact, not a
     deployment-ready security decision system.
+22. **Phase 9A creator oracle is non-deployable:** it reveals true labels after
+    each predicted creation block and therefore measures headroom, not an
+    operational detector.
+23. **Viewer-selection replay is incomplete:** the fixed 18-candidate Phase 9A
+    replay exceeded the 30-minute resource policy. No partial ranking is used.
+24. **Paper viewer mapping is incomplete:** the publication says five final
+    viewers but explicitly identifies only four, preventing a unique full
+    paper-exact cascade or combined oracle replay.
 
 ## 16. Pending Work
 
@@ -1294,6 +1610,8 @@ Do not:
    artifacts.
 3. Run a clean-environment reproducibility audit and archive a pinned dependency
    snapshot.
+4. Synchronize `README.md`, `docs/experiment_log.md`, and
+   `docs/RUN_AND_TEST_GUIDE.md` with the completed Phase 9A diagnostic.
 
 ### 16.2 External Validation
 
@@ -1302,12 +1620,17 @@ labeled Ethereum dataset. Before evaluation it must be audited for address,
 opcode, runtime-bytecode, and creation-code overlap with all 6,498 current
 contracts. Labels must not influence design or tuning.
 
-### 16.3 Phase 8R5C2 Decision
+### 16.3 Model-Development Gates
 
 Supervised Transformer fine-tuning is **not currently justified** by the
 predefined Phase 8R5C1 gate. It should not be treated as routine pending work.
 Any future fine-tuning study requires a new preregistered rationale and must
 remain P5-free during design and selection.
+
+Phase 9B is also **not started**. Phase 9A does not justify automatic threshold,
+viewer, classifier, or fusion search. Any Phase 9B work requires a new
+preregistered rationale and should preferably follow an external/later dataset
+provenance and overlap audit.
 
 ### 16.4 Optional Future Work
 
@@ -1330,13 +1653,17 @@ Key source-of-truth artifacts:
 - Phase 6 closure: `results/experiments/phase6_summary.json`
 - Phase 7 closure: `results/experiments/phase7_summary.json`
 - Phase 8 closure: `results/extension/phase8_closure/phase8_closure_results.json`
+- Phase 9A diagnostic result: `results/phase9/phase9a/phase9a_results.json`
+- Phase 9A report: `results/phase9/phase9a/phase9a_report.md`
 - Extension outputs: `results/extension/phase8r0/` through
   `results/extension/phase8r5c1/`
 - Sequence checkpoints: manifest at
   `results/extension/phase8r5b/checkpoint_manifest.json`; large files are in
   ignored artifact storage.
-- Latest extension result:
+- Latest supervised extension result:
   `results/extension/phase8r5c1/phase8r5c1_results.json`
+- Latest completed diagnostic phase:
+  `results/phase9/phase9a/phase9a_results.json`
 
 ### 17.1 Generated Data and Trained-Artifact Locations
 
@@ -1368,11 +1695,12 @@ and prediction traces rather than the 307 MB source data or large matrices.
   external-validation distinction.
 - `docs/phase8_summary.md` is the formal Phase 8 closure and records the
   retained reference, hypothesis outcomes, and research-governance decision.
-- `README.md`, `docs/RUN_AND_TEST_GUIDE.md`, and `docs/experiment_log.md` are
-  synchronized with the Phase 8 closure.
+- `results/phase9/phase9a/phase9a_report.md` is the Phase 9A protocol-gap
+  diagnostic and records its non-deployable oracle boundary and D3 runtime gate.
+- `README.md`, `docs/RUN_AND_TEST_GUIDE.md`, and `docs/experiment_log.md` remain
+  synchronized through the Phase 8 closure but do not yet summarize Phase 9A.
 - `docs/COMPLETE_PROJECT_PROGRESS_REPORT.md` stops at Phase 7 and is historical.
-- This file is the current cross-phase progress report through the Phase 8
-  closure.
+- This file is the current cross-phase progress report through Phase 9A.
 
 ## 18. Final Current Conclusion
 
@@ -1380,6 +1708,11 @@ The project has progressed from a basic independent reproduction to a
 paper-aligned frozen baseline, controlled improvement studies, systematic
 temporal/component/error analysis, and several materially different program
 representations.
+
+Phase 8 has now been formally closed and Phase 9A has audited specific
+publication/reconstruction protocol gaps. Phase 9A reproduced the frozen
+controls exactly and found limited headroom from true-label creator updates,
+but that result is not deployable. It did not produce or select a replacement.
 
 The strongest honest final statement is:
 
@@ -1393,7 +1726,10 @@ The strongest honest final statement is:
 
 This is not evidence that improvement is impossible. It is evidence that the
 tested interventions did not solve the temporal-generalization problem under
-the project's leakage-safe protocol. The most important next research need is
-an independently labeled, overlap-audited later-time dataset, while the most
-important immediate project task is final synthesis and reproducibility
-packaging.
+the project's leakage-safe protocol. Phase 9A further shows that selected
+protocol differences do not supply a defensible deployable explanation for the
+published gap: its creator improvement is oracle-only, its viewer replay hit the
+resource gate, and the publication does not uniquely define the full viewer
+mapping. The most important next research need is an independently labeled,
+overlap-audited later-time dataset, while the most important immediate project
+task is final synthesis and reproducibility packaging.
