@@ -1,0 +1,47 @@
+phase: 8R6B
+title: External enrichment and strict Track B construction
+frozen_manifest: configs/extension/frozen_phase8r6a_manifest.yaml
+internal_dataset: data/raw/PonziDataset_20221114.csv
+phase8r6a_dir: results/extension/phase8r6a
+output_dir: results/extension/phase8r6b
+ledger: data/external/enrichment/phase8r6b_ledger.csv
+audit_date: '2026-10-13'
+priority_sources: [ponzi_ml, blockchain_unica]
+reference_sources: [ctrf, ponziguard_verified]
+excluded_ground_truth_sources: [ponziguard_predictions, ponziguard_later_predictions]
+providers:
+  creation:
+    name: Blockscout Ethereum Etherscan-compatible API
+    endpoint: https://eth.blockscout.com/api
+    method: contract/getcontractcreation
+    credential_required: false
+    archival_required: false
+    documented_rate_limit: not_stated_for_public_instance
+  rpc:
+    name: PublicNode Ethereum JSON-RPC
+    endpoint: https://ethereum-rpc.publicnode.com
+    methods: [eth_getCode, eth_getTransactionByHash, eth_getTransactionReceipt, eth_getBlockByNumber]
+    credential_required: false
+    archival_required: false
+retry_policy: {maximum_attempts: 3, base_backoff_seconds: 2.0, inter_address_delay_seconds: 0.65, timeout_seconds: 30}
+preflight: {positive_sample: 10, benign_sample: 10, maximum_projected_minutes: 30}
+internal_endpoint: {block: 7136486, timestamp: '2019-01-27T23:59:59Z'}
+normalization:
+  address: lowercase_0x_40_hex
+  runtime: phase8r6a_lowercase_hex_without_0x_or_whitespace
+  creation: phase8r6a_lowercase_hex_without_0x_or_whitespace
+  opcode: existing_repository_deterministic_evm_disassembler
+provenance: {eligible: [A, B], ineligible: [C, D, UNKNOWN], no_automatic_upgrade: true}
+conflict_priority: [documented_manual_verification, curated_research_label, weak_label, model_prediction]
+strict_membership:
+  require_known_label: true
+  require_provenance: [A, B]
+  require_new_address: true
+  require_runtime_new: true
+  require_opcode_new: true
+  require_verified_later: true
+  require_no_unresolved_conflict: true
+  creation_missing_status: PROVISIONALLY_STRICT_INDEPENDENT
+rating: {strong_min_later_positive: 100, moderate_min_later_positive: 30, weak_min_later_positive: 1}
+sealing: {labels_separate: true, expose_labels_to_development: false, final_evaluation_flag_required: true}
+constraints: {models_trained: false, detectors_evaluated: false, p5_evaluated: false, phase9b_started: false}
