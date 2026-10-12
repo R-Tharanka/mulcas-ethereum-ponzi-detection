@@ -1,10 +1,11 @@
 # Running and Testing Guide
 
-This guide describes how to reproduce and verify the frozen baseline. The
-project now continues through Phase 7C; see
-[Project Progress Report](PROJECT_PROGRESS_REPORT.md) for current Phase 6/7
-results and commands. Run all commands from the repository root in Windows
-PowerShell.
+This guide describes how to reproduce and verify the frozen baseline and read
+the completed Phase 8 closure. See
+[Full Current Research Progress Report](FULL_CURRENT_RESEARCH_PROGRESS_REPORT.md)
+for the complete project account and [Phase 8 Research Extension Closure](phase8_summary.md)
+for the current research decision. Run all commands from the repository root
+in Windows PowerShell.
 
 ## 1. Scope
 
@@ -16,8 +17,9 @@ The implemented workflow covers:
 4. Ridge, SVM, and XGBoost individual baselines.
 5. The independently reconstructed MulCas cascade and voting baseline.
 
-Phase 6 improvement experiments are closed and Phase 7A-7C analyses are
-implemented. Notebook `08` remains reserved for future final evaluation.
+Phases 6, 7, and 8 are closed. The retained reference remains Phase 5.5 MulCas;
+Phase 8R6A has not started, and notebook `08` remains reserved for read-only
+final synthesis.
 
 ## 2. Prerequisites
 
@@ -179,9 +181,10 @@ Run the complete test suite:
 python -m pytest -q
 ```
 
-The current suite contains 100 tests. It covers imports, deterministic seeds,
-data and feature leakage controls, frozen manifests, model construction,
-MulCas routing/voting, Phase 6 experiments, and Phase 7 temporal ablations.
+The suite covers imports, deterministic seeds, data and feature leakage
+controls, frozen manifests, model construction, MulCas routing/voting, Phase 6
+experiments, Phase 7 analyses, Phase 8 representations, and formal closure
+consistency.
 
 Run focused suites while changing one area:
 
@@ -217,6 +220,25 @@ python -m jupyter nbconvert --execute --to notebook `
   --output mulcas_reproduction_executed.ipynb `
   notebooks\05_mulcas_reproduction.ipynb
 ```
+
+## 8. Read or Rebuild the Phase 8 Closure
+
+The tracked closure artifacts are under `results/extension/phase8_closure/`.
+Reading them does not require model retraining. The main files are:
+
+- `docs/phase8_summary.md`
+- `results/extension/phase8_closure/phase8_closure_results.json`
+- `results/extension/phase8_closure/phase8_closure_report.md`
+
+To reverify frozen inputs and deterministically regenerate only the closure:
+
+```powershell
+python -m src.extension.phase8_closure
+python -m pytest tests/test_phase8_closure.py -q
+```
+
+This command reads completed artifacts only. It does not train a model,
+evaluate P5, change a threshold, or start Phase 8R6A.
 
 `results/temp/` is ignored by Git and may be removed after inspection.
 

@@ -1,0 +1,6 @@
+hypothesis,status,evidence_phase,scope
+H8R1,not_supported,8R1A,recency-aware training
+H8R2,not_supported,8R2B,runtime CFG and GIN under the predefined eligibility criterion
+H8R3B,not_supported,8R3B,lightweight learned MulCas-GIN score fusion
+H8R4,not_supported,8R4B,creation/deployment-bytecode representation
+H8R5,not_supported_by_frozen_linear_probe,8R5C1,temporally pretrained opcode-sequence representation; does not disprove all fine-tuning methods

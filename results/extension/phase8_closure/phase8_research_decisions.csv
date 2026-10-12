@@ -1,0 +1,8 @@
+decision,status,rationale
+retained_reference,phase5.5_mulcas,No Phase 8 candidate met its predefined temporal acceptance criterion.
+phase8_static_model_search,closed,Multiple materially different static directions were tested without an accepted replacement.
+phase8r5c2,not_executed_not_justified,The predefined Phase 8R5C1 fine-tuning gate failed.
+track_a,previously_observed_exploratory_only,"The 6,498-contract corpus and P5 have been heavily inspected."
+track_b,not_established,No overlap-audited independent later dataset is available.
+next_recommended_phase,phase8r6a_not_started,Audit external/later data provenance and overlap before more model development.
+final_synthesis,pending,Notebook 08 remains pending and was not modified by closure.

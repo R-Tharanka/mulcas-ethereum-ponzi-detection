@@ -3,7 +3,7 @@
 ## MulCas Ethereum Ponzi Smart-Contract Detection
 
 **Report date:** 2026-10-12  
-**Project status:** Implementation and experiments complete through Phase 8R5C1  
+**Project status:** Phase 8 extension complete and formally closed
 **Current retained reference system:** Frozen Phase 5.5 paper-aligned MulCas  
 **Latest completed experiment:** Phase 8R5C1 frozen sequence-embedding linear probe  
 **Raw dataset status:** Unmodified and hash-verified
@@ -97,7 +97,8 @@ about where and how the system fails.
 | 8R5B0 | CUDA benchmark | Complete | GREEN feasibility gate |
 | 8R5B | Masked-opcode pretraining | Complete | Nine temporal checkpoints produced |
 | 8R5C1 | Frozen embedding linear probe | Complete | H8R5 not supported; fine-tuning gate failed |
-| Phase 8 closure | Consolidated extension closure | Pending | No closure document yet |
+| Phase 8 closure | Consolidated extension closure | Complete | No accepted Phase 8 replacement; Phase 5.5 retained |
+| Phase 8R6A | External/later data provenance and overlap audit | Not started | Next recommended research phase |
 | Final synthesis | Notebook/report packaging | Pending | Notebook 08 remains empty |
 
 ### 2.2 Source Paper and Reproduction Target
@@ -1100,7 +1101,7 @@ Executed on 2026-10-12:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Result: **248 passed, 65 warnings in 66.14 seconds**.
+Result after Phase 8 closure: **256 passed, 65 warnings in 74.01 seconds**.
 
 Warnings were non-failing deprecation/future warnings from PyTorch,
 PyTorch Geometric, and scikit-learn, plus a Windows permission warning when
@@ -1289,14 +1290,9 @@ Do not:
 
 1. Populate `notebooks/08_final_evaluation.ipynb` as a read-only synthesis of
    frozen results. It should not train or select a model.
-2. Create a formal Phase 8 extension closure summarizing H8R1-H8R5 outcomes and
-   recording that the Phase 5.5 system remains the reference.
-3. Update `docs/experiment_log.md`, `README.md`, and
-   `docs/RUN_AND_TEST_GUIDE.md`, which currently stop before the latest Phase 8
-   work.
-4. Build final thesis/manuscript tables directly from machine-readable
+2. Build final thesis/manuscript tables directly from machine-readable
    artifacts.
-5. Run a clean-environment reproducibility audit and archive a pinned dependency
+3. Run a clean-environment reproducibility audit and archive a pinned dependency
    snapshot.
 
 ### 16.2 External Validation
@@ -1333,6 +1329,7 @@ Key source-of-truth artifacts:
 - Frozen MulCas: `results/baseline/paper_aligned/mulcas_results.json`
 - Phase 6 closure: `results/experiments/phase6_summary.json`
 - Phase 7 closure: `results/experiments/phase7_summary.json`
+- Phase 8 closure: `results/extension/phase8_closure/phase8_closure_results.json`
 - Extension outputs: `results/extension/phase8r0/` through
   `results/extension/phase8r5c1/`
 - Sequence checkpoints: manifest at
@@ -1369,10 +1366,13 @@ and prediction traces rather than the 307 MB source data or large matrices.
   `docs/phase7_summary.md` are authoritative frozen-stage summaries.
 - `docs/research_extension_protocol.md` defines RQ6 and the exploratory versus
   external-validation distinction.
+- `docs/phase8_summary.md` is the formal Phase 8 closure and records the
+  retained reference, hypothesis outcomes, and research-governance decision.
 - `README.md`, `docs/RUN_AND_TEST_GUIDE.md`, and `docs/experiment_log.md` are
-  currently behind Phase 8 and require synchronization.
+  synchronized with the Phase 8 closure.
 - `docs/COMPLETE_PROJECT_PROGRESS_REPORT.md` stops at Phase 7 and is historical.
-- This file is the current cross-phase progress report through Phase 8R5C1.
+- This file is the current cross-phase progress report through the Phase 8
+  closure.
 
 ## 18. Final Current Conclusion
 

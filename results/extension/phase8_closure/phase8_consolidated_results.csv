@@ -1,0 +1,8 @@
+phase,intervention,temporal_periods,candidate_system,macro_precision,macro_recall,macro_f1,macro_pr_auc,macro_balanced_accuracy,eligibility_criterion,eligible,selection_role,conclusion
+control,Frozen temporal control,P2-P4,Frozen MulCas,0.46026913699327493,0.44,0.38562554061492493,0.4651431746610967,0.6875987844110275,reference only,False,retained_reference,Reference system; not a Phase 8 candidate.
+8R1A,Exponential temporal decay,P2-P4,Decay alpha 0.75,0.45817173766058145,0.45333333333333337,0.40239174497880964,0.5043544338457684,0.6933290760871799,macro precision >= 0.80,False,diagnostic_fallback,H8R1 not supported.
+8R2B,Runtime CFG message passing,P2-P4,GIN 3x128 dropout 0.5,0.465227179311195,0.5213333333333333,0.4720768986273083,0.47439283383251896,0.7043538979690963,macro precision >= 0.80,False,diagnostic_fallback,H8R2 not supported.
+8R3B,MulCas-GIN score fusion,P3 selection; P4 confirmation,Hybrid A,,,,,,P3 precision >= 0.80,False,diagnostic_fallback,H8R3B not supported.
+8R4B,Creation-code representation,P2-P4,Logistic Regression + creation_full,0.2702671513472968,0.30666666666666664,0.28179490895039366,0.5165081495199569,0.6279941727231061,macro precision >= 0.80,False,diagnostic_fallback,H8R4 not supported.
+8R5C1,Frozen self-supervised sequence embeddings,P2-P4,Contextual seed mean,0.28414322378799445,0.31333333333333335,0.29212412825418105,0.4691584262846971,0.6354941181605883,macro precision >= 0.80,False,hypothesis_candidate,H8R5 not supported by the frozen linear probe.
+8R5C1,Pretrained token-embedding control,P2-P4,Non-contextual seed mean,0.5297221696266589,0.46,0.38700823780570986,0.5260829455430417,0.691800044398822,macro precision >= 0.80,False,scientific_control,Control only; ineligible and not a replacement.
