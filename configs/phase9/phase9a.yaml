@@ -1,0 +1,41 @@
+phase: 9A
+title: paper/reconstruction protocol-gap decomposition
+dataset: data/raw/PonziDataset_20221114.csv
+paper_pdf: docs/reference/P09 - Ponzi-SmartContract.pdf
+phase8_closure_manifest: configs/phase9/frozen_phase8_closure_manifest.yaml
+phase7_config: configs/phase7/temporal_robustness.yaml
+feature_config: configs/paper_aligned_features.yaml
+model_config: configs/paper_aligned_baseline_models.yaml
+mulcas_config: configs/paper_aligned_mulcas.yaml
+phase55_results: results/baseline/paper_aligned/mulcas_results.json
+phase7a_metrics: results/experiments/phase7a/phase7a_period_metrics.csv
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+phase7d_inventory: results/experiments/phase7d/phase7d_error_inventory.csv
+phase7e_clone_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+phase8_closure_results: results/extension/phase8_closure/phase8_closure_results.json
+output_dir: results/phase9/phase9a
+seed: 42
+runtime_gate_minutes: 30
+observed_d3_runtime_gate:
+  activated: true
+  attempted_candidate_pool: 18
+  observed_elapsed_lower_bound_seconds: 2220
+  reason: >-
+    The representative XGBoost estimate passed, but the complete fixed pool
+    remained unfinished after 37 minutes because the estimate did not capture
+    the slow SVM/high-dimensional-view combination. The run was stopped and
+    no partial candidate ranking is reported.
+periods:
+  positive_ends: [50, 100, 150, 200, 250]
+  expected_total_positives: 314
+controls:
+  phase55_p5: {precision: 0.90625, recall: 0.453125, f1: 0.6041666666666666, tn: 442, fp: 3, fn: 35, tp: 29}
+  phase7a_p5: {precision: 0.8709677419354839, recall: 0.421875, f1: 0.5684210526315789, tn: 441, fp: 4, fn: 37, tp: 27}
+protocol:
+  p5_status: previously_observed_exploratory_track_a
+  p5_true_label_creator_updates: non_deployable_oracle
+  p5_viewer_selection: non_deployable_oracle
+  new_model_families: prohibited
+  tuning: prohibited
+  thresholds_changed: false
+  phase9b_started: false

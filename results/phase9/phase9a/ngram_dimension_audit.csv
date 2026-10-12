@@ -1,0 +1,7 @@
+corpus,ngram_range,row_count,paper_before_selection,observed_before_selection,raw_dimension_status,paper_after_selection,observed_min_df_2,exact_integer_cutoffs,nearest_integer_cutoff,nearest_dimension,nearest_dimension_delta,paper_df_wording,classifier_trained
+P0-P3,1-1,5839,141,142,MISMATCH,77,142,869;870;871;872;873;874;875;876;877;878;879;880;881;882;883;884;885;886;887;888;889;890;891;892;893;894;895;896;897,869,77,0,discard document frequency less than 0.1; formula semantics under-specified,False
+P0-P3,1-2,5839,7211,13623,MISMATCH,767,8717,,628,766,-1,discard document frequency less than 0.1; formula semantics under-specified,False
+P0-P3,1-3,5839,52532,82301,MISMATCH,2292,44671,,602,2293,1,discard document frequency less than 0.1; formula semantics under-specified,False
+P0-P4,1-1,5989,141,142,MISMATCH,77,142,913;914;915;916;917;918;919;920;921;922;923;924;925;926;927;928;929;930;931;932;933;934;935;936;937;938;939;940;941;942;943;944;945;946;947;948;949;950;951;952;953;954;955;956;957;958;959;960;961;962;963;964;965;966,913,77,0,discard document frequency less than 0.1; formula semantics under-specified,False
+P0-P4,1-2,5989,7211,13751,MISMATCH,767,8817,644,644,767,0,discard document frequency less than 0.1; formula semantics under-specified,False
+P0-P4,1-3,5989,52532,83277,MISMATCH,2292,45103,,612,2291,-1,discard document frequency less than 0.1; formula semantics under-specified,False
