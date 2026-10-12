@@ -1,0 +1,5 @@
+scope,row_count,both_correct,both_wrong,mulcas_only_correct,sequence_only_correct,positive_count,tp_by_both,mulcas_only_tp,sequence_only_tp,fn_by_both,theoretical_union_recall,oracle_label
+P2,5141,4796,53,57,235,50,3,10,1,36,0.28,non_deployable_union_diagnostic
+P3,289,233,43,7,6,50,0,7,0,43,0.14,non_deployable_union_diagnostic
+P4,150,133,15,1,1,50,45,1,0,4,0.92,non_deployable_union_diagnostic
+P2-P4,5580,5162,111,65,242,150,48,18,1,83,0.44666666666666666,non_deployable_union_diagnostic

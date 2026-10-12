@@ -1,0 +1,89 @@
+phase: 8R5C1
+hypothesis: >-
+  H8R5: A sequence representation learned through temporally restricted
+  self-supervised opcode pretraining improves forward-period Ponzi
+  classification relative to frozen MulCas and handcrafted static
+  representations.
+random_seed: 42
+encoder_seeds: [42, 123, 2026]
+
+inputs:
+  dataset: data/raw/PonziDataset_20221114.csv
+  period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+  checkpoint_manifest: results/extension/phase8r5b/checkpoint_manifest.json
+  phase7_predictions: results/experiments/phase7a/phase7a_predictions.csv
+  phase7_clone_membership: results/experiments/phase7e/phase7e_clone_membership.csv
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+  - configs/extension/frozen_phase8r4a_manifest.yaml
+  - configs/extension/frozen_phase8r4b_manifest.yaml
+  - configs/extension/frozen_phase8r5a_manifest.yaml
+  - configs/extension/frozen_phase8r5b0_manifest.yaml
+  - configs/extension/frozen_phase8r5b_manifest.yaml
+
+folds:
+  P2:
+    historical_periods: [P0, P1]
+    evaluation_period: P2
+  P3:
+    historical_periods: [P0, P1, P2]
+    evaluation_period: P3
+  P4:
+    historical_periods: [P0, P1, P2, P3]
+    evaluation_period: P4
+
+representations: [contextual, non_contextual]
+embedding:
+  dimension: 128
+  sequence_length: 1024
+  chunk_pooling: padding_aware_arithmetic_mean
+  contract_pooling: arithmetic_mean_all_chunks
+  inference_batch_size: 8
+  amp: true
+  gradients: false
+  mask_tokens_during_inference: false
+
+probe:
+  scaler: StandardScaler
+  penalty: l2
+  C: 1.0
+  class_weight: null
+  solver: liblinear
+  max_iter: 2000
+  random_state: 42
+  threshold: 0.5
+
+ensemble:
+  method: arithmetic_mean_probability
+  threshold: 0.5
+
+eligibility:
+  macro_precision_floor: 0.80
+  fine_tuning_justification_requires_eligibility: true
+  fine_tuning_justification_requires_macro_f1_improvement: true
+
+preflight:
+  checkpoint_fold: P2
+  checkpoint_seed: 42
+  historical_contracts: 50
+  evaluation_contracts: 50
+  maximum_estimated_runtime_seconds: 1800
+
+execution:
+  device: cuda:0
+  expected_gpu: NVIDIA GeForce RTX 2050
+  p5_allowed: false
+  transformer_fine_tuning: false
+  threshold_tuning: false
+  hyperparameter_tuning: false
+  hybrid_training: false
+
+embedding_cache_dir: artifacts/phase8r5c1/schema_v1
+output_dir: results/extension/phase8r5c1

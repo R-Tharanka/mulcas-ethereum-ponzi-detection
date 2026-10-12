@@ -1,0 +1,13 @@
+period,subgroup,positive_count,tp,fn,recall
+P2,historically_novel_ponzi,50,4,46,0.08
+P2,exact_clone_ponzi,0,0,0,
+P2,unseen_creator_ponzi,50,4,46,0.08
+P2,seen_creator_ponzi,0,0,0,
+P3,historically_novel_ponzi,50,0,50,0.0
+P3,exact_clone_ponzi,0,0,0,
+P3,unseen_creator_ponzi,49,0,49,0.0
+P3,seen_creator_ponzi,1,0,1,0.0
+P4,historically_novel_ponzi,36,31,5,0.8611111111111112
+P4,exact_clone_ponzi,14,14,0,1.0
+P4,unseen_creator_ponzi,46,42,4,0.9130434782608695
+P4,seen_creator_ponzi,4,3,1,0.75

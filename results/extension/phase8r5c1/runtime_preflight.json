@@ -1,0 +1,43 @@
+{
+  "environment": {
+    "operating_system": "Windows-11-10.0.26300-SP0",
+    "cpu_model": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "physical_cores": 10,
+    "logical_cores": 16,
+    "system_ram_gib": 15.708160400390625,
+    "torch_version": "2.14.1+cu130",
+    "cuda_available": true,
+    "cuda_runtime_version": "13.0",
+    "gpu_model": "NVIDIA GeForce RTX 2050",
+    "gpu_vram_mib": 4096,
+    "nvidia_driver_version": "610.78",
+    "execution_device": "cuda:0"
+  },
+  "checkpoint_fold": "P2",
+  "checkpoint_seed": 42,
+  "sample_contracts": 100,
+  "contracts": 100,
+  "chunks": 247,
+  "non_padding_tokens": 198769,
+  "elapsed_seconds": 0.8924486000323668,
+  "contracts_per_second": 112.0512710719399,
+  "chunks_per_second": 276.7666395476915,
+  "tokens_per_second": 222723.1909969842,
+  "peak_allocated_vram_mib": 38.02001953125,
+  "peak_reserved_vram_mib": 64.0,
+  "gradients_enabled": false,
+  "model_parameters_trainable": false,
+  "chunk_count_min": 1,
+  "chunk_count_max": 11,
+  "chunk_count_sum": 247,
+  "checkpoint_load_seconds": 0.645540300058201,
+  "required_chunks_by_fold": {
+    "P2": 16999,
+    "P3": 17908,
+    "P4": 18405
+  },
+  "required_total_chunks_all_seeds": 159936,
+  "estimated_complete_embedding_seconds": 583.6829772542753,
+  "stop_limit_seconds": 1800.0,
+  "full_execution_authorized": true
+}
