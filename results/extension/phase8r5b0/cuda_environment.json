@@ -1,0 +1,21 @@
+{
+  "operating_system": "Windows-11-10.0.26300-SP0",
+  "python_version": "3.13.14",
+  "cpu_model": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "physical_cores": 10,
+  "logical_cores": 16,
+  "system_ram_gib": 15.708160400390625,
+  "torch_version": "2.14.1+cu130",
+  "torch_build_type": "cuda_or_other",
+  "torch_cuda_available": true,
+  "torch_cuda_runtime_version": "13.0",
+  "torch_cuda_device_name": "NVIDIA GeForce RTX 2050",
+  "torchvision_version": null,
+  "torchaudio_version": null,
+  "torch_geometric_version": "2.8.0.post1",
+  "nvidia_smi_available": true,
+  "gpu_model": "NVIDIA GeForce RTX 2050",
+  "gpu_vram_mib": 4096,
+  "nvidia_driver_version": "610.78",
+  "cuda_driver_visibility": "13.3"
+}
