@@ -101,6 +101,10 @@ def run_creator_oracle(
             ["row_index", "oracle_prediction", "oracle_score", "oracle_accepted_viewer"]
         ]
         joined = frozen.merge(oracle, on="row_index", validate="one_to_one")
+        joined["frozen_route"] = joined["frozen_accepted_viewer"]
+        joined["oracle_route"] = joined["oracle_accepted_viewer"]
+        joined["frozen_relevant_viewer_score"] = joined["frozen_score"]
+        joined["oracle_relevant_viewer_score"] = joined["oracle_score"]
         archived = archived_predictions.loc[
             archived_predictions["period"] == scenario.prediction_period,
             ["row_index", "final_prediction", "final_score"],
@@ -114,12 +118,22 @@ def run_creator_oracle(
         if not exact:
             raise ValueError(f"Frozen replay mismatch for {scenario.prediction_period}.")
 
+        condition_metrics: dict[str, dict[str, Any]] = {}
         for condition in ("frozen", "oracle"):
-            metrics = binary_classification_metrics(
+            condition_metrics[condition] = binary_classification_metrics(
                 joined["label"].to_numpy(dtype=int),
                 joined[f"{condition}_prediction"].to_numpy(dtype=int),
                 joined[f"{condition}_score"].to_numpy(dtype=float),
             )
+        flag_change_count = int(
+            (joined["frozen_creator_flag"] != joined["oracle_creator_flag"]).sum()
+        )
+        prediction_change_count = int(
+            (joined["frozen_prediction"] != joined["oracle_prediction"]).sum()
+        )
+        for condition in ("frozen", "oracle"):
+            metrics = condition_metrics[condition]
+            baseline = condition_metrics["frozen"]
             metric_rows.append(
                 {
                     "period": scenario.prediction_period,
@@ -133,6 +147,12 @@ def run_creator_oracle(
                         if f"{condition}_creator_flag" in joined
                         else joined["oracle_creator_flag"].sum()
                     ),
+                    "creator_flag_changed_count": 0 if condition == "frozen" else flag_change_count,
+                    "prediction_change_count": 0 if condition == "frozen" else prediction_change_count,
+                    "tp_delta": int(metrics["tp"] - baseline["tp"]),
+                    "fp_delta": int(metrics["fp"] - baseline["fp"]),
+                    "fn_delta": int(metrics["fn"] - baseline["fn"]),
+                    "tn_delta": int(metrics["tn"] - baseline["tn"]),
                 }
             )
         changed = joined.loc[

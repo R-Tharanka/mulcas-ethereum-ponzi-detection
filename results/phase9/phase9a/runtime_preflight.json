@@ -6,5 +6,10 @@
   "observed_elapsed_lower_bound_seconds": 2220.0,
   "runtime_gate_seconds": 1800.0,
   "reason": "The representative XGBoost estimate passed, but the complete fixed pool remained unfinished after 37 minutes because the estimate did not capture the slow SVM/high-dimensional-view combination. The run was stopped and no partial candidate ranking is reported.",
-  "full_replay_status": "not_reproducible_from_available_specification"
+  "full_replay_status": "not_reproducible_from_available_specification",
+  "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "ram": "not_recorded_in_original_preflight",
+  "representative_candidate": "xgboost__opcode_ngram_count_1_3_df_filtered",
+  "representative_fit_seconds": "not_retained_in_original_preflight",
+  "estimated_total_seconds": "not_retained_in_original_preflight"
 }

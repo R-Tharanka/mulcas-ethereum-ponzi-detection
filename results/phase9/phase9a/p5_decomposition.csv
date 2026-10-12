@@ -1,4 +1,4 @@
-decomposition,system,precision,recall,f1,pr_auc,tn,fp,fn,tp,interpretation
-D0A,Phase 5.5 frozen P5,0.90625,0.453125,0.6041666666666666,0.6624476140288026,442.0,3.0,35.0,29.0,frozen reference; trained through P3
-D0B,Phase 7A incremental P5,0.8709677419354839,0.421875,0.5684210526315789,0.6673582481680086,441.0,4.0,37.0,27.0,primary decomposition control; trained through P4
-D1,D0B minus D0A,-0.035282258064516125,-0.03125,-0.03574561403508769,0.004910634139206005,-1.0,1.0,2.0,-2.0,descriptive training-history/protocol-coverage difference; not a causal P4 effect
+decomposition,system,precision,recall,f1,pr_auc,balanced_accuracy,tn,fp,fn,tp,interpretation
+D0A,Phase 5.5 frozen P5,0.90625,0.453125,0.6041666666666666,0.6624476140288026,0.723191713483146,442.0,3.0,35.0,29.0,frozen reference; trained through P3
+D0B,Phase 7A incremental P5,0.8709677419354839,0.421875,0.5684210526315789,0.6673582481680086,0.7064431179775281,441.0,4.0,37.0,27.0,primary decomposition control; trained through P4
+D1,D0B minus D0A,-0.035282258064516125,-0.03125,-0.03574561403508769,0.004910634139206005,-0.016748595505617914,-1.0,1.0,2.0,-2.0,descriptive training-history/protocol-coverage difference; not a causal P4 effect

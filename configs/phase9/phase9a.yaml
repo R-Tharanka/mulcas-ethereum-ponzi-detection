@@ -16,10 +16,18 @@ phase8_closure_results: results/extension/phase8_closure/phase8_closure_results.
 output_dir: results/phase9/phase9a
 seed: 42
 runtime_gate_minutes: 30
+source_control:
+  phase8_closure_manifest: configs/phase9/frozen_phase8_closure_manifest.yaml
+  policy: verify_before_any_phase9a_diagnostic_and_stop_on_mismatch
 observed_d3_runtime_gate:
   activated: true
   attempted_candidate_pool: 18
   observed_elapsed_lower_bound_seconds: 2220
+  cpu: AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD
+  ram: not_recorded_in_original_preflight
+  representative_candidate: xgboost__opcode_ngram_count_1_3_df_filtered
+  representative_fit_seconds: not_retained_in_original_preflight
+  estimated_total_seconds: not_retained_in_original_preflight
   reason: >-
     The representative XGBoost estimate passed, but the complete fixed pool
     remained unfinished after 37 minutes because the estimate did not capture
@@ -39,3 +47,57 @@ protocol:
   tuning: prohibited
   thresholds_changed: false
   phase9b_started: false
+creator_oracle:
+  label_source: target_period_true_labels
+  update_timing: after_prediction
+  same_block_update_policy: commit_after_entire_block
+  historical_training_rows_mutable: false
+  model_predictions_update_state: false
+candidate_viewer_pool:
+  frozen_before_p5_scoring: true
+  model_families: [ridge, svm, xgboost]
+  feature_views:
+    - opcode_term_count
+    - opcode_tfidf
+    - opcode_ngram_count_1_3_df_filtered
+    - opcode_ngram_tfidf_1_3_df_filtered
+    - opcode_word2vec_idf_weighted
+    - opcode_word2vec_mean
+  hyperparameters_source: configs/paper_aligned_baseline_models.yaml
+viewer_selection_ranking:
+  primary: f1
+  tie_break: [precision, recall, frozen_candidate_order]
+  label_use: P5_true_labels_non_deployable_oracle_only
+permitted_metrics:
+  - accuracy
+  - balanced_accuracy
+  - precision
+  - recall
+  - f1
+  - pr_auc
+  - roc_auc
+  - confusion_matrix
+p2_audit:
+  grouping_rules:
+    - exact_normalized_opcode_hash
+    - exact_runtime_bytecode_hash
+    - creator
+    - existing_exact_clone_status
+  learned_clustering: prohibited
+paper_benchmarks:
+  p5: {precision: 0.951, recall: 0.674, f1: 0.789}
+  temporal_f1: {P2: 0.53, P3: 0.48, P4: 0.87, P5: 0.79}
+  ngram_dimensions:
+    unigram: {raw: 141, selected: 77}
+    unigram_bigram: {raw: 7211, selected: 767}
+    unigram_bigram_trigram: {raw: 52532, selected: 2292}
+constraints:
+  new_classifier_families: prohibited
+  new_feature_representations: prohibited
+  hyperparameter_search: prohibited
+  threshold_search_or_changes: prohibited
+  class_weight_changes: prohibited
+  resampling: prohibited
+  calibration: prohibited
+  self_updating_creator_state: prohibited
+  phase8_hypothesis_reinterpretation: prohibited
