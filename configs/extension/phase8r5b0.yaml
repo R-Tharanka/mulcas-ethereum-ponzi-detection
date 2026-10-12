@@ -24,7 +24,7 @@ cuda:
   expected_gpu: NVIDIA GeForce RTX 2050
   expected_torch: 2.14.1+cu130
   wheel_index: https://download.pytorch.org/whl/cu130
-  installation_attempt_status: blocked_by_interrupted_download_and_dns_resolution
+  installation_attempt_status: installed_from_verified_official_cached_wheel
 
 model:
   vocabulary_size: 145

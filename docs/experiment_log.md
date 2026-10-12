@@ -43,3 +43,28 @@ This closure does not claim that concept drift was proven, that novel code
 causes misclassification, or that creator identity causes Ponzi behavior. See
 [Phase 7 Research Closure](phase7_summary.md) and the machine-readable record
 at [`results/experiments/phase7_summary.json`](../results/experiments/phase7_summary.json).
+
+## Phase 8 Extension Closure
+
+**Status:** Complete without an accepted replacement for Phase 5.5 MulCas.
+
+Phase 8R0 through Phase 8R5C1 tested materially different static extension
+directions while keeping P5 outside extension model selection and evaluation:
+recency-aware training, runtime CFG/GIN representations, MulCas-GIN
+complementarity and score fusion, creation-code features, and temporally valid
+self-supervised opcode-sequence representations.
+
+H8R1, H8R2, H8R3B, and H8R4 were not supported. H8R5 was not supported by the
+frozen Phase 8R5C1 linear-probe evaluation; this does not disprove every
+possible sequence fine-tuning method. Phase 8R5C2 was not executed because its
+predefined gate failed. Diagnostic fallbacks were retained as evidence, not
+promoted as winners.
+
+The frozen Phase 5.5 paper-aligned MulCas remains the reference system. Its P5
+result is P=0.9063, R=0.4531, F1=0.6042, and PR-AUC=0.6624. P5 is now
+previously observed Track A evidence, not an untouched independent test.
+
+The current static-model search is closed. Phase 8R6A, an external/later
+dataset provenance and overlap audit, is the next recommended research phase
+and has **not started**. See [Phase 8 Research Extension Closure](phase8_summary.md)
+and [`phase8_closure_results.json`](../results/extension/phase8_closure/phase8_closure_results.json).

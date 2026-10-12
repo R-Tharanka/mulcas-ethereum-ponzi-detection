@@ -65,19 +65,25 @@ def test_feasibility_rating_boundaries() -> None:
     assert feasibility_rating(6.01) == "RED"
 
 
-def test_blocked_outputs_record_no_gpu_execution() -> None:
+def test_generated_outputs_record_successful_bounded_gpu_execution() -> None:
     output = REPO_ROOT / "results/extension/phase8r5b0"
     results = json.loads((output / "phase8r5b0_results.json").read_text(encoding="utf-8"))
-    assert results["status"] == "blocked"
-    assert results["cuda_environment_verified"] is False
-    assert results["gpu_benchmark_executed"] is False
-    assert results["benchmark_data_loaded"] is False
+    assert results["status"] == "complete"
+    assert results["cuda_environment_verified"] is True
+    assert results["environment"]["torch_cuda_device_name"] == "NVIDIA GeForce RTX 2050"
+    assert results["environment"]["torch_version"] == "2.14.1+cu130"
+    assert results["gpu_benchmark_executed"] is True
+    assert results["benchmark_data_loaded"] is True
     assert results["p5_loaded"] is False and results["labels_loaded"] is False
     assert results["full_pretraining_executed"] is False
     assert results["supervised_classifier_trained"] is False
-    assert results["feasibility_rating"] == "BLOCKED"
-    assert pd.read_csv(output / "gpu_memory_benchmark.csv").empty
-    assert pd.read_csv(output / "runtime_estimates.csv").empty
+    assert results["feasibility_rating"] in {"GREEN", "YELLOW", "RED"}
+    assert results["phase8r5b_approved"] is False
+    benchmark = pd.read_csv(output / "gpu_memory_benchmark.csv")
+    assert not benchmark.empty
+    assert set(benchmark["precision_mode"]) == {"fp32", "amp"}
+    assert benchmark.loc[benchmark["status"].eq("success"), "loss_finite"].all()
+    assert not pd.read_csv(output / "runtime_estimates.csv").empty
 
 
 def test_source_has_no_cpu_fallback_or_full_pretraining_loop() -> None:

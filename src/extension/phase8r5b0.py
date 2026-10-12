@@ -213,8 +213,10 @@ def _benchmark_one(
         indices = np.arange(start, start + batch_size) % len(token_array)
         targets = torch.as_tensor(token_array[indices], device=device, dtype=torch.long)
         inputs = targets.clone()
+        padding_mask = targets.eq(0)
         masked_positions = torch.zeros_like(inputs, dtype=torch.bool)
         masked_positions[:, ::7] = True
+        masked_positions &= ~padding_mask
         inputs[masked_positions] = 1
         optimizer.zero_grad(set_to_none=True)
         total_start = torch.cuda.Event(enable_timing=True)
@@ -222,7 +224,7 @@ def _benchmark_one(
         backward_end = torch.cuda.Event(enable_timing=True)
         total_start.record()
         with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
-            logits = model(inputs)
+            logits = model(inputs, padding_mask)
             loss = masked_opcode_loss(logits, targets, masked_positions)
         forward_end.record()
         scaler.scale(loss).backward()
@@ -333,6 +335,43 @@ def feasibility_rating(one_seed_hours: float) -> str:
     return "RED"
 
 
+def summarize_mode_runtimes(
+    benchmarks: pd.DataFrame, estimates: pd.DataFrame
+) -> dict[str, dict[str, Any]]:
+    summaries: dict[str, dict[str, Any]] = {}
+    for mode in ("fp32", "amp"):
+        eligible = benchmarks[
+            benchmarks["precision_mode"].eq(mode)
+            & benchmarks["status"].eq("success")
+            & benchmarks["loss_finite"].eq(True)
+            & benchmarks["vram_headroom_fraction"].ge(0.10)
+        ]
+        if eligible.empty:
+            summaries[mode] = {"available": False}
+            continue
+        selected = eligible.sort_values(
+            ["batch_size", "tokens_per_second"], ascending=False
+        ).iloc[0]
+        runtime = estimates[
+            estimates["precision_mode"].eq(mode)
+            & estimates["batch_size"].eq(int(selected["batch_size"]))
+            & estimates["epochs"].eq(10)
+        ]
+        one_seed_hours = float(runtime["estimated_hours"].sum())
+        summaries[mode] = {
+            "available": True,
+            "batch_size": int(selected["batch_size"]),
+            "examples_per_second": float(selected["examples_per_second"]),
+            "tokens_per_second": float(selected["tokens_per_second"]),
+            "peak_allocated_mib": float(selected["peak_allocated_mib"]),
+            "peak_reserved_mib": float(selected["peak_reserved_mib"]),
+            "vram_headroom_fraction": float(selected["vram_headroom_fraction"]),
+            "one_seed_ten_epoch_hours": one_seed_hours,
+            "three_seed_ten_epoch_hours": one_seed_hours * 3,
+        }
+    return summaries
+
+
 def _environment_snapshot(environment: dict[str, Any]) -> str:
     freeze = subprocess.run(
         [sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True, check=True
@@ -367,7 +406,94 @@ Complete installation from `requirements-cuda.txt` on a stable connection, verif
 """
 
 
+def _successful_report(
+    results: dict[str, Any], benchmarks: pd.DataFrame, estimates: pd.DataFrame
+) -> str:
+    environment = results["environment"]
+    lines = [
+        "# Phase 8R5B0 CUDA Validation and GPU Benchmark",
+        "",
+        "## Outcome",
+        "",
+        f"CUDA validation succeeded and the bounded benchmark completed. Feasibility rating: **{results['feasibility_rating']}**. Full Phase 8R5B was not launched and remains explicitly approval-gated.",
+        "",
+        "## Environment",
+        "",
+        f"- OS: {environment['operating_system']}",
+        f"- Python: {environment['python_version']}",
+        f"- Torch: {environment['torch_version']}",
+        f"- CUDA runtime: {environment['torch_cuda_runtime_version']}",
+        f"- GPU: {environment['torch_cuda_device_name']}",
+        f"- VRAM: {environment['gpu_vram_mib']} MiB",
+        f"- NVIDIA driver: {environment['nvidia_driver_version']}",
+        f"- torch-geometric: {environment['torch_geometric_version']}",
+        "",
+        "## GPU Benchmark",
+        "",
+        "| Precision | Batch | Status | Peak allocated MiB | Peak reserved MiB | Headroom | Examples/s | Tokens/s | Forward s | Backward s | Finite loss |",
+        "| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+    for row in benchmarks.itertuples(index=False):
+        if row.status == "success":
+            lines.append(
+                f"| {row.precision_mode} | {row.batch_size} | success | {row.peak_allocated_mib:.1f} | {row.peak_reserved_mib:.1f} | {row.vram_headroom_fraction:.1%} | {row.examples_per_second:.2f} | {row.tokens_per_second:.0f} | {row.mean_forward_seconds:.4f} | {row.mean_backward_seconds:.4f} | {row.loss_finite} |"
+            )
+        else:
+            lines.append(
+                f"| {row.precision_mode} | {row.batch_size} | OOM | N/A | N/A | N/A | N/A | N/A | N/A | N/A | False |"
+            )
+    policy = results["recommended_batch_policy"]
+    lines.extend(["", "## Execution Policy", ""])
+    if policy is None:
+        lines.append("No stable configuration retained at least 10% VRAM headroom.")
+    else:
+        lines.append(
+            f"Recommended physical batch: **{int(policy['batch_size'])}** using **{policy['precision_mode']}**, with {policy['vram_headroom_fraction']:.1%} measured reserved-memory headroom."
+        )
+        lines.append(
+            "Gradient accumulation is recommended for Phase 8R5B if a larger effective batch is required. It was not benchmarked here."
+            if results["gradient_accumulation_likely_required"]
+            else "Gradient accumulation is not required by this systems benchmark, though Phase 8R5B may predeclare it for a larger effective batch."
+        )
+    lines.extend(["", "## Runtime Estimates", ""])
+    for mode, summary in results["mode_runtime_summary"].items():
+        if summary["available"]:
+            lines.append(
+                f"- {mode.upper()} batch {summary['batch_size']}: one seed at 10 epochs/fold = {summary['one_seed_ten_epoch_hours']:.3f} hours; three seeds = {summary['three_seed_ten_epoch_hours']:.3f} hours."
+            )
+        else:
+            lines.append(
+                f"- {mode.upper()}: no eligible configuration with finite loss and at least 10% VRAM headroom."
+            )
+    if policy is not None:
+        selected_estimates = estimates[
+            estimates["precision_mode"].eq(policy["precision_mode"])
+            & estimates["batch_size"].eq(int(policy["batch_size"]))
+        ]
+        lines.extend([
+            "",
+            "| Fold | Chunks/epoch | 1 epoch min | 5 epochs min | 10 epochs min |",
+            "| --- | ---: | ---: | ---: | ---: |",
+        ])
+        for fold in ("P2", "P3", "P4"):
+            fold_rows = selected_estimates[selected_estimates["prediction_fold"].eq(fold)]
+            values = {int(row.epochs): row for row in fold_rows.itertuples(index=False)}
+            lines.append(
+                f"| {fold} | {values[1].chunk_count} | {values[1].estimated_minutes:.2f} | {values[5].estimated_minutes:.2f} | {values[10].estimated_minutes:.2f} |"
+            )
+    lines.extend([
+        "",
+        f"The selected one-seed estimate is **{results['one_seed_ten_epoch_hours']:.3f} hours**; three seeds are **{results['three_seed_ten_epoch_hours']:.3f} hours**.",
+        "",
+        "## Safeguards",
+        "",
+        "Only the first 5,989 frozen P0-P4 rows were loaded, without labels. P5 was not loaded. No full masked-opcode pretraining or supervised classifier training occurred.",
+    ])
+    return "\n".join(lines) + "\n"
+
+
 def run(config_path: Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
+    started = time.perf_counter()
     config = load_config(config_path)
     frozen = verify_frozen_inputs(config)
     environment = collect_environment()
@@ -411,6 +537,7 @@ def run(config_path: Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
     phase8r5a = json.loads(config["inputs"]["phase8r5a_results"].read_text(encoding="utf-8"))
     estimates = build_runtime_estimates(benchmarks, phase8r5a, config)
     policy = select_execution_policy(benchmarks)
+    mode_summary = summarize_mode_runtimes(benchmarks, estimates)
     if policy is None:
         rating = "BLOCKED"
         one_seed_hours = None
@@ -433,14 +560,19 @@ def run(config_path: Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
         "full_pretraining_executed": False, "supervised_classifier_trained": False,
         "successful_batch_sizes": benchmarks.loc[benchmarks["status"].eq("success"), "batch_size"].astype(int).tolist(),
         "recommended_batch_policy": policy,
+        "gradient_accumulation_likely_required": (
+            int(policy["batch_size"]) <= 2 if policy is not None else None
+        ),
+        "mode_runtime_summary": mode_summary,
         "one_seed_ten_epoch_hours": one_seed_hours,
         "three_seed_ten_epoch_hours": one_seed_hours * 3 if one_seed_hours is not None else None,
         "feasibility_rating": rating, "phase8r5b_approved": False,
+        "actual_benchmark_phase_runtime_seconds": time.perf_counter() - started,
         "environment": environment,
     }
     (output / "phase8r5b0_results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
     (output / "phase8r5b0_report.md").write_text(
-        "# Phase 8R5B0 CUDA Validation\n\nGPU benchmark completed. See machine-readable outputs. Full Phase 8R5B remains approval-gated.\n",
+        _successful_report(results, benchmarks, estimates),
         encoding="utf-8",
     )
     return results

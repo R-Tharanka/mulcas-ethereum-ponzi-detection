@@ -1,0 +1,397 @@
+{
+  "phase": "phase8_closure",
+  "status": "complete",
+  "closure_date": "2026-10-12",
+  "closure_type": "documentation_evidence_consolidation_and_governance",
+  "scope": {
+    "model_training": false,
+    "new_experiments": false,
+    "p5_evaluation": false,
+    "threshold_tuning": false,
+    "phase8r6a_started": false
+  },
+  "frozen_verification": {
+    "verified": true,
+    "frozen_anchor_count": 199,
+    "checkpoint_count": 9,
+    "embedding_artifact_count": 18,
+    "raw_dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+    "anchor_fingerprint": "556cc23317066933bf1b2af79a7a6dbc8cf76b80ccd97d06727389e08ff40251"
+  },
+  "retained_reference": "phase5.5_mulcas",
+  "phase8_replacement_found": false,
+  "retained_reference_p5": {
+    "precision": 0.90625,
+    "recall": 0.453125,
+    "f1": 0.6041666666666666,
+    "pr_auc": 0.6624476140288026,
+    "tn": 442,
+    "fp": 3,
+    "fn": 35,
+    "tp": 29
+  },
+  "published_table5_reference": {
+    "precision": 0.951,
+    "recall": 0.674,
+    "f1": 0.789
+  },
+  "published_gap_experimental_minus_published": {
+    "precision": -0.044749999999999956,
+    "recall": -0.22087500000000004,
+    "f1": -0.1848333333333334
+  },
+  "hypotheses": {
+    "H8R1": {
+      "status": "not_supported",
+      "evidence_phase": "8R1A",
+      "scope": "recency-aware training"
+    },
+    "H8R2": {
+      "status": "not_supported",
+      "evidence_phase": "8R2B",
+      "scope": "runtime CFG and GIN under the predefined eligibility criterion"
+    },
+    "H8R3B": {
+      "status": "not_supported",
+      "evidence_phase": "8R3B",
+      "scope": "lightweight learned MulCas-GIN score fusion"
+    },
+    "H8R4": {
+      "status": "not_supported",
+      "evidence_phase": "8R4B",
+      "scope": "creation/deployment-bytecode representation"
+    },
+    "H8R5": {
+      "status": "not_supported_by_frozen_linear_probe",
+      "evidence_phase": "8R5C1",
+      "scope": "temporally pretrained opcode-sequence representation; does not disprove all fine-tuning methods"
+    }
+  },
+  "construction_and_analysis_phases": {
+    "8R0": "protocol_and_feasibility_only",
+    "8R2A": "representation_construction_only",
+    "8R3A": "saved_prediction_analysis_only",
+    "8R4A": "representation_construction_only",
+    "8R5A": "feasibility_only",
+    "8R5B0": "systems_benchmark_only",
+    "8R5B": "self_supervised_pretraining_only"
+  },
+  "consolidated_results": [
+    {
+      "phase": "control",
+      "intervention": "Frozen temporal control",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "Frozen MulCas",
+      "macro_precision": 0.46026913699327493,
+      "macro_recall": 0.44,
+      "macro_f1": 0.38562554061492493,
+      "macro_pr_auc": 0.4651431746610967,
+      "macro_balanced_accuracy": 0.6875987844110275,
+      "eligibility_criterion": "reference only",
+      "eligible": false,
+      "selection_role": "retained_reference",
+      "conclusion": "Reference system; not a Phase 8 candidate."
+    },
+    {
+      "phase": "8R1A",
+      "intervention": "Exponential temporal decay",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "Decay alpha 0.75",
+      "macro_precision": 0.45817173766058145,
+      "macro_recall": 0.45333333333333337,
+      "macro_f1": 0.40239174497880964,
+      "macro_pr_auc": 0.5043544338457684,
+      "macro_balanced_accuracy": 0.6933290760871799,
+      "eligibility_criterion": "macro precision >= 0.80",
+      "eligible": false,
+      "selection_role": "diagnostic_fallback",
+      "conclusion": "H8R1 not supported."
+    },
+    {
+      "phase": "8R2B",
+      "intervention": "Runtime CFG message passing",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "GIN 3x128 dropout 0.5",
+      "macro_precision": 0.465227179311195,
+      "macro_recall": 0.5213333333333333,
+      "macro_f1": 0.4720768986273083,
+      "macro_pr_auc": 0.47439283383251896,
+      "macro_balanced_accuracy": 0.7043538979690963,
+      "eligibility_criterion": "macro precision >= 0.80",
+      "eligible": false,
+      "selection_role": "diagnostic_fallback",
+      "conclusion": "H8R2 not supported."
+    },
+    {
+      "phase": "8R3B",
+      "intervention": "MulCas-GIN score fusion",
+      "temporal_periods": "P3 selection; P4 confirmation",
+      "candidate_system": "Hybrid A",
+      "macro_precision": null,
+      "macro_recall": null,
+      "macro_f1": null,
+      "macro_pr_auc": null,
+      "macro_balanced_accuracy": null,
+      "eligibility_criterion": "P3 precision >= 0.80",
+      "eligible": false,
+      "selection_role": "diagnostic_fallback",
+      "conclusion": "H8R3B not supported."
+    },
+    {
+      "phase": "8R4B",
+      "intervention": "Creation-code representation",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "Logistic Regression + creation_full",
+      "macro_precision": 0.2702671513472968,
+      "macro_recall": 0.30666666666666664,
+      "macro_f1": 0.28179490895039366,
+      "macro_pr_auc": 0.5165081495199569,
+      "macro_balanced_accuracy": 0.6279941727231061,
+      "eligibility_criterion": "macro precision >= 0.80",
+      "eligible": false,
+      "selection_role": "diagnostic_fallback",
+      "conclusion": "H8R4 not supported."
+    },
+    {
+      "phase": "8R5C1",
+      "intervention": "Frozen self-supervised sequence embeddings",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "Contextual seed mean",
+      "macro_precision": 0.28414322378799445,
+      "macro_recall": 0.31333333333333335,
+      "macro_f1": 0.29212412825418105,
+      "macro_pr_auc": 0.4691584262846971,
+      "macro_balanced_accuracy": 0.6354941181605883,
+      "eligibility_criterion": "macro precision >= 0.80",
+      "eligible": false,
+      "selection_role": "hypothesis_candidate",
+      "conclusion": "H8R5 not supported by the frozen linear probe."
+    },
+    {
+      "phase": "8R5C1",
+      "intervention": "Pretrained token-embedding control",
+      "temporal_periods": "P2-P4",
+      "candidate_system": "Non-contextual seed mean",
+      "macro_precision": 0.5297221696266589,
+      "macro_recall": 0.46,
+      "macro_f1": 0.38700823780570986,
+      "macro_pr_auc": 0.5260829455430417,
+      "macro_balanced_accuracy": 0.691800044398822,
+      "eligibility_criterion": "macro precision >= 0.80",
+      "eligible": false,
+      "selection_role": "scientific_control",
+      "conclusion": "Control only; ineligible and not a replacement."
+    }
+  ],
+  "temporal_comparison": [
+    {
+      "system": "Frozen MulCas",
+      "period": "P2",
+      "precision": 0.04924242424242424,
+      "recall": 0.26,
+      "f1": 0.08280254777070063,
+      "pr_auc": 0.046218232749443394,
+      "balanced_accuracy": 0.6053486544883127,
+      "role": "retained_reference"
+    },
+    {
+      "system": "Frozen MulCas",
+      "period": "P3",
+      "precision": 0.5384615384615384,
+      "recall": 0.14,
+      "f1": 0.2222222222222222,
+      "pr_auc": 0.4785713036145207,
+      "balanced_accuracy": 0.5574476987447698,
+      "role": "retained_reference"
+    },
+    {
+      "system": "Frozen MulCas",
+      "period": "P4",
+      "precision": 0.7931034482758621,
+      "recall": 0.92,
+      "f1": 0.8518518518518519,
+      "pr_auc": 0.870639987619326,
+      "balanced_accuracy": 0.9,
+      "role": "retained_reference"
+    },
+    {
+      "system": "GIN 3x128 dropout 0.5",
+      "period": "P2",
+      "precision": 0.05,
+      "recall": 0.004,
+      "f1": 0.0074074074074074,
+      "pr_auc": 0.0204484283160474,
+      "balanced_accuracy": 0.5011160872127283,
+      "role": "diagnostic_fallback_seed_mean"
+    },
+    {
+      "system": "GIN 3x128 dropout 0.5",
+      "period": "P3",
+      "precision": 0.7113328933619315,
+      "recall": 0.66,
+      "f1": 0.667972220350722,
+      "pr_auc": 0.625403787561653,
+      "balanced_accuracy": 0.7969456066945606,
+      "role": "diagnostic_fallback_seed_mean"
+    },
+    {
+      "system": "GIN 3x128 dropout 0.5",
+      "period": "P4",
+      "precision": 0.6343486445716533,
+      "recall": 0.9,
+      "f1": 0.7408510681237954,
+      "pr_auc": 0.7773262856198565,
+      "balanced_accuracy": 0.8150000000000001,
+      "role": "diagnostic_fallback_seed_mean"
+    },
+    {
+      "system": "LR + creation_full",
+      "period": "P2",
+      "precision": 0.01834862385321101,
+      "recall": 0.08,
+      "f1": 0.029850746268656716,
+      "pr_auc": 0.013524609436194115,
+      "balanced_accuracy": 0.5189825181693184,
+      "role": "diagnostic_fallback"
+    },
+    {
+      "system": "LR + creation_full",
+      "period": "P3",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "pr_auc": 0.6888667261309376,
+      "balanced_accuracy": 0.5,
+      "role": "diagnostic_fallback"
+    },
+    {
+      "system": "LR + creation_full",
+      "period": "P4",
+      "precision": 0.7924528301886793,
+      "recall": 0.84,
+      "f1": 0.8155339805825242,
+      "pr_auc": 0.8471331129927393,
+      "balanced_accuracy": 0.865,
+      "role": "diagnostic_fallback"
+    },
+    {
+      "system": "Contextual sequence ensemble",
+      "period": "P2",
+      "precision": 0.058823529411764705,
+      "recall": 0.08,
+      "f1": 0.06779661016949153,
+      "pr_auc": 0.03405731849444829,
+      "balanced_accuracy": 0.5337143979571793,
+      "role": "fixed_three_seed_ensemble"
+    },
+    {
+      "system": "Non-contextual sequence control",
+      "period": "P2",
+      "precision": 0.034274193548387094,
+      "recall": 0.34,
+      "f1": 0.06227106227106227,
+      "pr_auc": 0.024716110395465292,
+      "balanced_accuracy": 0.6229561972107641,
+      "role": "scientific_control_ensemble"
+    },
+    {
+      "system": "Contextual sequence ensemble",
+      "period": "P3",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "pr_auc": 0.6137428626023915,
+      "balanced_accuracy": 0.5,
+      "role": "fixed_three_seed_ensemble"
+    },
+    {
+      "system": "Non-contextual sequence control",
+      "period": "P3",
+      "precision": 0.6666666666666666,
+      "recall": 0.12,
+      "f1": 0.2033898305084746,
+      "pr_auc": 0.7652737935657861,
+      "balanced_accuracy": 0.553723849372385,
+      "role": "scientific_control_ensemble"
+    },
+    {
+      "system": "Contextual sequence ensemble",
+      "period": "P4",
+      "precision": 0.8035714285714286,
+      "recall": 0.9,
+      "f1": 0.8490566037735849,
+      "pr_auc": 0.8393473366631795,
+      "balanced_accuracy": 0.895,
+      "role": "fixed_three_seed_ensemble"
+    },
+    {
+      "system": "Non-contextual sequence control",
+      "period": "P4",
+      "precision": 0.7931034482758621,
+      "recall": 0.92,
+      "f1": 0.8518518518518519,
+      "pr_auc": 0.8071048169145804,
+      "balanced_accuracy": 0.9,
+      "role": "scientific_control_ensemble"
+    }
+  ],
+  "phase7_failure_context": {
+    "p5_false_negatives": 37,
+    "p5_false_negatives_unseen_creator": 36,
+    "p5_false_negatives_without_exact_opcode_or_runtime_clone": 37,
+    "p5_false_negatives_confidently_rejected_by_viewer1": 28,
+    "phase8r3a_gin_only_ponzi_recoveries_p2_p4": 28,
+    "phase8r3a_gin_only_recoveries_novel_and_unseen": 28
+  },
+  "p5_status": "previously_observed_track_a_only",
+  "track_a_status": "heavily_inspected_exploratory_only",
+  "track_b_status": "not_established",
+  "phase8r5c2_status": "not_justified_under_predefined_gate",
+  "next_recommended_phase": "phase8r6a",
+  "phase8r6a_status": "not_started",
+  "rq6_answer": "The tested Phase 8 approaches did not produce a reliable improvement under the predefined temporal criteria. Period-specific diagnostic benefits did not generalize strongly enough across P2-P4 to replace frozen MulCas.",
+  "research_decisions": [
+    {
+      "decision": "retained_reference",
+      "status": "phase5.5_mulcas",
+      "rationale": "No Phase 8 candidate met its predefined temporal acceptance criterion."
+    },
+    {
+      "decision": "phase8_static_model_search",
+      "status": "closed",
+      "rationale": "Multiple materially different static directions were tested without an accepted replacement."
+    },
+    {
+      "decision": "phase8r5c2",
+      "status": "not_executed_not_justified",
+      "rationale": "The predefined Phase 8R5C1 fine-tuning gate failed."
+    },
+    {
+      "decision": "track_a",
+      "status": "previously_observed_exploratory_only",
+      "rationale": "The 6,498-contract corpus and P5 have been heavily inspected."
+    },
+    {
+      "decision": "track_b",
+      "status": "not_established",
+      "rationale": "No overlap-audited independent later dataset is available."
+    },
+    {
+      "decision": "next_recommended_phase",
+      "status": "phase8r6a_not_started",
+      "rationale": "Audit external/later data provenance and overlap before more model development."
+    },
+    {
+      "decision": "final_synthesis",
+      "status": "pending",
+      "rationale": "Notebook 08 remains pending and was not modified by closure."
+    }
+  ],
+  "claims_not_made": [
+    "concept_drift_proven",
+    "novel_code_causes_errors",
+    "all_sequence_fine_tuning_methods_disproven",
+    "exact_paper_replication"
+  ],
+  "phase7_closure_status": "complete"
+}

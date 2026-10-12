@@ -1,0 +1,86 @@
+phase: 8R5B
+purpose: temporally valid masked-opcode self-supervised pretraining only
+random_seeds: [42, 123, 2026]
+
+inputs:
+  dataset: data/raw/PonziDataset_20221114.csv
+  period_definitions: results/experiments/phase7a/phase7a_period_definitions.json
+  phase8r5a_config: configs/extension/phase8r5a.yaml
+  phase8r5a_results: results/extension/phase8r5a/phase8r5a_results.json
+  phase8r5b0_config: configs/extension/phase8r5b0.yaml
+  phase8r5b0_results: results/extension/phase8r5b0/phase8r5b0_results.json
+
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+  - configs/extension/frozen_phase8r4a_manifest.yaml
+  - configs/extension/frozen_phase8r4b_manifest.yaml
+  - configs/extension/frozen_phase8r5a_manifest.yaml
+  - configs/extension/frozen_phase8r5b0_manifest.yaml
+
+folds:
+  P2:
+    historical_periods: [P0, P1]
+    future_period: P2
+  P3:
+    historical_periods: [P0, P1, P2]
+    future_period: P3
+  P4:
+    historical_periods: [P0, P1, P2, P3]
+    future_period: P4
+
+sequence:
+  source_field: opcode
+  length: 1024
+  policy: deterministic_fixed_size_chunking
+  special_tokens: [PAD, MASK, UNK]
+  preserve_all_non_padding_tokens: true
+
+model:
+  vocabulary_embedding_dim: 128
+  positional_encoding: sinusoidal
+  encoder_layers: 2
+  attention_heads: 4
+  feed_forward_dim: 256
+  dropout: 0.1
+  objective: masked_opcode_prediction
+  classification_head: false
+
+masking:
+  probability: 0.15
+  mask_replacement_probability: 0.80
+  random_replacement_probability: 0.10
+  unchanged_probability: 0.10
+  protected_tokens: [PAD, MASK, UNK]
+
+optimization:
+  optimizer: AdamW
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  epochs: 10
+  early_stopping: false
+  validation_holdout: omitted_to_preserve_small_P2_corpus
+
+execution:
+  device: cuda:0
+  expected_gpu: NVIDIA GeForce RTX 2050
+  amp: true
+  physical_batch_size: 8
+  cpu_fallback: false
+  shuffle_chunks: true
+  runtime_pause_ratio: 2.0
+  p5_allowed: false
+  labels_allowed: false
+  supervised_training: false
+
+embedding_readiness:
+  token_hidden_states: final_encoder_layer
+  chunk_pooling: padding_masked_mean
+
+checkpoint_dir: artifacts/phase8r5b/schema_v1
+output_dir: results/extension/phase8r5b

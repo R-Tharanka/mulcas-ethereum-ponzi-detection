@@ -1,0 +1,41 @@
+phase: phase8_closure
+closure_date: 2026-10-12
+status: complete
+scope:
+  model_training: false
+  new_experiments: false
+  p5_evaluation: false
+  threshold_tuning: false
+  phase8r6a_started: false
+frozen_manifests:
+  - configs/extension/frozen_phase7_manifest.yaml
+  - configs/extension/frozen_phase8r0_manifest.yaml
+  - configs/extension/frozen_phase8r1a_manifest.yaml
+  - configs/extension/frozen_phase8r2a_manifest.yaml
+  - configs/extension/frozen_phase8r2b_manifest.yaml
+  - configs/extension/frozen_phase8r3a_manifest.yaml
+  - configs/extension/frozen_phase8r3b_manifest.yaml
+  - configs/extension/frozen_phase8r4a_manifest.yaml
+  - configs/extension/frozen_phase8r4b_manifest.yaml
+  - configs/extension/frozen_phase8r5a_manifest.yaml
+  - configs/extension/frozen_phase8r5b0_manifest.yaml
+  - configs/extension/frozen_phase8r5b_manifest.yaml
+  - configs/extension/frozen_phase8r5c1_manifest.yaml
+inputs:
+  phase55_mulcas: results/baseline/paper_aligned/mulcas_results.json
+  phase7_summary: results/experiments/phase7_summary.json
+  phase7a_period_metrics: results/experiments/phase7a/phase7a_period_metrics.csv
+  phase8r1a_summary: results/extension/phase8r1a/phase8r1a_strategy_summary.csv
+  phase8r2b_summary: results/extension/phase8r2b/gin_architecture_summary.csv
+  phase8r2b_period_metrics: results/extension/phase8r2b/gin_period_metrics.csv
+  phase8r3a_results: results/extension/phase8r3a/phase8r3a_results.json
+  phase8r3a_novelty_interaction: results/extension/phase8r3a/novelty_creator_interaction.csv
+  phase8r3b_p3_metrics: results/extension/phase8r3b/p3_candidate_metrics.csv
+  phase8r3b_p4_metrics: results/extension/phase8r3b/p4_confirmation_metrics.csv
+  phase8r4b_summary: results/extension/phase8r4b/candidate_summary.csv
+  phase8r4b_period_metrics: results/extension/phase8r4b/model_period_metrics.csv
+  phase8r5b_checkpoints: results/extension/phase8r5b/checkpoint_manifest.json
+  phase8r5c1_results: results/extension/phase8r5c1/phase8r5c1_results.json
+  phase8r5c1_embeddings: results/extension/phase8r5c1/embedding_manifest.json
+output_dir: results/extension/phase8_closure
+docs_summary: docs/phase8_summary.md
