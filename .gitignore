@@ -25,6 +25,8 @@ venv/
 *.pem
 *.key
 secrets.*
+Alchemy.txt
+Alchemy.txt
 
 # Local datasets
 data/raw/

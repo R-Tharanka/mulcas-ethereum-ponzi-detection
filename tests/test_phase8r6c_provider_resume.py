@@ -11,10 +11,12 @@ from src.extension.phase8r6c_provider_resume import (
     GateFailure,
     Metrics,
     _http_category,
+    _safe_error_message,
     creation_lookup,
     creation_schema,
     enrich_one,
     provider_configuration,
+    provider_stability_failure,
     rpc_health,
     run,
     successful_ledger_addresses,
@@ -45,8 +47,10 @@ def test_rpc_health_requires_mainnet(monkeypatch):
 
 @pytest.mark.parametrize(("code", "category"), [(401, "AUTH_FAILURE"), (403, "AUTH_FAILURE"), (429, "RATE_LIMITED")])
 def test_auth_and_rate_limit_statuses_stop_distinctly(code, category):
-    error = HTTPError("https://redacted.invalid", code, "failure", None, None)
+    error = HTTPError("https://redacted.invalid/?apikey=do-not-serialize", code, "failure", None, None)
     assert _http_category(error) == category
+    assert _safe_error_message(error) == f"HTTP {code}"
+    assert "do-not-serialize" not in _safe_error_message(error)
 
 
 def test_provider_schema_mismatch_stops():
@@ -55,11 +59,34 @@ def test_provider_schema_mismatch_stops():
     assert failure.value.category == "SCHEMA_MISMATCH"
 
 
-def test_blockscout_v2_schema_is_explicit_and_checked(monkeypatch):
+@pytest.mark.parametrize("transaction_field", ["creation_transaction_hash", "creation_tx_hash"])
+def test_blockscout_v2_schema_is_explicit_and_checked(monkeypatch, transaction_field):
     target = _address("1")
-    monkeypatch.setattr("src.extension.phase8r6c_provider_resume._request_json", lambda *args, **kwargs: {"hash": target, "creator_address_hash": _address("2"), "creation_tx_hash": "0xabc"})
+    response = {"hash": target, "creator_address_hash": _address("2"), transaction_field: "0xabc"}
+    monkeypatch.setattr("src.extension.phase8r6c_provider_resume._request_json", lambda *args, **kwargs: response)
     row = creation_lookup(target, "https://eth.blockscout.com/api/v2", "secret", 1, Metrics())
     assert row["address"] == target and row["tx_hash"] == "0xabc"
+
+
+def test_blockscout_v2_rejects_unknown_creation_hash_schema(monkeypatch):
+    target = _address("1")
+    monkeypatch.setattr(
+        "src.extension.phase8r6c_provider_resume._request_json",
+        lambda *args, **kwargs: {"hash": target, "creator_address_hash": _address("2"), "transaction_hash": "0xabc"},
+    )
+    with pytest.raises(GateFailure) as failure:
+        creation_lookup(target, "https://eth.blockscout.com/api/v2", "secret", 1, Metrics())
+    assert failure.value.category == "SCHEMA_MISMATCH"
+
+
+def test_invalid_contract_is_data_status_not_provider_instability():
+    summary = {"failures": [{"status": "INVALID_CONTRACT"}]}
+    assert provider_stability_failure(summary) is None
+
+
+@pytest.mark.parametrize("status", ["AUTH_FAILURE", "RATE_LIMITED", "RPC_FAILURE", "SCHEMA_MISMATCH", "IDENTITY_MISMATCH"])
+def test_provider_failures_invalidate_stability(status):
+    assert provider_stability_failure({"failures": [{"status": status}]}) == status
 
 
 def test_contract_identity_mismatch_stops(monkeypatch):

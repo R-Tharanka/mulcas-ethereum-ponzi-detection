@@ -1,4 +1,5 @@
 {
+  "creation_code_ready_count": 0,
   "decision": "A",
   "decision_label": "PROVIDER CONFIGURATION INVALID",
   "detectors_evaluated": false,
@@ -11,6 +12,7 @@
   "parent_results_preserved": true,
   "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
   "sealed_ready": false,
+  "static_runtime_ready_count": 0,
   "status": "MISSING_CONFIGURATION",
   "track_a_modified": false,
   "track_b_provisional_count": 0,

@@ -28,6 +28,7 @@ from .track_b_builder import classify, enrich_static_identities, internal_refere
 
 CONFIG = REPO_ROOT / "configs/extension/phase8r6c_provider_resume.yaml"
 PARENT_FILES = ("phase8r6c_results.json", "phase8r6c_report.md", "provider_preflight.json")
+PROVIDER_STABILITY_FAILURES = {"AUTH_FAILURE", "RATE_LIMITED", "RPC_FAILURE", "SCHEMA_MISMATCH", "IDENTITY_MISMATCH"}
 
 
 class GateFailure(RuntimeError):
@@ -115,9 +116,12 @@ def creation_lookup(address: str, endpoint: str, key: str, timeout: float, metri
         if key:
             url += "?" + urlencode({"apikey": key})
         value = _request_json(url, None, timeout, metrics)
-        if not isinstance(value, dict) or "creation_tx_hash" not in value or "creator_address_hash" not in value:
-            raise GateFailure("creation_provider", "SCHEMA_MISMATCH", "Blockscout v2 address response lacks creation_tx_hash or creator_address_hash")
-        return {"address": normalize_address(value.get("hash") or address), "creator": normalize_address(value["creator_address_hash"]), "tx_hash": str(value["creation_tx_hash"]).lower(), "block_number": value.get("creation_block_number")}
+        if not isinstance(value, dict) or "creator_address_hash" not in value:
+            raise GateFailure("creation_provider", "SCHEMA_MISMATCH", "Blockscout v2 address response lacks creator_address_hash")
+        tx_hash = value.get("creation_transaction_hash") or value.get("creation_tx_hash")
+        if not tx_hash:
+            raise GateFailure("creation_provider", "SCHEMA_MISMATCH", "Blockscout v2 address response lacks a supported creation transaction hash field")
+        return {"address": normalize_address(value.get("hash") or address), "creator": normalize_address(value["creator_address_hash"]), "tx_hash": str(tx_hash).lower(), "block_number": value.get("creation_block_number")}
     query = {"module": "contract", "action": "getcontractcreation", "contractaddresses": normalize_address(address), "apikey": key}
     value = _request_json(endpoint + "?" + urlencode(query), None, timeout, metrics)
     if not isinstance(value, dict) or str(value.get("status")) != "1" or not isinstance(value.get("result"), list) or not value["result"]:
@@ -137,6 +141,16 @@ def _http_category(exc: BaseException) -> str:
     if isinstance(exc, GateFailure):
         return exc.category
     return "RPC_FAILURE"
+
+
+def _safe_error_message(exc: BaseException) -> str:
+    if isinstance(exc, GateFailure):
+        return str(exc)
+    if isinstance(exc, HTTPError):
+        return f"HTTP {exc.code}"
+    if isinstance(exc, (URLError, TimeoutError)):
+        return type(exc).__name__
+    return type(exc).__name__
 
 
 def rpc_health(endpoint: str, timeout: float, metrics: Metrics) -> dict[str, Any]:
@@ -200,6 +214,25 @@ def _empty_gate(status: str, reason: str) -> dict[str, Any]:
     return {"status": status, "reason": reason, "requests": 0, "elapsed_seconds": 0}
 
 
+def provider_stability_failure(summary: dict[str, Any]) -> str | None:
+    failures = [row["status"] for row in summary.get("failures", []) if row.get("status") in PROVIDER_STABILITY_FAILURES]
+    return failures[-1] if failures else None
+
+
+def _readiness_counts(rows: pd.DataFrame) -> dict[str, int]:
+    if rows.empty:
+        return {"mulcas_ready_count": 0, "static_runtime_ready_count": 0, "creation_code_ready_count": 0}
+    required = ("address", "label", "created_block", "timestamp", "creator", "runtime_bytecode", "opcode")
+    mulcas_ready = rows.loc[:, list(required)].notna().all(axis=1) if all(name in rows for name in required) else pd.Series(False, index=rows.index)
+    static_ready = rows.runtime_bytecode.notna() & rows.opcode.notna() if all(name in rows for name in ("runtime_bytecode", "opcode")) else pd.Series(False, index=rows.index)
+    creation_ready = rows.creation_code.notna() if "creation_code" in rows else pd.Series(False, index=rows.index)
+    return {
+        "mulcas_ready_count": int(mulcas_ready.sum()),
+        "static_runtime_ready_count": int(static_ready.sum()),
+        "creation_code_ready_count": int(creation_ready.sum()),
+    }
+
+
 def successful_ledger_addresses(path: Path) -> set[str]:
     if not path.exists():
         return set()
@@ -258,7 +291,7 @@ def _finalize_track_b(enriched: pd.DataFrame, cfg: dict[str, Any], out: Path) ->
     pd.DataFrame([readiness]).to_csv(out / "track_b_readiness.csv", index=False)
     if sealed_ready:
         seal(selected, REPO_ROOT / "data/external/track_b/metadata.csv", REPO_ROOT / "data/external/track_b_sealed/labels.csv", REPO_ROOT / "data/external/track_b/membership_manifest.json")
-    return {"mulcas_ready_count": int(rows.MULCAS_READY.sum()), "later_positive_count": int((classified.temporal_status.eq("LATER") & classified.label.eq(1)).sum()), "later_benign_count": int((classified.temporal_status.eq("LATER") & classified.label.eq(0)).sum()), "track_b_strict_count": len(strict), "track_b_provisional_count": len(provisional), "track_b_rating": rating, "sealed_ready": sealed_ready, "excluded_count": len(excluded)}
+    return {"mulcas_ready_count": int(rows.MULCAS_READY.sum()), "static_runtime_ready_count": int(rows.STATIC_RUNTIME_READY.sum()), "creation_code_ready_count": int(rows.CREATION_CODE_READY.sum()), "later_positive_count": int((classified.temporal_status.eq("LATER") & classified.label.eq(1)).sum()), "later_benign_count": int((classified.temporal_status.eq("LATER") & classified.label.eq(0)).sum()), "track_b_strict_count": len(strict), "track_b_provisional_count": len(provisional), "track_b_rating": rating, "sealed_ready": sealed_ready, "excluded_count": len(excluded)}
 
 
 def _decision(category: str) -> tuple[str, str]:
@@ -279,7 +312,7 @@ def run(config_path: Path = CONFIG, environ: dict[str, str] | None = None) -> di
     required = [name for name in ("ETH_RPC_URL", "BLOCKSCOUT_API_URL", "BLOCKSCOUT_API_KEY") if not configuration[name]["configured"]]
     gates: dict[str, Any] = {}
     enriched = pd.DataFrame()
-    final_counts = {"mulcas_ready_count": 0, "later_positive_count": 0, "later_benign_count": 0, "track_b_strict_count": 0, "track_b_provisional_count": 0, "track_b_rating": "NONE", "sealed_ready": False}
+    final_counts = {"mulcas_ready_count": 0, "static_runtime_ready_count": 0, "creation_code_ready_count": 0, "later_positive_count": 0, "later_benign_count": 0, "track_b_strict_count": 0, "track_b_provisional_count": 0, "track_b_rating": "NONE", "sealed_ready": False}
     full_resume = False
     category = "MISSING_CONFIGURATION"
     reason = "Missing required environment variables: " + ", ".join(required) if required else ""
@@ -316,18 +349,20 @@ def run(config_path: Path = CONFIG, environ: dict[str, str] | None = None) -> di
             stability_sample = deterministic_sample(remaining, int(cfg["stability"]["positive_count"]), int(cfg["stability"]["benign_count"]))
             stability_metrics = Metrics()
             stability_rows, gates["stability"] = _batch(stability_sample, secrets, cfg, stability_metrics)
-            if len(stability_rows) != len(stability_sample):
-                failure_category = gates["stability"]["failures"][-1]["status"] if gates["stability"]["failures"] else "RPC_FAILURE"
+            failure_category = provider_stability_failure(gates["stability"])
+            if failure_category:
                 raise GateFailure("stability", failure_category, "100-address stability gate did not fully succeed")
             gates["stability"]["status"] = "PASS"
-            remaining_count = len(available) - len(preflight_rows) - len(stability_rows)
-            per_address = gates["stability"]["elapsed_seconds"] / len(stability_rows)
+            remaining_count = len(available) - len(preflight_sample) - len(stability_sample)
+            per_address = gates["stability"]["elapsed_seconds"] / gates["stability"]["attempted"]
             projected_minutes = remaining_count * per_address / 60
-            requests_per_address = gates["stability"]["requests"] / len(stability_rows)
-            gates["projection"] = {"status": "PASS" if projected_minutes <= float(cfg["performance_gate_minutes"]) else "STOP", "remaining_candidate_count": remaining_count, "estimated_remaining_requests": round(remaining_count * requests_per_address), "projected_remaining_minutes": projected_minutes, "expected_retry_overhead": gates["stability"]["retries"], "maximum_minutes": cfg["performance_gate_minutes"]}
+            observed_minutes = (gates["preflight"]["elapsed_seconds"] + gates["stability"]["elapsed_seconds"]) / 60
+            requests_per_address = gates["stability"]["requests"] / gates["stability"]["attempted"]
+            gates["projection"] = {"status": "PASS" if projected_minutes <= float(cfg["performance_gate_minutes"]) else "STOP", "remaining_candidate_count": remaining_count, "estimated_remaining_requests": round(remaining_count * requests_per_address), "projected_remaining_minutes": projected_minutes, "projected_total_minutes": observed_minutes + projected_minutes, "expected_retry_overhead": gates["stability"]["retries"], "maximum_minutes": cfg["performance_gate_minutes"]}
             enriched = pd.concat([prior_rows, preflight_rows, stability_rows], ignore_index=True)
+            final_counts.update(_readiness_counts(enriched))
             if projected_minutes > float(cfg["performance_gate_minutes"]):
-                category, reason = "RUNTIME_OVER_30_MIN", "AWAIT USER APPROVAL FOR FULL ENRICHMENT"
+                category, reason = "RUNTIME_OVER_30_MIN", "Observed stability gate projects full runtime above 30 minutes; awaiting user approval"
             else:
                 # The continuation is authorized; resume only rows not already successful.
                 todo = available[~available.address.isin(enriched.address)]
@@ -342,7 +377,7 @@ def run(config_path: Path = CONFIG, environ: dict[str, str] | None = None) -> di
                     final_counts = _finalize_track_b(enriched, cfg, out)
         except (HTTPError, URLError, TimeoutError, GateFailure, ValueError, KeyError, TypeError) as exc:
             category = _http_category(exc)
-            reason = str(exc)
+            reason = _safe_error_message(exc)
     for name, filename in (("rpc", "rpc_health_check.json"), ("creation", "creation_provider_health_check.json"), ("end_to_end", "end_to_end_validation.json"), ("preflight", "preflight_20.json"), ("stability", "stability_100.json"), ("projection", "runtime_projection.json")):
         _json_write(out / filename, gates.get(name, _empty_gate("NOT_RUN", reason)))
     source_ledger = REPO_ROOT / cfg["source_ledger"]
@@ -353,7 +388,7 @@ def run(config_path: Path = CONFIG, environ: dict[str, str] | None = None) -> di
     parent_hashes_after = {name: sha256_file(parent / name) for name in PARENT_FILES}
     if parent_hashes_before != parent_hashes_after:
         raise RuntimeError("Frozen Phase 8R6C evidence changed during continuation")
-    code, label = ("C", "PROVIDER VALID; FULL RUNTIME >30 MIN") if category == "RUNTIME_OVER_30_MIN" else _decision(category)
+    code, label = ("C", "PROVIDER VALID; FULL RUNTIME >30 MIN — AWAIT USER APPROVAL") if category == "RUNTIME_OVER_30_MIN" else _decision(category)
     if category == "COMPLETE":
         if final_counts["sealed_ready"]:
             code, label = "D", "ENRICHMENT COMPLETE; TRACK B READY"
