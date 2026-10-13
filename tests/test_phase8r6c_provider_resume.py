@@ -4,13 +4,16 @@ from __future__ import annotations
 import json
 from urllib.error import HTTPError
 
+import pandas as pd
 import pytest
+import yaml
 
 from src.experiments.phase6a import sha256_file
 from src.extension.phase8r6c_provider_resume import (
     GateFailure,
     Metrics,
     _http_category,
+    _load_approved_resume_state,
     _safe_error_message,
     creation_lookup,
     creation_schema,
@@ -97,16 +100,20 @@ def test_contract_identity_mismatch_stops(monkeypatch):
     assert failure.value.category == "IDENTITY_MISMATCH"
 
 
-def test_missing_environment_creates_audited_stop_without_changing_parent():
+def test_missing_environment_creates_audited_stop_without_changing_parent(tmp_path):
     parent = REPO_ROOT / "results/extension/phase8r6c"
     tracked = [parent / "phase8r6c_results.json", parent / "phase8r6c_report.md", parent / "provider_preflight.json"]
     before = [sha256_file(path) for path in tracked]
-    result = run(environ={})
+    config = yaml.safe_load((REPO_ROOT / "configs/extension/phase8r6c_provider_resume.yaml").read_text(encoding="utf-8"))
+    config["output_dir"] = tmp_path.as_posix()
+    config_path = tmp_path / "provider_resume.yaml"
+    config_path.write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
+    result = run(config_path=config_path, environ={})
     after = [sha256_file(path) for path in tracked]
     assert before == after
     assert result["decision"] == "A" and result["full_resume_occurred"] is False
     assert result["track_a_modified"] is False
-    output = parent / "provider_resume"
+    output = tmp_path
     ledger = json.loads((output / "ledger_audit.json").read_text(encoding="utf-8"))
     assert ledger["source_modified"] is False and len(ledger["source_sha256"]) == 64
 
@@ -115,6 +122,21 @@ def test_resumable_ledger_recognizes_only_verified_success(tmp_path):
     ledger = tmp_path / "ledger.csv"
     ledger.write_text(f"address,status\n{_address('1')},SUCCESS\n{_address('2')},RATE_LIMITED\n", encoding="utf-8")
     assert successful_ledger_addresses(ledger) == {_address("1")}
+
+
+def test_approved_resume_reuses_success_and_terminal_invalid_rows(tmp_path):
+    candidates = pd.DataFrame([
+        {"address": _address("1"), "label": 1, "sources": "one", "provenance": "A"},
+        {"address": _address("2"), "label": 0, "sources": "two", "provenance": "B"},
+        {"address": _address("3"), "label": 1, "sources": "three", "provenance": "B"},
+    ])
+    pd.DataFrame([{"address": _address("1"), "status": "SUCCESS", "created_block": 10}]).to_csv(tmp_path / "enriched_contracts.csv", index=False)
+    pd.DataFrame([{"address": _address("1"), "status": "SUCCESS"}]).to_csv(tmp_path / "enrichment_status.csv", index=False)
+    (tmp_path / "stability_100.json").write_text(json.dumps({"failures": [{"address": _address("2"), "status": "INVALID_CONTRACT", "error_type": "GateFailure"}]}), encoding="utf-8")
+    enriched, status = _load_approved_resume_state(tmp_path, candidates)
+    assert set(enriched.address) == {_address("1")}
+    assert dict(zip(status.address, status.status)) == {_address("1"): "SUCCESS", _address("2"): "INVALID_CONTRACT"}
+    assert _address("3") not in set(status.address)
 
 
 def test_no_model_training_scoring_or_sealed_label_access():

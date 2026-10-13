@@ -1,6 +1,9 @@
 {
-  "elapsed_seconds": 0,
-  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
-  "requests": 0,
-  "status": "NOT_RUN"
+  "addresses_checked": 2,
+  "http_status_distribution": {
+    "200": 2
+  },
+  "requests": 2,
+  "schema": "blockscout_v2",
+  "status": "PASS"
 }
