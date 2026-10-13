@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "representative_period": "P3",
+  "representative_candidate": "C3",
+  "preparation_seconds": 45.866836400004104,
+  "fit_seconds": 24.87203770002816,
+  "representative_runtime_seconds": 70.73887410003226,
+  "estimated_total_fits": 72,
+  "estimated_full_runtime_minutes": 7.267749360005837,
+  "estimated_output_size_mib": 30.0,
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "ram_gib": 15.708160400390625,
+  "gpu_status": "NVIDIA GeForce RTX 2050"
+}

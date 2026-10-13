@@ -26,6 +26,7 @@ from src.utils.paths import REPO_ROOT
 from .external_enrichment import candidate_rows
 from .external_normalization import normalize_address
 from .phase8r6b import conflict_audit
+from .successor_migration import verify_manifest_with_successor_migrations
 from .track_b_builder import internal_reference, seal
 
 
@@ -74,14 +75,7 @@ def _csv_write(frame: pd.DataFrame, path: Path) -> None:
 def verify_frozen_inputs(config: dict[str, Any]) -> dict[str, Any]:
     manifest_path = REPO_ROOT / config["frozen_manifest"]
     manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
-    verified = 0
-    for relative, expected in manifest["sha256"].items():
-        path = REPO_ROOT / relative
-        if not path.is_file():
-            raise FileNotFoundError(f"Frozen artifact missing: {relative}")
-        if sha256_file(path) != expected:
-            raise RuntimeError(f"Frozen artifact hash mismatch: {relative}")
-        verified += 1
+    verified = len(verify_manifest_with_successor_migrations(manifest_path))
 
     registry = manifest["external_source_registry"]
     registry_path = REPO_ROOT / registry["manifest_path"]

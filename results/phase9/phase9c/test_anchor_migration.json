@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "migration_date": "2026-10-13",
+  "authorized_by_successor_phase": "phase8r6d",
+  "scope": "successor_test_assertions_only",
+  "historical_artifacts_modified": false,
+  "track_b_membership_modified": false,
+  "track_b_labels_modified": false,
+  "reason": "Phase 8R6D legitimately established and sealed Track B after the historical Phase 8R6B and Phase 8R6C stopped states. Successor-aware tests must preserve those historical conclusions while enforcing default-deny label access.",
+  "changes": [
+    {
+      "test_file": "tests/test_phase8r6b.py",
+      "old_sha256": "5bbc31c26d7901cfb9eb01ad3471b4c4a402ffba56a5b7e34d062dc493df4973",
+      "new_sha256": "252790f110de8e4ef96c3b6833ed5886f5020a9fe5356244425cf701ef188e5a",
+      "old_assertion": "assert not (REPO_ROOT/\"data/external/track_b_sealed/labels.csv\").exists()",
+      "new_assertions": [
+        "assert sealed_labels.is_file()",
+        "load_sealed_labels(sealed_labels) raises PermissionError unless explicit final evaluation is enabled"
+      ]
+    },
+    {
+      "test_file": "tests/test_phase8r6c.py",
+      "old_sha256": "14aa27262a08e0791561175f7c12f66d5fcbf111120350c36f131d195a09d1df",
+      "new_sha256": "ae8871dd1673c16788a2c477dfbfb43cda39dd4081200393b733f179ff0cb303",
+      "old_assertion": "assert not (REPO_ROOT/\"data/external/track_b_sealed/labels.csv\").exists()",
+      "new_assertions": [
+        "assert sealed_labels.is_file()",
+        "load_sealed_labels(sealed_labels) raises PermissionError unless explicit final evaluation is enabled"
+      ],
+      "successor_verification": "The historical Phase 8R6B manifest remains unchanged; its verifier accepts only this record's exact old-to-new test hash transition."
+    }
+  ]
+}
