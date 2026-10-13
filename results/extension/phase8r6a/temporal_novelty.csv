@@ -1,0 +1,8 @@
+source_name,status,minimum_block,median_block,maximum_block,after_end_block,positive_after_end,benign_after_end,addresses_requiring_enrichment,required_fields,estimated_minimum_explorer_calls,expected_runtime_cost,free_public_endpoint_sufficient,reason
+xblock_current,not_computable,,,,,,,6483,"creation block,timestamp",6483,rate-limit/provider dependent; not bounded deterministically,False,6483 addresses require deterministic creation-block/timestamp enrichment
+blockchain_unica,not_computable,,,,,,,182,"creation block,timestamp",182,rate-limit/provider dependent; not bounded deterministically,False,182 addresses require deterministic creation-block/timestamp enrichment
+ctrf,not_computable,,,,,,,3884,"creation block,timestamp",3884,rate-limit/provider dependent; not bounded deterministically,False,3884 addresses require deterministic creation-block/timestamp enrichment
+ponzi_ml,not_computable,,,,,,,4373,"creation block,timestamp",4373,rate-limit/provider dependent; not bounded deterministically,False,4373 addresses require deterministic creation-block/timestamp enrichment
+ponziguard_verified,not_computable,,,,,,,50,"creation block,timestamp",50,rate-limit/provider dependent; not bounded deterministically,False,50 addresses require deterministic creation-block/timestamp enrichment
+ponziguard_predictions,not_computable,,,,,,,805,"creation block,timestamp",805,rate-limit/provider dependent; not bounded deterministically,False,805 addresses require deterministic creation-block/timestamp enrichment
+ponziguard_later_predictions,not_computable,,,,,,,31,"creation block,timestamp",31,rate-limit/provider dependent; not bounded deterministically,False,31 addresses require deterministic creation-block/timestamp enrichment

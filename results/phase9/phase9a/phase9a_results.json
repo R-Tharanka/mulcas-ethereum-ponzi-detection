@@ -54,12 +54,12 @@
       "period": "P2",
       "condition": "frozen",
       "deployability": "deployable_frozen_control",
-      "accuracy": 0.9439797704726707,
+      "accuracy": 0.9439797704726708,
       "balanced_accuracy": 0.6053486544883127,
-      "precision": 0.04924242424242424,
+      "precision": 0.0492424242424242,
       "recall": 0.26,
-      "f1": 0.08280254777070063,
-      "pr_auc": 0.046218232749443394,
+      "f1": 0.0828025477707006,
+      "pr_auc": 0.0462182327494433,
       "roc_auc": 0.6387841288548418,
       "tn": 4840,
       "fp": 251,
@@ -67,18 +67,24 @@
       "tp": 13,
       "support_negative": 5091,
       "support_positive": 50,
-      "creator_flag_count": 1
+      "creator_flag_count": 1,
+      "creator_flag_changed_count": 0.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P2",
       "condition": "oracle",
       "deployability": "non_deployable_true_label_online_oracle",
-      "accuracy": 0.9418401089282241,
+      "accuracy": 0.941840108928224,
       "balanced_accuracy": 0.6240718915733647,
-      "precision": 0.053763440860215055,
+      "precision": 0.053763440860215,
       "recall": 0.3,
       "f1": 0.0911854103343465,
-      "pr_auc": 0.056266378659810386,
+      "pr_auc": 0.0562663786598103,
       "roc_auc": 0.6896916126497741,
       "tn": 4827,
       "fp": 264,
@@ -86,7 +92,13 @@
       "tp": 15,
       "support_negative": 5091,
       "support_positive": 50,
-      "creator_flag_count": 69
+      "creator_flag_count": 69,
+      "creator_flag_changed_count": 68.0,
+      "prediction_change_count": 15.0,
+      "tp_delta": 2.0,
+      "fp_delta": 13.0,
+      "fn_delta": -2.0,
+      "tn_delta": -13.0
     },
     {
       "period": "P3",
@@ -105,7 +117,13 @@
       "tp": 7,
       "support_negative": 239,
       "support_positive": 50,
-      "creator_flag_count": 2
+      "creator_flag_count": 2,
+      "creator_flag_changed_count": 0.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P3",
@@ -124,7 +142,13 @@
       "tp": 7,
       "support_negative": 239,
       "support_positive": 50,
-      "creator_flag_count": 20
+      "creator_flag_count": 20,
+      "creator_flag_changed_count": 18.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P4",
@@ -143,7 +167,13 @@
       "tp": 46,
       "support_negative": 100,
       "support_positive": 50,
-      "creator_flag_count": 6
+      "creator_flag_count": 6,
+      "creator_flag_changed_count": 0.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P4",
@@ -162,26 +192,38 @@
       "tp": 46,
       "support_negative": 100,
       "support_positive": 50,
-      "creator_flag_count": 36
+      "creator_flag_count": 36,
+      "creator_flag_changed_count": 30.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P5",
       "condition": "frozen",
       "deployability": "deployable_frozen_control",
-      "accuracy": 0.9194499017681729,
+      "accuracy": 0.9194499017681728,
       "balanced_accuracy": 0.7064431179775281,
       "precision": 0.8709677419354839,
       "recall": 0.421875,
       "f1": 0.5684210526315789,
       "pr_auc": 0.6673582481680086,
-      "roc_auc": 0.9122893258426967,
+      "roc_auc": 0.9122893258426968,
       "tn": 441,
       "fp": 4,
       "fn": 37,
       "tp": 27,
       "support_negative": 445,
       "support_positive": 64,
-      "creator_flag_count": 11
+      "creator_flag_count": 11,
+      "creator_flag_changed_count": 0.0,
+      "prediction_change_count": 0.0,
+      "tp_delta": 0.0,
+      "fp_delta": 0.0,
+      "fn_delta": 0.0,
+      "tn_delta": 0.0
     },
     {
       "period": "P5",
@@ -193,14 +235,20 @@
       "recall": 0.46875,
       "f1": 0.6122448979591837,
       "pr_auc": 0.7269630054967879,
-      "roc_auc": 0.9255266853932583,
+      "roc_auc": 0.9255266853932584,
       "tn": 441,
       "fp": 4,
       "fn": 34,
       "tp": 30,
       "support_negative": 445,
       "support_positive": 64,
-      "creator_flag_count": 34
+      "creator_flag_count": 34,
+      "creator_flag_changed_count": 23.0,
+      "prediction_change_count": 3.0,
+      "tp_delta": 3.0,
+      "fp_delta": 0.0,
+      "fn_delta": -3.0,
+      "tn_delta": 0.0
     }
   ],
   "viewer_selection_oracle": {
@@ -7177,17 +7225,46 @@
       "xgboost_ngram_count_df_filtered": 250,
       "vote": 1
     },
+    "routing_percentages": {
+      "xgboost_ngram_count_df_filtered": 99.60159362549801,
+      "vote": 0.398406374501992
+    },
+    "accepted_stage_counts": {
+      "viewer_2": 250,
+      "voting": 1
+    },
     "previously_seen_creator_count": 5,
+    "repeated_creator_row_count": 92,
     "historical_opcode_clone_count": 0,
     "historical_runtime_clone_count": 0,
+    "unique_opcode_hash_count": 240,
+    "unique_runtime_hash_count": 243,
+    "repeated_opcode_cluster_count": 6,
+    "repeated_runtime_cluster_count": 3,
+    "largest_opcode_cluster": 5,
+    "largest_runtime_cluster": 5,
+    "rows_in_repeated_opcode_clusters": 17,
+    "rows_in_repeated_runtime_clusters": 11,
+    "fraction_in_repeated_opcode_clusters": 0.06772908366533864,
+    "fraction_in_repeated_runtime_clusters": 0.043824701195219126,
+    "score_quantiles": {
+      "min": 0.522352397441864,
+      "q25": 0.7276171147823334,
+      "median": 0.8539572358131409,
+      "q75": 0.9241108298301696,
+      "max": 0.9798744320869446
+    },
     "repeated_group_count": 45
   },
   "p2_membership_status": {
     "positive_count": "MATCH",
     "row_count": "NOT VERIFIABLE FROM PAPER",
-    "block_range": "NOT VERIFIABLE FROM PAPER",
+    "benign_count": "NOT VERIFIABLE FROM PAPER",
+    "first_block": "NOT VERIFIABLE FROM PAPER",
+    "last_block": "NOT VERIFIABLE FROM PAPER",
     "first_positive": "NOT VERIFIABLE FROM PAPER",
-    "last_positive": "NOT VERIFIABLE FROM PAPER"
+    "last_positive": "NOT VERIFIABLE FROM PAPER",
+    "same_block_boundary_behavior": "NOT VERIFIABLE FROM PAPER"
   },
   "phase8_conclusions_modified": false,
   "retained_reference": "phase5.5_mulcas",
@@ -7200,6 +7277,294 @@
     "observed_elapsed_lower_bound_seconds": 2220.0,
     "runtime_gate_seconds": 1800.0,
     "reason": "The representative XGBoost estimate passed, but the complete fixed pool remained unfinished after 37 minutes because the estimate did not capture the slow SVM/high-dimensional-view combination. The run was stopped and no partial candidate ranking is reported.",
-    "full_replay_status": "not_reproducible_from_available_specification"
-  }
+    "full_replay_status": "not_reproducible_from_available_specification",
+    "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "ram": "not_recorded_in_original_preflight",
+    "representative_candidate": "xgboost__opcode_ngram_count_1_3_df_filtered",
+    "representative_fit_seconds": "not_retained_in_original_preflight",
+    "estimated_total_seconds": "not_retained_in_original_preflight"
+  },
+  "ngram_dimension_audit": [
+    {
+      "corpus": "P0-P3",
+      "ngram_range": "1-1",
+      "row_count": 5839,
+      "paper_before_selection": 141,
+      "observed_before_selection": 142,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 77,
+      "observed_min_df_2": 142,
+      "exact_integer_cutoffs": "869;870;871;872;873;874;875;876;877;878;879;880;881;882;883;884;885;886;887;888;889;890;891;892;893;894;895;896;897",
+      "nearest_integer_cutoff": 869,
+      "nearest_dimension": 77,
+      "nearest_dimension_delta": 0,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    },
+    {
+      "corpus": "P0-P3",
+      "ngram_range": "1-2",
+      "row_count": 5839,
+      "paper_before_selection": 7211,
+      "observed_before_selection": 13623,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 767,
+      "observed_min_df_2": 8717,
+      "exact_integer_cutoffs": NaN,
+      "nearest_integer_cutoff": 628,
+      "nearest_dimension": 766,
+      "nearest_dimension_delta": -1,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    },
+    {
+      "corpus": "P0-P3",
+      "ngram_range": "1-3",
+      "row_count": 5839,
+      "paper_before_selection": 52532,
+      "observed_before_selection": 82301,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 2292,
+      "observed_min_df_2": 44671,
+      "exact_integer_cutoffs": NaN,
+      "nearest_integer_cutoff": 602,
+      "nearest_dimension": 2293,
+      "nearest_dimension_delta": 1,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    },
+    {
+      "corpus": "P0-P4",
+      "ngram_range": "1-1",
+      "row_count": 5989,
+      "paper_before_selection": 141,
+      "observed_before_selection": 142,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 77,
+      "observed_min_df_2": 142,
+      "exact_integer_cutoffs": "913;914;915;916;917;918;919;920;921;922;923;924;925;926;927;928;929;930;931;932;933;934;935;936;937;938;939;940;941;942;943;944;945;946;947;948;949;950;951;952;953;954;955;956;957;958;959;960;961;962;963;964;965;966",
+      "nearest_integer_cutoff": 913,
+      "nearest_dimension": 77,
+      "nearest_dimension_delta": 0,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    },
+    {
+      "corpus": "P0-P4",
+      "ngram_range": "1-2",
+      "row_count": 5989,
+      "paper_before_selection": 7211,
+      "observed_before_selection": 13751,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 767,
+      "observed_min_df_2": 8817,
+      "exact_integer_cutoffs": "644",
+      "nearest_integer_cutoff": 644,
+      "nearest_dimension": 767,
+      "nearest_dimension_delta": 0,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    },
+    {
+      "corpus": "P0-P4",
+      "ngram_range": "1-3",
+      "row_count": 5989,
+      "paper_before_selection": 52532,
+      "observed_before_selection": 83277,
+      "raw_dimension_status": "MISMATCH",
+      "paper_after_selection": 2292,
+      "observed_min_df_2": 45103,
+      "exact_integer_cutoffs": NaN,
+      "nearest_integer_cutoff": 612,
+      "nearest_dimension": 2291,
+      "nearest_dimension_delta": -1,
+      "paper_df_wording": "discard document frequency less than 0.1; formula semantics under-specified",
+      "classifier_trained": false
+    }
+  ],
+  "p2_membership_audit": [
+    {
+      "check": "positive_count",
+      "observed": 50,
+      "paper_value": 50.0,
+      "status": "MATCH",
+      "note": "Paper defines each P0-P4 interval by 50 chronological Ponzi contracts."
+    },
+    {
+      "check": "row_count",
+      "observed": 5141,
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "Paper does not list P2 benign-row membership."
+    },
+    {
+      "check": "benign_count",
+      "observed": 5091,
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "Paper does not list P2 benign-row membership."
+    },
+    {
+      "check": "first_block",
+      "observed": 2008140,
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "Derived from released CSV with whole-block boundaries."
+    },
+    {
+      "check": "last_block",
+      "observed": 4963650,
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "Derived from released CSV with whole-block boundaries."
+    },
+    {
+      "check": "first_positive",
+      "observed": "0x143e8bd26d95b230680c25300f93ef56f86eccac@2129975#row_521",
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "First-principles reconstruction evidence."
+    },
+    {
+      "check": "last_positive",
+      "observed": "0xe3f64dc522a66405c51d96aae234217a03502bb4@4963650#row_5549",
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "First-principles reconstruction evidence."
+    },
+    {
+      "check": "same_block_boundary_behavior",
+      "observed": "all rows at each positive boundary block remain in the same period",
+      "paper_value": NaN,
+      "status": "NOT VERIFIABLE FROM PAPER",
+      "note": "Frozen whole-block policy; no block is split across periods."
+    }
+  ],
+  "protocol_evidence": [
+    {
+      "protocol_item": "training coverage",
+      "paper_evidence": "Table 5 training covers the first 250 chronological Ponzi contracts.",
+      "source": "local paper PDF Section 5.2.2, Table 5",
+      "reconstruction_policy": "Phase 7A P5 trains on P0-P4; Phase 5.5 stops at P3 and reserves P4.",
+      "difference": "Phase 7A matches the reported positive-history coverage more closely.",
+      "reproducible_in_9a": true,
+      "diagnostic_type": "D1 descriptive frozen-control comparison",
+      "deployable": true
+    },
+    {
+      "protocol_item": "creator-state update",
+      "paper_evidence": "Creator vector is chronological and may expand with upcoming labeled Ponzi contracts.",
+      "source": "local paper PDF pages 16-17, Algorithm 1",
+      "reconstruction_policy": "Evaluation state is frozen from historical training labels.",
+      "difference": "Target-period true-label updates are excluded from controls.",
+      "reproducible_in_9a": true,
+      "diagnostic_type": "D2 true-label online creator oracle",
+      "deployable": false
+    },
+    {
+      "protocol_item": "viewer selection",
+      "paper_evidence": "Best model for each feature is selected on the test set; five final models are claimed but only four are enumerated.",
+      "source": "local paper PDF page 17, Section 4.3",
+      "reconstruction_policy": "Viewer choice uses validation/forward data and a frozen four-viewer mapping.",
+      "difference": "Test-label selection is non-deployable; the full paper mapping/order is under-specified.",
+      "reproducible_in_9a": false,
+      "diagnostic_type": "D3 candidate oracle runtime-gated; full replay unavailable",
+      "deployable": false
+    },
+    {
+      "protocol_item": "N-gram filtering",
+      "paper_evidence": "N-grams with document frequency less than 0.1 are discarded; Table 3 reports 77/767/2292 selected dimensions.",
+      "source": "local paper PDF pages 13-14, Section 4.2.1/Table 3",
+      "reconstruction_policy": "Whitespace opcode tokenization and integer min_df=2.",
+      "difference": "Formula semantics are under-specified and dimensions differ.",
+      "reproducible_in_9a": true,
+      "diagnostic_type": "dimension-only audit",
+      "deployable": true
+    },
+    {
+      "protocol_item": "period row membership",
+      "paper_evidence": "Table 5 reports 5,990 train and 508 test rows; P2 benign membership is not reported.",
+      "source": "local paper PDF Sections 5.2.1-5.2.2, Tables 4-5",
+      "reconstruction_policy": "Whole-block positive-occurrence boundaries yield 5,989/509.",
+      "difference": "One-row Table-5 boundary difference; exact P2 benign comparison is not verifiable.",
+      "reproducible_in_9a": true,
+      "diagnostic_type": "membership audit",
+      "deployable": true
+    },
+    {
+      "protocol_item": "cascade thresholds",
+      "paper_evidence": "Algorithm 2 describes theta and reports a commonly used value of 0.05; complete per-stage asymmetric thresholds are not specified.",
+      "source": "local paper PDF pages 17-18, Section 4.4/Algorithm 2",
+      "reconstruction_policy": "Frozen N=2 cascade uses 0.05/0.95 then 0.05/0.51.",
+      "difference": "Paper-exact per-stage threshold mapping is under-specified.",
+      "reproducible_in_9a": false,
+      "diagnostic_type": "frozen mechanics only; no threshold search",
+      "deployable": true
+    },
+    {
+      "protocol_item": "voting rule",
+      "paper_evidence": "All viewers vote on residual rows and lambda controls the decision.",
+      "source": "local paper PDF pages 17-18, Section 4.4/Algorithm 2",
+      "reconstruction_policy": "Frozen voting threshold lambda=0.",
+      "difference": "No change is permitted in Phase 9A.",
+      "reproducible_in_9a": true,
+      "diagnostic_type": "frozen mechanic",
+      "deployable": true
+    },
+    {
+      "protocol_item": "auxiliary-bytecode handling",
+      "paper_evidence": "Auxiliary bytecode fragment is discarded.",
+      "source": "local paper PDF page 10, Section 3.2",
+      "reconstruction_policy": "Paper-aligned baseline consumes released opcode; later diagnostic parsers retain complete contractCode.",
+      "difference": "Exact preprocessing equivalence cannot be established from released material.",
+      "reproducible_in_9a": false,
+      "diagnostic_type": "evidence audit only",
+      "deployable": true
+    }
+  ],
+  "p5_decomposition": [
+    {
+      "decomposition": "D0A",
+      "system": "Phase 5.5 frozen P5",
+      "precision": 0.90625,
+      "recall": 0.453125,
+      "f1": 0.6041666666666666,
+      "pr_auc": 0.6624476140288026,
+      "balanced_accuracy": 0.723191713483146,
+      "tn": 442.0,
+      "fp": 3.0,
+      "fn": 35.0,
+      "tp": 29.0,
+      "interpretation": "frozen reference; trained through P3"
+    },
+    {
+      "decomposition": "D0B",
+      "system": "Phase 7A incremental P5",
+      "precision": 0.8709677419354839,
+      "recall": 0.421875,
+      "f1": 0.5684210526315789,
+      "pr_auc": 0.6673582481680086,
+      "balanced_accuracy": 0.7064431179775281,
+      "tn": 441.0,
+      "fp": 4.0,
+      "fn": 37.0,
+      "tp": 27.0,
+      "interpretation": "primary decomposition control; trained through P4"
+    },
+    {
+      "decomposition": "D1",
+      "system": "D0B minus D0A",
+      "precision": -0.035282258064516125,
+      "recall": -0.03125,
+      "f1": -0.03574561403508769,
+      "pr_auc": 0.004910634139206005,
+      "balanced_accuracy": -0.016748595505617914,
+      "tn": -1.0,
+      "fp": 1.0,
+      "fn": 2.0,
+      "tp": -2.0,
+      "interpretation": "descriptive training-history/protocol-coverage difference; not a causal P4 effect"
+    }
+  ],
+  "gap_classification": "C_little_protocol_explanation_completed_diagnostics_only_D3_D4_unavailable"
 }

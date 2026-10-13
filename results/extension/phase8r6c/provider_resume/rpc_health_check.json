@@ -1,0 +1,6 @@
+{
+  "elapsed_seconds": 0,
+  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
+  "requests": 0,
+  "status": "NOT_RUN"
+}

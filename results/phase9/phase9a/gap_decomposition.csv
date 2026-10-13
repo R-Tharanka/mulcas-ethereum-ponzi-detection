@@ -1,3 +1,10 @@
-metric,published,D0B,D4,gap_closed_fraction,status
-recall,0.674,0.421875,,,N/A_D4_unavailable
-f1,0.789,0.5684210526315789,,,N/A_D4_unavailable
+metric,published,D0B,D1,D2,D3,D4,delta_D1_from_D0B,delta_D2_from_D0B,delta_D3_from_D0B,delta_D4_from_D0B,D2_gap_closed_fraction,gap_closed_fraction,status
+precision,0.951,0.8709677419354839,-0.0352822580645161,0.8823529411764706,,,-0.0352822580645161,0.0113851992409866,,,,,N/A_D4_unavailable
+recall,0.674,0.421875,-0.03125,0.46875,,,-0.03125,0.046875,,,0.18591968269707485,,N/A_D4_unavailable
+f1,0.789,0.5684210526315789,-0.0357456140350876,0.6122448979591837,,,-0.0357456140350876,0.0438238453276047,,,0.19867646414328086,,N/A_D4_unavailable
+pr_auc,,0.6673582481680086,0.004910634139206,0.7269630054967879,,,0.004910634139206,0.0596047573287793,,,,,N/A_D4_unavailable
+balanced_accuracy,,0.7064431179775281,-0.0167485955056179,0.7298806179775281,,,-0.0167485955056179,0.0234375,,,,,N/A_D4_unavailable
+tn,,441.0,-1.0,441.0,,,-1.0,0.0,,,,,N/A_D4_unavailable
+fp,,4.0,1.0,4.0,,,1.0,0.0,,,,,N/A_D4_unavailable
+fn,,37.0,2.0,34.0,,,2.0,-3.0,,,,,N/A_D4_unavailable
+tp,,27.0,-2.0,30.0,,,-2.0,3.0,,,,,N/A_D4_unavailable

@@ -11,6 +11,7 @@ import pandas as pd
 from src.experiments.phase6a import verify_frozen_manifest
 from src.phase9.creator_oracle import online_true_label_creator_flags
 from src.phase9.protocol_gap import load_config, verify_inputs
+from src.phase9.viewer_selection_oracle import MODEL_ORDER, VIEW_ORDER
 from src.utils.paths import REPO_ROOT
 
 
@@ -63,6 +64,31 @@ def test_creator_oracle_is_explicitly_non_deployable_and_replay_exact() -> None:
     assert set(metrics.loc[metrics["condition"] == "oracle", "deployability"]) == {
         "non_deployable_true_label_online_oracle"
     }
+    required = {
+        "creator_flag_changed_count", "prediction_change_count",
+        "tp_delta", "fp_delta", "fn_delta", "tn_delta",
+    }
+    assert required.issubset(metrics.columns)
+    changed = pd.read_csv(OUTPUT / "creator_oracle_changed_rows.csv")
+    assert {
+        "frozen_route", "oracle_route", "frozen_relevant_viewer_score",
+        "oracle_relevant_viewer_score",
+    }.issubset(changed.columns)
+
+
+def test_candidate_pool_and_oracle_rules_are_predeclared() -> None:
+    config = load_config()
+    pool = config["candidate_viewer_pool"]
+    assert pool["frozen_before_p5_scoring"] is True
+    assert tuple(pool["model_families"]) == MODEL_ORDER
+    assert tuple(pool["feature_views"]) == VIEW_ORDER
+    assert config["viewer_selection_ranking"]["tie_break"] == [
+        "precision", "recall", "frozen_candidate_order"
+    ]
+    oracle = config["creator_oracle"]
+    assert oracle["update_timing"] == "after_prediction"
+    assert oracle["same_block_update_policy"] == "commit_after_entire_block"
+    assert oracle["model_predictions_update_state"] is False
 
 
 def test_viewer_selection_partial_results_are_not_ranked() -> None:
@@ -97,6 +123,9 @@ def test_p2_false_positive_inventory_reconciles() -> None:
     assert set(rows["error_type"]) == {"false_positive"}
     assert rows["normalized_opcode_sha256"].str.len().eq(64).all()
     assert rows["normalized_runtime_sha256"].str.len().eq(64).all()
+    assert set(rows["accepted_stage"]).issubset({"viewer_1", "viewer_2", "voting"})
+    groups = pd.read_csv(OUTPUT / "p2_fp_groups.csv")
+    assert {"score_min", "score_max", "representative_route"}.issubset(groups.columns)
 
 
 def test_p2_membership_and_track_a_governance() -> None:
@@ -121,3 +150,27 @@ def test_all_required_outputs_exist() -> None:
         "gap_decomposition.csv", "runtime_preflight.json", "phase9a_report.md",
     }
     assert {path.name for path in OUTPUT.iterdir()} == required
+
+
+def test_report_has_required_structure_and_interpretation_language() -> None:
+    report = (OUTPUT / "phase9a_report.md").read_text(encoding="utf-8")
+    for section in range(1, 19):
+        assert f"## {section}." in report
+    assert "not an improved detector evaluation" in report
+    assert "deliberately non-deployable" in report
+    assert "Closer agreement under a paper-permissive replay would not prove" in report
+    assert "Failure to reproduce the published result even under the permissive replay" in report
+    assert "Recommendation A" in report
+
+
+def test_protocol_evidence_uses_required_schema() -> None:
+    evidence = pd.read_csv(OUTPUT / "protocol_evidence.csv")
+    assert {
+        "protocol_item", "paper_evidence", "reconstruction_policy", "difference",
+        "reproducible_in_9a", "diagnostic_type", "deployable",
+    }.issubset(evidence.columns)
+    assert {
+        "training coverage", "creator-state update", "viewer selection",
+        "N-gram filtering", "period row membership", "cascade thresholds",
+        "voting rule", "auxiliary-bytecode handling",
+    } == set(evidence["protocol_item"])

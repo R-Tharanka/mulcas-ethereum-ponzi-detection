@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "models_trained": false,
+  "p5_evaluated": false,
+  "frozen_anchors_verified": 9,
+  "recursive_prior_verification": {
+    "verified": true,
+    "phase0_to_phase8r5c1_anchor_count": 199,
+    "phase8_closure_anchor_count": 11,
+    "total_verification_events": 210,
+    "raw_dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+    "checkpoint_count": 9,
+    "embedding_artifact_count": 18
+  },
+  "track_a_status": "previously_observed_exploratory",
+  "track_b_established": false,
+  "best_candidate_source": "blockchain_unica",
+  "best_candidate_rating": "MODERATE",
+  "genuinely_new_positive_count": 65,
+  "genuinely_later_positive_count": null,
+  "usable_benign_count": 0,
+  "strict_overlap_free_positive_count": null,
+  "label_provenance_class": "A",
+  "manual_verification_required": true,
+  "sealed_set_ready": false,
+  "next_recommended_phase": "external_data_enrichment",
+  "decision": "B. EXTERNAL DATA ENRICHMENT / MANUAL VERIFICATION FIRST",
+  "normalization": {
+    "address": "lowercase_0x_40_hex",
+    "bytecode": "lowercase_hex_without_0x_or_whitespace",
+    "opcode": "collapse_whitespace_preserve_token_case",
+    "digest": "sha256_utf8_normalized_value"
+  },
+  "source_count": 8,
+  "retrieved_file_count": 5218,
+  "constraints": {
+    "models_trained": false,
+    "p5_evaluation": "prohibited",
+    "external_labels_in_model_development": "prohibited"
+  },
+  "promising_curated_source": {
+    "source_name": "ponzi_ml",
+    "new_positive": 537,
+    "new_benign": 927,
+    "rating": "NONE_until_temporal_metadata_and_strict_overlap_are_resolved"
+  }
+}

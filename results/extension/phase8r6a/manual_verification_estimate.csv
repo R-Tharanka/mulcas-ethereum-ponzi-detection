@@ -1,0 +1,8 @@
+source_name,candidate_count,suspected_ponzi,evidence_fields_available,approximate_review_burden,manual_verification_feasible
+xblock_current,6483,314,"address, code",>100 (6483),bounded sample
+blockchain_unica,182,184,address only/source where applicable,>100 (182),bounded sample
+ctrf,3884,298,"address, code",>100 (3884),bounded sample
+ponzi_ml,4373,673,"address, code",>100 (4373),bounded sample
+ponziguard_verified,50,50,address only/source where applicable,31-100 (50),yes
+ponziguard_predictions,805,805,address only/source where applicable,>100 (805),bounded sample
+ponziguard_later_predictions,31,31,address only/source where applicable,31-100 (31),yes

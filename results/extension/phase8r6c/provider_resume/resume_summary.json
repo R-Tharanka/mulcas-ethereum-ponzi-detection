@@ -1,0 +1,19 @@
+{
+  "decision": "A",
+  "decision_label": "PROVIDER CONFIGURATION INVALID",
+  "detectors_evaluated": false,
+  "enriched_count": 0,
+  "full_resume_occurred": false,
+  "later_benign_count": 0,
+  "later_positive_count": 0,
+  "models_trained": false,
+  "mulcas_ready_count": 0,
+  "parent_results_preserved": true,
+  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
+  "sealed_ready": false,
+  "status": "MISSING_CONFIGURATION",
+  "track_a_modified": false,
+  "track_b_provisional_count": 0,
+  "track_b_rating": "NONE",
+  "track_b_strict_count": 0
+}

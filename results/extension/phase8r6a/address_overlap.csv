@@ -1,0 +1,9 @@
+source_name,candidate_total_rows,candidate_unique_addresses,positive_addresses,benign_addresses,unknown_label_addresses,exact_address_overlap,overlap_pct_candidate,overlap_pct_current,positive_address_overlap,benign_address_overlap,external_ponzi_internal_benign,external_benign_internal_ponzi,genuinely_new_unique_addresses,duplicate_address_rows,conflicting_internal_duplicate_labels,deduplicated_unambiguous_addresses,status,reason
+xblock_current,6498,6483,314,6184,0,6483,100.0,100.0,314,6184,15,15,0,15,15,6468,,
+blockchain_unica,184,182,182,0,0,117,64.285714,1.80472,115,0,2,0,65,2,0,182,,
+ctrf,3884,3884,298,3586,0,3721,95.803296,57.396267,134,3585,2,0,163,0,0,3884,,
+ponzi_ml,4422,4373,673,3713,0,2909,66.521839,44.871202,103,2784,34,2,1464,49,13,4360,,
+ponziguard_verified,50,50,50,0,0,41,82.0,0.632423,37,0,4,0,9,0,0,50,,
+ponziguard_predictions,805,805,805,0,0,165,20.496894,2.545118,77,0,88,0,640,0,0,805,,
+ponziguard_later_predictions,31,31,31,0,0,0,0.0,0.0,0,0,0,0,31,0,0,31,,
+ponziguard_ground_truth_archives,,,,,,,,,,,,,,,,,metadata_only,no address-resolved rows available

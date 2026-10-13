@@ -1,0 +1,39 @@
+{
+  "status": "stopped_after_provider_rate_limit_invalidated_projection",
+  "sample_count": 20,
+  "positive_count": 10,
+  "benign_count": 10,
+  "fully_successful": 9,
+  "creation_success": 9,
+  "runtime_success": 9,
+  "observed_requests": 29,
+  "elapsed_seconds": 13.341,
+  "average_seconds_per_address": 0.667,
+  "projected_candidate_count": 1490,
+  "projected_requests": 2980,
+  "projected_minutes": 16.57,
+  "projected_disk_mb": 75,
+  "approval_required": true,
+  "performance_gate_stopped": true,
+  "full_run_attempted_before_stop": 8,
+  "full_run_success_before_stop": 0,
+  "full_run_http_429_failures": 8,
+  "revised_projected_minutes_lower_bound": 149.0,
+  "recommended_batching": "credentialed reputable provider or <=100-address scheduled batches after documented cooldown; rerun preflight before continuation",
+  "note": "Measured deterministic lexicographic sample on 2026-10-13; the full run was stopped immediately when repeated HTTP 429 responses made the projection exceed 30 minutes.",
+  "candidate_count": 1490,
+  "actual_run": {
+    "attempted_this_run": 0,
+    "elapsed_seconds": 0,
+    "successful_this_run": 0
+  },
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "pyyaml": "6.0.3",
+    "operating_system": "Windows-10-10.0.26200-SP0",
+    "repository_root": "D:\\ALT IN ONE\\mulcas-ethereum-ponzi-detection"
+  },
+  "provider_versions": "Blockscout v1-compatible contract API; Ethereum JSON-RPC per EIP-1474"
+}

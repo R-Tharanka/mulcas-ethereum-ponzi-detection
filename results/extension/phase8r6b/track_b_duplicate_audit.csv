@@ -1,0 +1,5 @@
+identity,available_rows,unique_values,duplicate_rows,policy
+address,0,0,0,PRIMARY_ALL_UNIQUE_ADDRESS; deterministic first-address sensitivity view
+runtime_hash,0,0,0,PRIMARY_ALL_UNIQUE_ADDRESS; deterministic first-address sensitivity view
+opcode_hash,0,0,0,PRIMARY_ALL_UNIQUE_ADDRESS; deterministic first-address sensitivity view
+creation_hash,0,0,0,PRIMARY_ALL_UNIQUE_ADDRESS; deterministic first-address sensitivity view

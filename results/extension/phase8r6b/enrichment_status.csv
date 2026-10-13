@@ -1,0 +1,9 @@
+address,status,attempts,last_provider,last_retrieval_time,error_reason,successful_fields
+0x0000000000085d4780b73119b644ae5ecd22b376,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x00000000016697fa9a9c8e2889e28d3d9816a078,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x0000000006adbd7c01bc0738cdbfc3932600ad63,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x0000000053d411becdb4a82d8603edc6d8b8b3bc,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x0000000f8ef4be2b7aed6724e893c1b674b9682d,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x000005edbbc1f258302add96b5e20d3442e5dd89,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x00073ce45a555f14fb4128c7bbfc776ee061d2da,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,
+0x00155b088ac98fc566bcde94ac340e9e7b3a5a0d,failed,3,Blockscout + PublicNode JSON-RPC,2026-10-13,HTTPError: HTTP Error 429: Too Many Requests,

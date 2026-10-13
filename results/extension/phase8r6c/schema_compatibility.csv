@@ -1,0 +1,13 @@
+field_or_status,eligible_enriched_rows,available_count,available_percent,reason
+address,0,0,0.0,no verified enrichment; provider configuration required
+label,0,0,0.0,no verified enrichment; provider configuration required
+block,0,0,0.0,no verified enrichment; provider configuration required
+timestamp,0,0,0.0,no verified enrichment; provider configuration required
+creator,0,0,0.0,no verified enrichment; provider configuration required
+contractCode,0,0,0.0,no verified enrichment; provider configuration required
+opcode,0,0,0.0,no verified enrichment; provider configuration required
+creationCode,0,0,0.0,no verified enrichment; provider configuration required
+transaction_hash,0,0,0.0,no verified enrichment; provider configuration required
+MULCAS_READY,0,0,0.0,no verified enrichment; provider configuration required
+STATIC_RUNTIME_READY,0,0,0.0,no verified enrichment; provider configuration required
+CREATION_CODE_READY,0,0,0.0,no verified enrichment; provider configuration required

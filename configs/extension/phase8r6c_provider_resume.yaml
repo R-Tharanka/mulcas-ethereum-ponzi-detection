@@ -1,0 +1,29 @@
+phase: 8R6C_PROVIDER_RESUME
+parent_config: configs/extension/phase8r6c.yaml
+parent_results: results/extension/phase8r6c
+output_dir: results/extension/phase8r6c/provider_resume
+internal_dataset: data/raw/PonziDataset_20221114.csv
+ponzi_ml_source: data/external/raw/ponzi_ml/dataset/dataset.csv
+unica_source: data/external/raw/blockchain_unica/ponzi-addresses.csv
+source_ledger: data/external/enrichment/phase8r6b_ledger.csv
+environment:
+  rpc_url: ETH_RPC_URL
+  creation_url: BLOCKSCOUT_API_URL
+  creation_key: BLOCKSCOUT_API_KEY
+provider:
+  accepted_creation_schemas: [blockscout_v2, blockscout_etherscan_compatible]
+  request_timeout_seconds: 20
+  maximum_attempts: 3
+  backoff_seconds: 1
+  sustained_failure_count: 2
+preflight: {positive_count: 10, benign_count: 10}
+stability: {positive_count: 50, benign_count: 50}
+performance_gate_minutes: 30
+temporal_boundary_block: 7136486
+constraints:
+  expected_chain_id: 1
+  preserve_parent_results: true
+  models_trained: false
+  detectors_evaluated: false
+  phase9b_started: false
+  track_a_modified: false
