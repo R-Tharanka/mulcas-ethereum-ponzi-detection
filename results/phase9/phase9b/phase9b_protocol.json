@@ -1,0 +1,12 @@
+{
+  "detectors_evaluated": false,
+  "models_trained": false,
+  "p5_evaluated": false,
+  "phase9c_started": false,
+  "protocol_config": "configs/phase9/phase9b.yaml",
+  "protocol_config_sha256": "400cb7675f6a0e56848609d25a586e60f0089019c7be2962e734ee8b19b8efd5",
+  "status": "frozen",
+  "track_b_labels_loaded": false,
+  "track_b_predictions_loaded": false,
+  "track_b_status_at_freeze": "sealed_available"
+}

@@ -1,0 +1,104 @@
+phase: 9C
+status: preregistered
+hypothesis: >-
+  Deployment-available historical creator state and historical code-family
+  similarity improve forward temporal Ponzi detection relative to frozen
+  MulCas under the prospective Phase 9B evaluation protocol.
+dataset: data/raw/PonziDataset_20221114.csv
+dataset_sha256: 48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+phase9b_config: configs/phase9/phase9b.yaml
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+test_anchor_migration: results/extension/phase8r6d/test_anchor_migration.json
+output_dir: results/phase9/phase9c
+artifact_dir: artifacts/phase9c
+seed: 42
+candidates:
+  C0: frozen_mulcas_control
+  C1: creator_state_only
+  C2: code_family_only
+  C3: creator_and_code_family
+creator_features:
+  columns:
+    - prior_contract_count
+    - prior_verified_ponzi_count
+    - prior_verified_ponzi_flag
+    - creator_ponzi_rate
+    - blocks_since_creator_last_deployment
+    - prior_creator_positive_recency
+  log1p_columns:
+    - prior_contract_count
+    - prior_verified_ponzi_count
+    - blocks_since_creator_last_deployment
+    - prior_creator_positive_recency
+  no_history_block_sentinel: 7136487
+  target_label_updates: prohibited
+  target_label_free_activity_updates: strictly_earlier_blocks_only
+family_features:
+  representation: frozen_filtered_opcode_ngram_tfidf
+  columns:
+    - max_similarity_prior_ponzi
+    - max_similarity_prior_benign
+    - similarity_margin
+    - nearest_prior_label
+    - count_prior_ponzi_similarity_ge_0_90
+    - count_prior_all_similarity_ge_0_90
+  log1p_columns:
+    - count_prior_ponzi_similarity_ge_0_90
+    - count_prior_all_similarity_ge_0_90
+  similarity_threshold: 0.90
+  tie_policy: benign_when_equal
+  target_labeled_reference: historical_training_only
+  target_unlabeled_reference: historical_training_plus_strictly_earlier_target_blocks
+temporal_protocol:
+  whole_creation_blocks: true
+  same_block_updates: prohibited
+  scenarios:
+    - {train_periods: [P0, P1], prediction_period: P2}
+    - {train_periods: [P0, P1, P2], prediction_period: P3}
+    - {train_periods: [P0, P1, P2, P3], prediction_period: P4}
+  p5_evaluation: prohibited
+metrics:
+  primary: [pooled_prequential_pr_auc, pooled_prequential_f1, recall_at_reference_fpr_ceiling]
+  secondary: [balanced_accuracy, roc_auc, per_period_precision, per_period_recall, per_period_f1, prevalence_standardized_precision]
+  reference_fpr_ceiling: 0.049539594843462244
+  reference_prevalence: 0.048322560787934746
+  fpr_constrained_policy: maximum_recall_at_observed_score_threshold_with_fpr_at_or_below_ceiling
+bootstrap:
+  replicates: 2000
+  seed: 42
+  resampling_unit: contract_row
+advancement:
+  pooled_f1_relation: strictly_greater
+  pr_auc_maximum_absolute_degradation: 0.01
+  fpr_maximum: 0.049539594843462244
+  minimum_periods_with_nonnegative_f1_delta: 2
+  maximum_allowed_single_period_f1_degradation: 0.02
+selection:
+  order: [pooled_f1, pooled_pr_auc, pooled_recall, simpler_feature_set]
+  effective_tie_f1: 0.002
+  simplicity_order: [C1, C2, C3]
+performance_gate:
+  representative_period: P3
+  representative_candidate: C3
+  maximum_estimated_runtime_minutes: 30
+track_b:
+  sealed_labels_path: data/external/track_b_sealed/labels.csv
+  access_permission: disabled
+  fitting: prohibited
+  scoring: prohibited
+  prediction_inspection: prohibited
+  metrics: prohibited
+constraints:
+  model_families: frozen
+  cascade_thresholds: frozen
+  voting_lambda: frozen
+  viewer_order: frozen
+  threshold_search: prohibited
+  calibration: prohibited
+  phase8_reopening: prohibited
+  phase9d_start: prohibited

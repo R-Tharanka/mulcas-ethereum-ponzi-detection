@@ -1,0 +1,101 @@
+phase: 9B
+status: frozen_protocol_only
+research_question: To what extent can deployment-available historical state, code-family
+  similarity, and calibrated cascade routing improve forward temporal Ponzi detection
+  under a leakage-safe prospective protocol, and does the final frozen system generalize
+  to a sealed external later-time benchmark?
+development_data:
+  dataset: Track A only
+  periods:
+  - P2
+  - P3
+  - P4
+  expanding_predictions:
+  - P0+P1 -> P2
+  - P0-P2 -> P3
+  - P0-P3 -> P4
+  p5_status: previously_observed_exploratory_only_not_for_selection
+  track_b_labels_available_to_development: false
+primary_metrics:
+- pooled_prequential_pr_auc
+- pooled_prequential_f1
+- recall_at_reference_fpr_ceiling
+secondary_metrics:
+- balanced_accuracy
+- roc_auc
+- per_period_precision
+- per_period_recall
+- per_period_f1
+- prevalence_standardized_precision
+prevalence_standardization:
+  reference_prevalence_numerator: 314
+  reference_prevalence_denominator: 6498
+  reference_prevalence: 0.048322560787934746
+  formula: PPV(pi)=(TPR*pi)/(TPR*pi+FPR*(1-pi))
+  sole_selection_criterion: false
+frozen_mulcas_reference:
+  pooled_forward_periods:
+  - P2
+  - P3
+  - P4
+  tn: 5161
+  fp: 269
+  fn: 84
+  tp: 66
+  fpr: 0.049539594843462244
+  fpr_ceiling: 0.049539594843462244
+  fpr_ceiling_basis: frozen_mulcas_pooled_forward_fpr
+uncertainty:
+  method: contract_level_paired_bootstrap_within_pooled_forward_predictions
+  replicates: 2000
+  seed: 42
+  report:
+  - delta_f1_ci
+  - delta_pr_auc_ci
+  - delta_recall_ci_where_applicable
+  track_b_used_for_selection: false
+advancement_rule:
+  pooled_f1_minimum_delta: 0.0
+  pooled_f1_relation: strictly_greater_than_frozen_mulcas
+  pr_auc_maximum_absolute_degradation: 0.01
+  fpr_maximum: 0.049539594843462244
+  temporal_breadth:
+    minimum_periods_with_nonnegative_f1_delta: 2
+    maximum_allowed_single_period_f1_degradation: 0.02
+  paired_uncertainty_required: true
+planned_interventions:
+  phase9c: deployment_available_creator_and_family_state
+  phase9d: cascade_calibration_and_safer_routing
+  phase9e: selector_and_semantic_static_features
+  phase9f: combine_only_independently_supported_components
+prohibited_reopenings:
+- arbitrary_model_zoo
+- GIN
+- Transformer
+- creation_code_model
+- unrestricted_threshold_search
+track_b_final_evaluation:
+  status: sealed_available
+  primary_basis: STRICT
+  labels_inaccessible_during:
+  - Phase 9C
+  - Phase 9D
+  - Phase 9E
+  - Phase 9F
+  one_shot_only_after_phase9f_system_freeze: true
+  tuning_after_evaluation: false
+  metrics:
+  - precision
+  - recall
+  - f1
+  - pr_auc
+  - balanced_accuracy
+  - confusion_matrix
+  strict_provisional_distinction_required: true
+  inadequate_or_positive_only_rule: do_not_report_full_precision_recall_f1_as_if_a_complete_benchmark
+constraints:
+  models_trained: false
+  detectors_scored: false
+  p5_evaluated: false
+  phase9c_started: false
+  track_b_performance_used: false

@@ -1,0 +1,14 @@
+stage,total,positive,benign
+starting_candidates,1490,563,927
+attempted,1490,563,927
+successfully_enriched,1453,530,923
+eligible_A_B_provenance,1453,530,923
+new_address,1453,530,923
+later_deployment,292,112,180
+runtime_new,292,112,180
+opcode_new,292,112,180
+creation_new_or_unknown,292,112,180
+no_unresolved_conflict,292,112,180
+MULCAS_READY,292,112,180
+TRACK_B_STRICT,292,112,180
+TRACK_B_PROVISIONAL,0,0,0

@@ -1,0 +1,43 @@
+phase: 8R6D
+status: provider_enrichment_and_protocol_freeze
+frozen_manifest: configs/extension/frozen_phase8r6c_manifest.yaml
+parent_provider_dir: results/extension/phase8r6c/provider_resume
+output_dir: results/extension/phase8r6d
+internal_dataset: data/raw/PonziDataset_20221114.csv
+ponzi_ml_source: data/external/raw/ponzi_ml/dataset/dataset.csv
+unica_source: data/external/raw/blockchain_unica/ponzi-addresses.csv
+environment:
+  rpc_url: ETH_RPC_URL
+  creation_url: BLOCKSCOUT_API_URL
+  creation_key: BLOCKSCOUT_API_KEY
+provider:
+  request_timeout_seconds: 20
+  maximum_attempts: 3
+  backoff_seconds: 1
+  checkpoint_interval: 25
+  approved_total_minutes: 100
+  systemic_consecutive_failures: 5
+  systemic_window_size: 50
+  systemic_window_fraction: 0.10
+  sustained_transport_failures: 2
+temporal_boundary:
+  block: 7136486
+  date: 2019-01-27
+track_a:
+  expected_rows: 6498
+  expected_sha256: 48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+track_b:
+  accepted_provenance_classes: [A, B]
+  strict_minimum_positive_moderate: 30
+  strict_minimum_positive_strong: 100
+phase9b:
+  config: configs/phase9/phase9b.yaml
+  protocol_doc: docs/phase9_evaluation_protocol.md
+  output_dir: results/phase9/phase9b
+constraints:
+  models_trained: false
+  detectors_evaluated: false
+  p5_evaluated: false
+  track_a_modified: false
+  track_b_used_for_development: false
+  phase9c_started: false

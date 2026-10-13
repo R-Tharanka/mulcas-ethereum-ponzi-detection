@@ -1,6 +1,36 @@
 {
-  "elapsed_seconds": 0,
-  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
-  "requests": 0,
-  "status": "NOT_RUN"
+  "attempted": 100,
+  "elapsed_seconds": 332.32139979989734,
+  "failures": [
+    {
+      "address": "0x07f196fe6e6d382b3411cd1add427552616f2204",
+      "error_type": "GateFailure",
+      "status": "INVALID_CONTRACT"
+    },
+    {
+      "address": "0x0894cdc957a5a132fd20e3680a7c822d596d3af7",
+      "error_type": "GateFailure",
+      "status": "INVALID_CONTRACT"
+    },
+    {
+      "address": "0x08bf3adb1ad9ce3d73f8b709086e738d9d15df2b",
+      "error_type": "GateFailure",
+      "status": "INVALID_CONTRACT"
+    },
+    {
+      "address": "0x178310c3f6912cd354654e7a79a76fe0616cb355",
+      "error_type": "GateFailure",
+      "status": "INVALID_CONTRACT"
+    }
+  ],
+  "full_successes": 96,
+  "http_status_distribution": {
+    "200": 600
+  },
+  "mean_request_latency_seconds": 0.5521416823296265,
+  "median_request_latency_seconds": 0.49769524997100234,
+  "partial_successes": 0,
+  "requests": 600,
+  "retries": 0,
+  "status": "PASS"
 }

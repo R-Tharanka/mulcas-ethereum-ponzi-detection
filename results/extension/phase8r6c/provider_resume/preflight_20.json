@@ -1,6 +1,15 @@
 {
-  "elapsed_seconds": 0,
-  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
-  "requests": 0,
-  "status": "NOT_RUN"
+  "attempted": 20,
+  "elapsed_seconds": 73.56749579997268,
+  "failures": [],
+  "full_successes": 20,
+  "http_status_distribution": {
+    "200": 120
+  },
+  "mean_request_latency_seconds": 0.6115330758368752,
+  "median_request_latency_seconds": 0.5164719000458717,
+  "partial_successes": 0,
+  "requests": 120,
+  "retries": 0,
+  "status": "PASS"
 }

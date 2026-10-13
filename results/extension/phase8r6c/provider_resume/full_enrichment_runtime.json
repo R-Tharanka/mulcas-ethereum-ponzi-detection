@@ -1,0 +1,16 @@
+{
+  "actual_total_minutes": 47.71925460499673,
+  "approved_resume_minutes": 40.95443967833223,
+  "approved_total_minutes": 100.0,
+  "average_request_latency_seconds": 0.591314033834683,
+  "http_status_distribution": {
+    "200": 4120
+  },
+  "prior_bounded_gate_minutes": 6.7648149266645,
+  "processed_this_resume": 688,
+  "remaining_unattempted": 682,
+  "requests_this_resume": 4120,
+  "retries_this_resume": 0,
+  "starting_successful_rows": 116,
+  "stopped_category": "PROVIDER_SCHEMA_FAILURE"
+}

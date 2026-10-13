@@ -13,6 +13,7 @@ from src.extension.artifact_resolver import resolve_artifact
 from src.extension.external_rpc import retrieve_with_retry
 from src.extension.phase8r6c import CONFIG,SCHEMA,provider_state
 from src.extension.sealed_track_b import load_sealed_labels
+from src.extension.successor_migration import verify_manifest_with_successor_migrations
 from src.extension.track_b_builder import classify,enrich_static_identities,primary_membership
 from src.utils.paths import REPO_ROOT
 
@@ -23,7 +24,7 @@ def _address(char:str)->str:return "0x"+char*40
 
 
 def test_all_phase8r6b_anchors_and_internal_dataset_remain_frozen():
-    observed=verify_frozen_manifest(REPO_ROOT/"configs/extension/frozen_phase8r6b_manifest.yaml")
+    observed=verify_manifest_with_successor_migrations(REPO_ROOT/"configs/extension/frozen_phase8r6b_manifest.yaml")
     assert len(observed)==31
     raw=REPO_ROOT/"data/raw/PonziDataset_20221114.csv"
     assert sha256_file(raw)=="48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf"
@@ -80,7 +81,10 @@ def test_only_A_or_B_can_enter_and_track_a_track_b_are_separate():
     selected,_=primary_membership(rows)
     assert set(selected.provenance)=={"A","B"}
     assert json.loads((OUT/"phase8r6c_results.json").read_text())["track_a_modified"] is False
-    assert not (REPO_ROOT/"data/external/track_b_sealed/labels.csv").exists()
+    sealed_labels=REPO_ROOT/"data/external/track_b_sealed/labels.csv"
+    assert sealed_labels.is_file()
+    with pytest.raises(PermissionError,match="explicit final_evaluation=True is required"):
+        load_sealed_labels(sealed_labels)
 
 
 def test_sealed_labels_are_default_deny(tmp_path):

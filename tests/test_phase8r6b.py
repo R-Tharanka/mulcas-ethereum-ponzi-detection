@@ -10,6 +10,7 @@ from src.extension.artifact_resolver import resolve_artifact
 from src.extension.external_enrichment import enrich
 from src.extension.external_normalization import digest,normalize_address,normalize_hex
 from src.extension.external_rpc import rpc_deployment_bundle
+from src.extension.sealed_track_b import load_sealed_labels
 from src.extension.track_b_builder import classify,enrich_static_identities,primary_membership,seal
 from src.experiments.phase6a import verify_frozen_manifest
 from src.utils.paths import REPO_ROOT
@@ -111,4 +112,7 @@ def test_gate_stopped_outputs_do_not_claim_track_b_or_expose_labels():
     assert result["next_recommended_phase"]=="phase8r6c_manual_verification"
     candidate=pd.read_csv(output/"track_b_candidate.csv")
     assert "label" not in candidate.columns
-    assert not (REPO_ROOT/"data/external/track_b_sealed/labels.csv").exists()
+    sealed_labels=REPO_ROOT/"data/external/track_b_sealed/labels.csv"
+    assert sealed_labels.is_file()
+    with pytest.raises(PermissionError,match="explicit final_evaluation=True is required"):
+        load_sealed_labels(sealed_labels)

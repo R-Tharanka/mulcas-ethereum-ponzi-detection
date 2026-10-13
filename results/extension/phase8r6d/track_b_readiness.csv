@@ -1,0 +1,3 @@
+subset,rating,rows,positive,benign,scientifically_ready
+STRICT,STRONG,292,112,180,True
+STRICT_PLUS_PROVISIONAL,STRONG,292,112,180,True

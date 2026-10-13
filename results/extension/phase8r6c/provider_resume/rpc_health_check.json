@@ -1,6 +1,11 @@
 {
-  "elapsed_seconds": 0,
-  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
-  "requests": 0,
-  "status": "NOT_RUN"
+  "chain_id": 1,
+  "elapsed_seconds": 1.4984001000411808,
+  "http_status_distribution": {
+    "200": 2
+  },
+  "latest_block": 26183625,
+  "mainnet_verified": true,
+  "requests": 2,
+  "status": "PASS"
 }

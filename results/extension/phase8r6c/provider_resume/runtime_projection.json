@@ -1,6 +1,9 @@
 {
-  "elapsed_seconds": 0,
-  "reason": "Missing required environment variables: ETH_RPC_URL, BLOCKSCOUT_API_URL, BLOCKSCOUT_API_KEY",
-  "requests": 0,
-  "status": "NOT_RUN"
+  "estimated_remaining_requests": 8220,
+  "expected_retry_overhead": 0,
+  "maximum_minutes": 30,
+  "projected_remaining_minutes": 75.88005295430989,
+  "projected_total_minutes": 82.64486788097439,
+  "remaining_candidate_count": 1370,
+  "status": "STOP"
 }

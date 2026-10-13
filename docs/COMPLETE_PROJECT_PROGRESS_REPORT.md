@@ -2,10 +2,19 @@
 
 ## MulCas Ethereum Ponzi Smart-Contract Detection
 
+| Status item | Current value |
+| --- | --- |
+| Report date | 2026-10-13 |
+| Project status | Complete through Phase 8R6D; Phase 9A complete and Phase 9B protocol frozen |
+| Retained reference | Frozen Phase 5.5 paper-aligned MulCas |
+| External benchmark | Sealed STRICT Track B established; not yet evaluated |
+| Next research phase | Phase 9C, not started |
+
 ## 1. Report Purpose
 
-This document is a complete, current account of the project through the formal
-closure of Phase 7. It explains what was implemented, why each phase was
+This document is a complete, current account of the project through Phase 8R6D,
+the Phase 9A protocol-gap audit, and the prospective Phase 9B protocol freeze.
+It explains what was implemented, why each phase was
 performed, what results were obtained, what conclusions are supported, what
 limitations remain, and what work is still pending.
 
@@ -36,7 +45,16 @@ The project has completed the following major objectives:
    improvement under the predefined temporal protocol.
 10. Evaluated temporal robustness, viewer contribution, creator-history
     contribution, error patterns, and historical code novelty.
-11. Closed Phase 7 with conservative answers to RQ4 and RQ5.
+11. Tested recency weighting, runtime CFG/GIN, score fusion, creation-code
+    features, and self-supervised opcode-sequence representations.
+12. Closed the Phase 8 static-model search without accepting a replacement for
+    the frozen Phase 5.5 MulCas system.
+13. Audited paper/reconstruction protocol gaps without changing the retained
+    reference or treating non-deployable diagnostics as improvements.
+14. Discovered, enriched, overlap-audited, and sealed a later-time external
+    Track B benchmark containing 112 positive and 180 benign contracts.
+15. Froze the prospective Phase 9B evaluation protocol before any Phase 9
+    intervention was trained or Track B performance was observed.
 
 The frozen Phase 5.5 MulCas final-test result is:
 
@@ -48,18 +66,17 @@ This means the reconstructed system is usually correct when it predicts Ponzi,
 but it misses more than half of the Ponzi contracts in the final Phase 5.5 test
 partition.
 
-The central result after Phase 7 is:
+The central result after the completed Phase 8 extension is:
 
-> The reconstructed MulCas model exhibits substantial temporal performance
-> variation. Component and creator-feature contributions are period-dependent.
-> Later-period errors are concentrated among contracts with unseen creators
-> and historically novel code, and many are confidently misclassified. Exact
-> historical code reuse is associated with easier detection where cloned Ponzi
-> contracts occur, but clone prevalence does not fully explain temporal
-> performance variation.
+> No tested Phase 8 intervention produced a reliable P2-P4 improvement under
+> its predefined temporal criterion, so frozen Phase 5.5 MulCas remains the
+> retained reference. The project nevertheless established a sealed,
+> later-time, overlap-audited Track B benchmark for one future evaluation after
+> the Phase 9 system is frozen.
 
 The project does not claim that concept drift has been proven, that novel code
-causes errors, or that creator identity causes Ponzi behavior.
+or unseen creators cause errors, or that the sealed Track B result is known.
+No detector has yet been evaluated on Track B.
 
 ## 3. Current Status at a Glance
 
@@ -86,7 +103,25 @@ causes errors, or that creator identity causes Ponzi behavior.
 | 7D | Systematic error analysis | Complete | Errors often involve unseen creators and confident routing mistakes |
 | 7E | Clone/novelty sensitivity | Complete | Clones are easier where present, but do not fully explain variation |
 | 7 closure | Robustness and ablation closure | Complete | RQ4/RQ5 evidence consolidated |
-| 8 | Final synthesis/evaluation notebook and research packaging | Pending | `08_final_evaluation.ipynb` is empty |
+| 8R0 | Extension protocol and feasibility | Complete | RQ6, Track A/Track B governance, and staged static extension defined |
+| 8R1A | Recency-aware MulCas | Complete | H8R1 not supported |
+| 8R2A | Runtime CFG corpus | Complete and frozen | 6,498 deterministic graphs constructed |
+| 8R2B | Graph aggregates and GIN | Complete | H8R2 not supported; diagnostic P3 benefit did not generalize |
+| 8R3A | MulCas/GIN complementarity | Complete, analysis only | Complementarity justified one bounded fusion test |
+| 8R3B | Lightweight score fusion | Complete | H8R3B not supported |
+| 8R4A | Creation-code representation | Complete and frozen | Three deployment-time views constructed |
+| 8R4B | Creation-code classification | Complete | H8R4 not supported |
+| 8R5A | Opcode-sequence feasibility | Complete | Deterministic 1,024-token chunking selected |
+| 8R5B0 | CUDA benchmark | Complete | Feasibility gate passed |
+| 8R5B | Masked-opcode pretraining | Complete | Nine temporally valid checkpoints produced |
+| 8R5C1 | Frozen sequence linear probe | Complete | H8R5 not supported by this probe; 8R5C2 not run |
+| Phase 8 closure | Static extension closure | Complete | No accepted replacement; Phase 5.5 retained |
+| 9A | Paper/reconstruction protocol-gap decomposition | Complete | Limited protocol explanation; no detector improvement claimed |
+| 8R6A-8R6C | External-source audit and provider enrichment | Complete as staged predecessors | Candidate union and 787-row resumable evidence established |
+| 8R6D | Complete enrichment and Track B sealing | Complete | 1,453 enriched; 292-contract STRICT Track B sealed |
+| 9B | Prospective Phase 9 evaluation protocol | Frozen | Track A development and one-shot sealed Track B rules fixed |
+| 9C | Creator/family-state intervention | Not started | Next recommended research phase |
+| Final synthesis | Notebook and manuscript packaging | Pending | `08_final_evaluation.ipynb` remains empty |
 | Optional prototype | New-contract warning interface | Not started | Outside the completed research scope |
 
 ## 4. Research Objective and Questions
@@ -106,11 +141,22 @@ The completed work provides evidence for the following questions:
   predictions?
 - **RQ5:** Does the reconstruction remain effective on contracts created later
   than its historical training data?
+- **RQ6:** Can temporal adaptation or richer graph, sequence, and
+  deployment-time representations improve historically novel and
+  unseen-creator detection?
+- **RQ7:** To what extent can deployment-available historical state,
+  code-family similarity, and calibrated cascade routing improve forward
+  temporal detection, and does a final frozen system generalize to sealed
+  Track B?
 
 The evidence supports independent reconstruction for RQ1/RQ2, but not exact
 replication of the paper's scores. None of the Phase 6 changes reliably
 improved the model for RQ3. For RQ4, contribution is period-dependent. For RQ5,
 performance is useful in some periods but not temporally stable.
+For RQ6, the tested Phase 8 methods did not reliably improve P2-P4 performance,
+although GIN showed a period-specific P3 benefit. RQ7 is prospectively defined
+but unanswered: Phase 9B is frozen, Phase 9C has not started, and Track B labels
+remain unavailable to development.
 
 ## 5. Dataset and Integrity Findings
 
@@ -166,9 +212,15 @@ The project uses the following controls throughout:
 - notebooks present saved outputs rather than containing the core algorithms;
 - final-test labels were prohibited from Phase 6 candidate selection.
 
-The current automated test suite contains **118 tests** covering imports,
-validation, leakage, deterministic behavior, feature extraction, estimators,
-MulCas routing, frozen manifests, Phase 6 experiments, and Phase 7 analyses.
+The automated suite now covers imports, validation, leakage, deterministic
+behavior, feature extraction, estimators, MulCas routing, frozen manifests,
+Phase 6-9 governance, provider-resume behavior, overlap classification, and
+sealed-label controls. On 2026-10-13, focused Phase 8R6D verification passed
+**14 tests**. The full suite reported **331 passed and 2 failed**;
+the two failures are legacy Phase 8R6B/R6C assertions that expected sealed
+labels not to exist before the explicitly authorized Phase 8R6D seal. They are
+an unresolved test-anchor migration, not evidence of a model or data-integrity
+failure, and are not hidden as a passing suite.
 
 ## 7. Phase-by-Phase Work Through the Frozen Baseline
 
@@ -546,7 +598,263 @@ shown to cause misclassification.
 
 Phase 7 is formally complete.
 
-## 10. What the Project Has Demonstrated
+## 10. Static Research Extension: Phase 8R0-8R5C1
+
+### 10.1 Phase 8R0: Extension Protocol and Feasibility
+
+**Work completed:** Phase 8R0 defined RQ6, separated exploratory Track A from
+future independent Track B evidence, froze forward-only P2-P4 evaluation, and
+specified bounded recency, graph, creation-code, and sequence branches. It also
+audited whether deterministic runtime CFG construction and external-data
+discovery were feasible.
+
+**Outcome:** The extension was feasible, but no independent external benchmark
+was ready. Phase 8R0 was a protocol phase and did not test an improvement
+hypothesis.
+
+### 10.2 Phase 8R1A: Recency-Aware MulCas
+
+**Work completed:** Recent-window training and exponential-decay policies were
+compared with the exact expanding-history MulCas control on P2-P4. P5 was
+excluded.
+
+| System | Macro precision | Macro recall | Macro F1 | Macro PR-AUC |
+| --- | ---: | ---: | ---: | ---: |
+| Frozen expanding control | 0.4603 | 0.4400 | 0.3856 | 0.4651 |
+| Diagnostic decay alpha 0.75 | 0.4582 | 0.4533 | 0.4024 | 0.5044 |
+
+**Outcome:** The diagnostic fallback improved some aggregate values but failed
+the predefined precision requirement. **H8R1 was not supported.**
+
+### 10.3 Phase 8R2A: Deterministic Runtime CFG Corpus
+
+**Work completed:** All 6,498 runtime bytecodes were deterministically
+disassembled into contract-local control-flow graphs with conservative static
+jump recovery and explicit unresolved dynamic jumps.
+
+| Graphs | Nodes | Edges | Node features | Static jump resolution |
+| ---: | ---: | ---: | ---: | ---: |
+| 6,498 | 1,514,545 | 1,464,910 | 55 | 74.48% |
+
+**Outcome:** The frozen graph corpus was constructed successfully. No
+classifier was trained in this construction phase.
+
+### 10.4 Phase 8R2B: Graph Aggregates and GIN
+
+**Work completed:** Fixed graph-aggregate Logistic Regression and a small,
+predeclared GIN grid were evaluated under expanding P2-P4 prediction.
+
+The diagnostic GIN fallback, with three layers, 128 hidden units, and dropout
+0.5, produced macro P/R/F1 of 0.4652/0.5213/0.4721. Its period F1 values were
+0.0074 on P2, 0.6680 on P3, and 0.7409 on P4.
+
+**Outcome:** GIN substantially improved P3 relative to MulCas but failed P2
+and the cross-period eligibility criterion. **H8R2 was not supported.**
+
+### 10.5 Phase 8R3A: MulCas/GIN Complementarity
+
+**Work completed:** Frozen MulCas and GIN predictions were compared without
+training a new model. Across P2-P4, GIN recovered 28 positives missed by
+MulCas, MulCas recovered 22 missed by GIN, and GIN correctly rejected 256
+benign contracts misclassified by MulCas.
+
+**Outcome:** Complementarity, concentrated mainly in P3, justified one bounded
+fusion test. The oracle analysis was non-deployable and was not a hypothesis
+winner.
+
+### 10.6 Phase 8R3B: Lightweight Score Fusion
+
+**Work completed:** Two fixed Logistic Regression meta-models combined frozen
+MulCas and GIN scores, with one variant adding permitted historical context.
+P3 was used for selection and P4 for confirmation.
+
+**Outcome:** Both hybrids predicted no P3 positives. Diagnostic Hybrid A gave
+P=0.6567, R=0.8800, and F1=0.7521 on P4, below MulCas F1=0.8519.
+**H8R3B was not supported.**
+
+### 10.7 Phase 8R4A: Creation-Code Representation
+
+**Work completed:** All 6,498 `creationCode` values were parsed. The deployed
+runtime appeared exactly once in 6,497 rows; the unmatched row received the
+frozen zero-filled init representation. Full creation, deployment-init, and
+combined views had 85, 90, and 183 dimensions.
+
+**Outcome:** Deployment-time representations were frozen successfully. No
+classifier was trained in this phase.
+
+### 10.8 Phase 8R4B: Creation-Code Classification
+
+**Work completed:** Fixed Logistic Regression and XGBoost candidates were
+evaluated on the three creation-code views over P2-P4.
+
+**Outcome:** The diagnostic Logistic Regression `creation_full` fallback had
+macro P/R/F1/PR-AUC of 0.2703/0.3067/0.2818/0.5165 and recovered only one
+positive missed by MulCas across all periods. **H8R4 was not supported.**
+
+### 10.9 Phase 8R5A: Opcode-Sequence Feasibility
+
+**Work completed:** Runtime opcode lengths, historical vocabularies, OOV rates,
+truncation loss, and CPU cost were audited. Lengths ranged from 8 to 18,058
+tokens; 80.92% of P0-P4 contracts would be truncated at 1,024 tokens.
+
+**Outcome:** Deterministic 1,024-token chunking was frozen. The projected
+three-seed CPU runtime was too high, so pretraining was not launched until a
+separate CUDA gate passed.
+
+### 10.10 Phase 8R5B0: CUDA Resource Gate
+
+**Work completed:** CUDA-enabled PyTorch was validated on the local RTX 2050.
+The bounded AMP benchmark estimated about 68.5 minutes for all three seeds.
+
+**Outcome:** The resource gate was **GREEN**, authorizing only the predefined
+masked-opcode pretraining work.
+
+### 10.11 Phase 8R5B: Masked-Opcode Pretraining
+
+**Work completed:** Nine historical-only fold/seed Transformer runs completed
+with fixed masking, optimizer, architecture, and chunking. Future prediction
+periods and P5 were excluded from each fold's vocabulary and pretraining data.
+
+**Outcome:** Nine hash-recorded checkpoints were produced in 72.32 summed
+minutes. This representation-learning phase did not itself test H8R5.
+
+### 10.12 Phase 8R5C1: Frozen Sequence Linear Probe
+
+**Work completed:** Frozen contextual and non-contextual 128-dimensional
+contract embeddings were evaluated with a fixed linear probe over P2-P4.
+
+| Representation | Macro precision | Macro recall | Macro F1 | Macro PR-AUC |
+| --- | ---: | ---: | ---: | ---: |
+| Contextual seed mean | 0.2841 | 0.3133 | 0.2921 | 0.4692 |
+| Non-contextual control | 0.5297 | 0.4600 | 0.3870 | 0.5261 |
+| Frozen MulCas | 0.4603 | 0.4400 | 0.3856 | 0.4651 |
+
+**Outcome:** The contextual representation underperformed both controls. The
+non-contextual control's small macro-F1 difference was ineligible and did not
+establish improvement. **H8R5 was not supported by this frozen linear-probe
+evaluation.** Phase 8R5C2 supervised fine-tuning was deliberately not executed
+because its predefined gate failed; this does not disprove all possible
+sequence fine-tuning methods.
+
+### 10.13 Formal Phase 8 Closure
+
+The closure reverified 199 frozen anchors, nine MLM checkpoints, 18 embedding
+caches, and the raw dataset hash. H8R1, H8R2, H8R3B, H8R4, and the tested
+H8R5 probe were not supported. No diagnostic fallback was promoted to a
+research winner, and no Phase 8 intervention replaced frozen Phase 5.5 MulCas.
+
+## 11. External Track B Construction: Phase 8R6A-8R6D
+
+### 11.1 Phase 8R6A: External/Later Dataset Audit
+
+**Work completed:** Eight candidate sources and 5,218 retrieved files were
+audited for provenance, address overlap, temporal metadata, benign-cohort
+availability, and compatibility with static creation-time features.
+
+**Outcome:** No ready Track B existed. A promising union required provider
+enrichment and exact overlap checks, so the decision was external-data
+enrichment/manual verification first. No model was trained and P5 was not
+evaluated.
+
+### 11.2 Phase 8R6B: Initial Enrichment Gate
+
+**Work completed:** The candidate union was frozen at 1,490 unique addresses:
+563 positive and 927 benign records from `ponzi_ml` plus new class-A
+Blockchain@Unica positives. Provider feasibility and runtime were tested.
+
+**Outcome:** The run stopped at its performance gate before enrichment. Zero
+counts were explicitly treated as unobserved, not evidence of absence. Track B
+was not established.
+
+### 11.3 Phase 8R6C: Authenticated Provider Resume
+
+**Work completed:** Environment-only credentials, Ethereum mainnet identity,
+historical RPC calls, Blockscout creation lookup, an end-to-end contract path,
+a 20-address preflight, and a 100-address stability gate were validated.
+Provider-backed enrichment then resumed from a deterministic ledger.
+
+**Outcome:** The continuation stopped safely after 787 successful enrichments,
+with row-level invalid, identity, and schema outcomes preserved for resumption.
+Historical gate evidence and completed rows were retained; no success was
+silently refetched.
+
+### 11.4 Phase 8R6D: Complete Enrichment and Seal Track B
+
+**Work completed:** Phase 8R6D froze the prior ledger, added safe row-level
+handling for null/unsupported creation schemas while retaining strict identity
+validation, resumed only unresolved rows, finalized chronology and exact
+address/runtime/opcode/creation-code overlap, applied A/B provenance rules,
+audited internal duplicates, and sealed eligible labels behind the default-deny
+guard.
+
+| Enrichment measure | Result |
+| --- | ---: |
+| Candidate addresses / attempted | 1,490 / 1,490 |
+| Successful enrichment | 1,453 |
+| Invalid contract / identity mismatch / not found | 34 / 2 / 1 |
+| Provider failures / retries | 0 / 0 |
+| MULCAS_READY | 1,453 |
+| STATIC_RUNTIME_READY | 1,453 |
+| CREATION_CODE_READY | 1,453 |
+| Phase 8R6D runtime / cumulative provider runtime | 26.80 / 74.52 minutes |
+
+The mandatory Track B funnel was:
+
+| Stage | Total | Positive | Benign |
+| --- | ---: | ---: | ---: |
+| Starting / attempted | 1,490 | 563 | 927 |
+| Successfully enriched and A/B eligible | 1,453 | 530 | 923 |
+| Later deployment | 292 | 112 | 180 |
+| Runtime-new and opcode-new | 292 | 112 | 180 |
+| Creation-new, conflict-free, and MULCAS_READY | 292 | 112 | 180 |
+| TRACK_B_STRICT | 292 | 112 | 180 |
+| TRACK_B_PROVISIONAL | 0 | 0 | 0 |
+
+**Outcome:** A **STRONG**, strict-only Track B benchmark was established and
+sealed. It contains 292 unique-address contracts from blocks 7,143,846 through
+10,311,201, dated 2019-01-29 through 2020-06-21. It has 287 unique runtime and
+opcode identities, no unresolved A/B conflicts, and no critical manual-review
+cases. Track A remains separate and byte-for-byte unchanged. No detector was
+trained, scored, or evaluated on Track B.
+
+## 12. Phase 9 Diagnostic and Prospective Protocol Work
+
+### 12.1 Phase 9A: Paper/Reconstruction Protocol-Gap Decomposition
+
+**Work completed:** Phase 9A audited training coverage, creator-state updates,
+viewer selection, N-gram dimensions, period membership, cascade thresholds,
+voting, and auxiliary-bytecode handling. It replayed frozen controls and used a
+clearly labeled, non-deployable true-label online creator oracle. It introduced
+no classifier, feature, threshold, or tuning change.
+
+**Outcome:** On exploratory P5, the non-deployable creator oracle changed the
+Phase 7A control from P/R/F1=0.8710/0.4219/0.5684 to
+0.8824/0.4688/0.6122, adding three true positives without additional false
+positives. This explained only about 19.87% of the F1 gap in isolation. The
+test-selected-viewer replay was stopped by its runtime gate and was also
+under-specified by the paper, so no partial ranking or combined oracle was
+reported. The completed evidence was classified as **little protocol
+explanation**, not as a model improvement.
+
+### 12.2 Phase 9B: Prospective Evaluation Protocol Freeze
+
+**Work completed:** After Track B status was known, the project froze RQ7 and
+the Phase 9 selection/evaluation rules before Phase 9C began. Development is
+limited to Track A expanding predictions: P0+P1 to P2, P0-P2 to P3, and P0-P3
+to P4. P5 remains previously observed exploratory evidence only.
+
+The primary measures are pooled prequential PR-AUC, pooled prequential F1, and
+recall at the frozen MulCas pooled FPR ceiling of 0.04954. Advancement requires
+strictly better pooled F1, no more than 0.01 absolute PR-AUC degradation, FPR
+within that ceiling, nonnegative F1 change in at least two periods, no single
+period degradation beyond 0.02, and paired contract-level bootstrap reporting
+with 2,000 replicates and seed 42.
+
+**Outcome:** The protocol is frozen. Phase 9C-9F may not access Track B labels.
+Only after a Phase 9F system is frozen may one final Track B evaluation occur,
+with no subsequent tuning. Phase 9C has not started.
+
+## 13. What the Project Has Demonstrated
 
 The project has demonstrated that:
 
@@ -567,8 +875,20 @@ The project has demonstrated that:
 9. Creator history and exact code reuse are sparse signals.
 10. Many later false negatives are confidently misclassified, so the issue is
     not merely that the system refuses to decide on difficult cases.
+11. Recency, graph, fusion, creation-code, and frozen sequence interventions
+    did not reliably improve cross-period performance under their predefined
+    Phase 8 rules.
+12. Period-specific complementarity, especially GIN on P3, is not sufficient
+    evidence for a replacement when P2/P4 behavior and eligibility fail.
+13. The paper/reconstruction gap is only partly explained by completed,
+    reproducible protocol diagnostics; under-specified viewer selection remains
+    unresolved.
+14. A later-time, exact-overlap-audited external benchmark can be constructed
+    from the frozen sources while keeping Track A unchanged.
+15. A prospective model-development and one-shot external-evaluation protocol
+    can be frozen before any Track B performance is observed.
 
-## 11. What the Project Has Not Demonstrated
+## 14. What the Project Has Not Demonstrated
 
 The current evidence does not demonstrate that:
 
@@ -578,13 +898,17 @@ The current evidence does not demonstrate that:
 - novel code causes model errors;
 - creator identity causes Ponzi behavior;
 - exact clone prevalence fully explains period differences;
+- the non-deployable Phase 9A creator oracle is a usable improvement;
+- Phase 9C, 9D, 9E, or 9F will improve the retained baseline;
+- the frozen system generalizes to Track B, because sealed labels have not been
+  loaded for evaluation;
 - a live deployment would generalize to present-day Ethereum contracts; or
-- the current scores apply to contracts created after the dataset's 2019 end.
+- the current results apply beyond Track B's June 2020 endpoint.
 
 These boundaries are important parts of the research result, not weaknesses to
 hide.
 
-## 12. Current Repository Outputs
+## 15. Current Repository Outputs
 
 ### Baseline and Protocol
 
@@ -613,6 +937,34 @@ hide.
 
 - `results/experiments/phase7a/` through `phase7e/`
 
+### Phase 8 Extension and Closure
+
+- `results/extension/phase8r0/` through `phase8r5c1/`
+- `results/extension/phase8_closure/`
+- `docs/phase8_summary.md`
+- `results/extension/phase8r6a/` through `phase8r6d/`
+- `results/extension/phase8r6d/phase8r6d_results.json`
+- `results/extension/phase8r6d/track_b_filter_funnel.csv`
+- `results/extension/phase8r6d/phase8r6d_report.md`
+
+### Sealed Track B
+
+- `data/external/track_b/metadata.csv`
+- `data/external/track_b/membership_manifest.json`
+- `data/external/track_b_sealed/labels.csv` (protected and default-deny)
+
+Track B is an external dataset, not an addition to the 6,498-row Track A file.
+Its labels must remain inaccessible during Phase 9C-9F.
+
+### Phase 9
+
+- `results/phase9/phase9a/phase9a_results.json`
+- `results/phase9/phase9a/phase9a_report.md`
+- `configs/phase9/phase9b.yaml`
+- `docs/phase9_evaluation_protocol.md`
+- `results/phase9/phase9b/phase9b_protocol.json`
+- `results/phase9/phase9b/phase9b_report.md`
+
 ### Notebooks
 
 | Notebook | Status |
@@ -627,7 +979,7 @@ hide.
 | `07_ablation_study.ipynb` | Implemented through Phase 7E |
 | `08_final_evaluation.ipynb` | Empty and pending |
 
-## 13. How to Run and Verify the Current Project
+## 16. How to Run and Verify the Current Project
 
 From Windows PowerShell in the repository root:
 
@@ -653,8 +1005,12 @@ Run all tests:
 python -m pytest -q
 ```
 
-The current expected result is **118 passed**. A Windows permission warning for
-`.pytest_cache` can appear without indicating a test failure.
+The 2026-10-13 focused Phase 8R6D run passed **14 tests in 13.68 seconds**.
+The full run reported **331 passed, 2 failed, and 66 warnings in 153.69
+seconds**. Both failures are stale
+historical tests that assert sealed labels are absent, which was true before
+the authorized Phase 8R6D sealing step. Until those anchors are migrated to the
+successor manifest, the repository must not be described as fully green.
 
 Run Jupyter:
 
@@ -665,26 +1021,31 @@ python -m jupyter notebook
 Core research logic belongs under `src/`; notebooks should remain presentation
 layers.
 
-Important: rerunning Phases 6 or 7 is not necessary to read the results. Their
-machine-readable artifacts already exist. Reproduction runs should be performed
-only when intentionally verifying the archived pipeline.
+Important: rerunning completed training or provider-enrichment phases is not
+necessary to read the results. Phase 8R2B graph training, Phase 8R5B sequence
+pretraining, and Phase 8R6 provider enrichment are expensive and have frozen
+outputs. Read and verify their reports/manifests unless an intentional
+reproduction exercise has been approved. Never expose provider credentials or
+unseal Track B labels during ordinary verification.
 
-## 14. What Is Still Pending
+## 17. What Is Still Pending
 
-### 14.1 Phase 8 Final Synthesis
+### 17.1 Final Synthesis Notebook
 
-The clearest required next step is to populate `08_final_evaluation.ipynb` as a
-read-only synthesis of frozen outputs. It should:
+`08_final_evaluation.ipynb` remains empty. It should become a read-only
+synthesis of frozen outputs and must not train, tune, or select a model. It
+should:
 
-- load Phase 5.5, Phase 6 closure, and Phase 7 closure artifacts;
+- load Phase 5.5, Phase 6-8 closures, Phase 9A, Track B construction metadata,
+  and the Phase 9B protocol;
 - present the final baseline, published comparison, negative improvement
   results, and temporal robustness findings;
 - include final confusion matrices and precision/recall/F1/PR-AUC tables;
-- state RQ1-RQ5 answers and limitations;
+- state the current RQ1-RQ6 answers and RQ7's prospective status;
 - avoid retraining, tuning, or selecting a new model; and
 - clearly label the frozen Phase 5.5 reconstruction as the retained reference.
 
-### 14.2 Final-Test Status Must Be Described Honestly
+### 17.2 P5 and Track B Must Be Described Honestly
 
 The research plan originally proposed a final untouched test evaluation.
 However, the Phase 5.5 test metrics were already inspected, and the same P5
@@ -693,13 +1054,30 @@ period was subsequently analyzed in Phases 7A-7E. Therefore:
 - P5 is a frozen evaluation partition, but it is no longer untouched;
 - no new method should be selected or tuned using P5;
 - notebook 08 should synthesize the existing P5 result, not treat it as a new
-  first-time evaluation; and
-- a genuinely untouched generalization result would require a new external or
-  later-time labeled dataset.
+  first-time evaluation;
+- P5 is Track A exploratory historical evidence, not an untouched final test;
+- Track B now supplies the independent later-time benchmark, but it has not
+  been evaluated;
+- sealed Track B labels must remain inaccessible during Phase 9C-9F; and
+- one final external evaluation is allowed only after the Phase 9F system is
+  frozen, with no tuning afterward.
 
 This limitation should be stated explicitly in the final thesis/report.
 
-### 14.3 Final Research Manuscript or Thesis Chapter
+### 17.3 Phase 9C-9F Research
+
+Phase 9C is the next prospective research phase and has not started. The frozen
+sequence is:
+
+1. Phase 9C: deployment-available creator and code-family state.
+2. Phase 9D: cascade calibration and safer routing.
+3. Phase 9E: selector and semantic static features.
+4. Phase 9F: combine only independently supported components.
+
+Arbitrary model search, reopening GIN/Transformer/creation-code models, and
+unrestricted threshold search are prohibited by the Phase 9B protocol.
+
+### 17.4 Final Research Manuscript or Thesis Chapter
 
 The final written research output remains to be assembled. It should include:
 
@@ -710,53 +1088,55 @@ The final written research output remains to be assembled. It should include:
 - initial reconstruction and Phase 5.5 correction;
 - Phase 6 hypotheses and negative results;
 - Phase 7 temporal, ablation, error, and clone findings;
+- Phase 8 hypotheses, negative results, and closure;
+- Phase 9A protocol-gap diagnostics;
+- Phase 8R6 external-data provenance, enrichment, overlap, and sealing;
+- Phase 9B prospective evaluation governance;
 - threats to validity;
-- answers to RQ1-RQ5;
+- answers to RQ1-RQ6 and the status of RQ7;
 - limitations and future work; and
 - reproducibility instructions and artifact index.
 
-### 14.4 Final Reproducibility Audit
+### 17.5 Final Reproducibility Audit
 
 Before submission or release, perform one clean-environment verification:
 
 1. create a fresh `.venv`;
 2. install dependencies;
 3. verify the raw dataset hash;
-4. run all tests;
+4. migrate the two stale pre-seal test anchors and run all tests;
 5. execute implemented notebooks non-interactively;
 6. verify frozen manifests and closure JSON files;
-7. record Python and dependency versions; and
-8. confirm no raw data, secrets, fitted artifacts, or temporary notebook files
-   are staged for commit.
+7. verify the sealed-label default-deny guard without loading labels into model
+   code;
+8. record Python and dependency versions; and
+9. confirm no credentials, provider URLs containing secrets, large fitted
+   artifacts, or temporary notebook files are staged for commit.
 
 The current `requirements.txt` is mostly unpinned. Producing a fully pinned
 environment snapshot or lock file remains advisable for archival reproduction.
 
-### 14.5 Documentation Synchronization
+### 17.6 Documentation Synchronization
 
-Some earlier entry-point documents still describe the project only through
-Phase 7C or list an older test count. They were intentionally not edited as part
-of this request. A later documentation-only task should synchronize:
+Other entry-point documents may still list older phase or test status. A later
+documentation-only task should reconcile:
 
 - `README.md`;
 - `docs/RUN_AND_TEST_GUIDE.md`;
 - the earlier `docs/PROJECT_PROGRESS_REPORT.md`; and
 - notebook status descriptions.
 
-This new report should be used as the current progress reference until that
-synchronization is performed.
+This report should be used as the broad current progress reference, while exact
+JSON/CSV artifacts remain authoritative for metrics and membership.
 
-### 14.6 Optional External Validation
+### 17.7 Track B Final Evaluation
 
-A stronger temporal-generalization claim would require a later labeled Ethereum
-dataset that was not used anywhere in development or analysis. Such work would
-need a new preregistered protocol covering label definitions, data provenance,
-bytecode compatibility, creator-history availability, and one-time evaluation.
+Track B construction is complete, but external validation is pending by design.
+After Phase 9F is frozen, the one-shot evaluation should report precision,
+recall, F1, PR-AUC, balanced accuracy, and the confusion matrix. No model
+selection or post-evaluation tuning is allowed.
 
-This is valuable future research, but it is not required to close the completed
-Phase 7 work.
-
-### 14.7 Optional Prototype
+### 17.8 Optional Prototype
 
 The original roadmap mentions an optional interface that accepts new contract
 bytecode and creator information and produces a warning. This has not been
@@ -764,18 +1144,18 @@ implemented and should remain secondary to final research reporting.
 
 A prototype must not be presented as deployment-ready because:
 
-- the data ends in 2019;
+- Track A ends in 2019 and Track B ends in June 2020;
 - P2-P5 performance is unstable;
 - recall is low in several periods;
-- current-day distribution compatibility is unverified; and
-- the system has not been externally validated.
+- current-day distribution compatibility remains unverified; and
+- Track B performance is still sealed and unknown.
 
-### 14.8 Optional Additional Research, Not Current Commitments
+### 17.9 Optional Additional Research, Not Current Commitments
 
-The following are possible future studies, not unfinished requirements of the
-closed Phase 6/7 protocols:
+The following are possible future studies, not substitutes for the frozen
+Phase 9 program:
 
-- external later-time validation;
+- a newer post-2020 external cohort after the sealed Track B evaluation;
 - repeated-seed robustness for genuinely stochastic future candidates;
 - compiler/version-aware analysis;
 - representation-learning methods designed for code novelty;
@@ -787,33 +1167,46 @@ closed Phase 6/7 protocols:
 These must be preregistered as new research rather than selected after reviewing
 the existing P5 errors.
 
-## 15. Recommended Next Actions
+## 18. Recommended Next Actions
 
 The recommended order is:
 
-1. Freeze the current Phase 7 closure and this progress report.
-2. Create Phase 8 as a read-only final synthesis, not a new experiment.
-3. Prepare final thesis/report tables directly from machine-readable artifacts.
-4. Complete a clean-environment reproducibility audit.
-5. Synchronize entry-point documentation and current test counts.
-6. Decide whether external validation is feasible.
-7. Consider the optional prototype only after the research deliverables are
-   complete and its limitations are clearly communicated.
+1. Migrate the two stale pre-seal test anchors to the frozen Phase 8R6D
+   successor state and restore a fully green suite.
+2. Begin Phase 9C only under the frozen Phase 9B protocol; do not access Track B
+   labels.
+3. Run Phase 9D and 9E as mechanism-driven tests, then Phase 9F only with
+   independently supported components.
+4. Freeze the final Phase 9 system before the single permitted Track B
+   evaluation.
+5. Populate notebook 08 as read-only synthesis and prepare thesis/manuscript
+   tables from machine-readable artifacts.
+6. Complete clean-environment and dependency-lock reproducibility audits.
+7. Consider a prototype only after research closure and with explicit
+   non-production limitations.
 
-## 16. Final Current Conclusion
+## 19. Final Current Conclusion
 
 The project has successfully progressed from repository setup and dataset audit
 through independent MulCas reconstruction, paper-aligned correction,
-controlled improvement experiments, temporal robustness analysis, component
-ablation, creator-feature ablation, systematic error analysis, and historical
-clone sensitivity.
+controlled improvement experiments, temporal robustness analysis, materially
+different static representations, protocol-gap diagnostics, complete external
+enrichment, and prospective evaluation governance.
 
 The work produced a defensible frozen baseline and a substantial body of
-negative and diagnostic evidence. It did not produce a reliably improved model,
-but it did establish where the reconstruction succeeds, where it fails, how its
-components behave over time, and why claims must remain conservative.
+negative and diagnostic evidence. No Phase 8 intervention reliably improved
+the reference across P2-P4. Phase 9A explained only a limited portion of the
+published gap using completed diagnostics and did not create a deployable
+improvement.
 
-The research implementation through Phase 7 is complete. The main remaining
-work is final synthesis, reproducibility packaging, documentation alignment,
-and, optionally, external validation or a clearly caveated prototype.
+Phase 8R6D established a sealed, strict-only STRONG Track B benchmark with 112
+positive and 180 benign later-time contracts while preserving Track A. Phase
+9B now fixes how future development and one-shot external evaluation must be
+conducted. Track B performance remains unknown, Phase 9C has not started, and
+the retained reference remains frozen Phase 5.5 paper-aligned MulCas.
 
+The immediate work is Phase 9C under the frozen protocol, restoration of a
+fully green test suite by migrating stale pre-seal assertions, and final
+synthesis/reproducibility packaging. No claim of external generalization is
+supported until a frozen Phase 9 system receives the one permitted Track B
+evaluation.

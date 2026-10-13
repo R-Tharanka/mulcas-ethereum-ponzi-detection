@@ -1,0 +1,21 @@
+{
+  "creation_code_ready_count": 116,
+  "decision": "C",
+  "decision_label": "PROVIDER VALID; FULL RUNTIME >30 MIN — AWAIT USER APPROVAL",
+  "detectors_evaluated": false,
+  "enriched_count": 116,
+  "full_resume_occurred": false,
+  "later_benign_count": 0,
+  "later_positive_count": 0,
+  "models_trained": false,
+  "mulcas_ready_count": 116,
+  "parent_results_preserved": true,
+  "reason": "Observed stability gate projects full runtime above 30 minutes; awaiting user approval",
+  "sealed_ready": false,
+  "static_runtime_ready_count": 116,
+  "status": "RUNTIME_OVER_30_MIN",
+  "track_a_modified": false,
+  "track_b_provisional_count": 0,
+  "track_b_rating": "NONE",
+  "track_b_strict_count": 0
+}

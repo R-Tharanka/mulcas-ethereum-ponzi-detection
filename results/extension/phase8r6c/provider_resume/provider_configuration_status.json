@@ -1,20 +1,20 @@
 {
   "BLOCKSCOUT_API_KEY": {
     "authentication_required": true,
-    "configured": false,
+    "configured": true,
     "hostname": null,
     "provider_class": "api_credential"
   },
   "BLOCKSCOUT_API_URL": {
     "authentication_required": true,
-    "configured": false,
-    "hostname": null,
+    "configured": true,
+    "hostname": "api.blockscout.com",
     "provider_class": "blockscout_creation_api"
   },
   "ETH_RPC_URL": {
     "authentication_required": true,
-    "configured": false,
-    "hostname": null,
+    "configured": true,
+    "hostname": "eth-mainnet.g.alchemy.com",
     "provider_class": "ethereum_json_rpc"
   },
   "credentials_serialized": false

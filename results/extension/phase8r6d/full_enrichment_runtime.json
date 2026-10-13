@@ -1,0 +1,16 @@
+{
+  "additional_runtime_minutes": 26.79656326166587,
+  "approved_total_minutes": 100.0,
+  "average_request_latency_seconds": 0.3873530590955981,
+  "cumulative_runtime_minutes": 74.5158178666626,
+  "http_status_distribution": {
+    "200": 4090
+  },
+  "remaining_unattempted": 0,
+  "requests_cumulative": 8930,
+  "requests_phase8r6d": 4090,
+  "resumed_addresses": 683,
+  "retries_phase8r6d": 0,
+  "starting_successful_rows": 787,
+  "stop_category": null
+}
