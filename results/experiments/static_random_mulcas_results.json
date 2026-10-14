@@ -1,0 +1,136 @@
+{
+  "experiment": "random_stratified_static_opcode_three_viewer",
+  "dataset": "C:\\Users\\ASUS\\Documents\\GitHub\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "seed": 42,
+  "split_counts": {
+    "train": {
+      "rows": 5198,
+      "ponzi": 251
+    },
+    "fit": {
+      "rows": 4158,
+      "ponzi": 201
+    },
+    "validation": {
+      "rows": 1040,
+      "ponzi": 50
+    },
+    "test": {
+      "rows": 1300,
+      "ponzi": 63
+    }
+  },
+  "train_test_shared_addresses": 3,
+  "smote": "Applied only inside training and cross-validation folds",
+  "scale_pos_weight": 1.0,
+  "word2vec": "64-dimensional training-only mean pooling",
+  "xgboost_count": {
+    "best_params": {
+      "model__learning_rate": 0.1,
+      "model__max_depth": 5,
+      "model__n_estimators": 100
+    },
+    "cv_f1": 0.7518562897029176
+  },
+  "xgboost_tfidf": {
+    "best_params": {
+      "model__learning_rate": 0.1,
+      "model__max_depth": 3,
+      "model__n_estimators": 100
+    },
+    "cv_f1": 0.7790525667434064
+  },
+  "validation_optimal_f1": 0.8823529411764707,
+  "test": {
+    "threshold": 0.39088033297408625,
+    "tn": 1230,
+    "fp": 7,
+    "fn": 10,
+    "tp": 53,
+    "accuracy": 0.9869230769230769,
+    "balanced_accuracy": 0.9178054946042011,
+    "precision": 0.8833333333333333,
+    "recall": 0.8412698412698413,
+    "f1": 0.8617886178861789,
+    "pr_auc_trapezoidal": 0.8836950397145659,
+    "average_precision": 0.883321656015283,
+    "classification_report": {
+      "Benign": {
+        "precision": 0.9919354838709677,
+        "recall": 0.994341147938561,
+        "f1-score": 0.9931368591037545,
+        "support": 1237.0
+      },
+      "Ponzi": {
+        "precision": 0.8833333333333333,
+        "recall": 0.8412698412698413,
+        "f1-score": 0.8617886178861789,
+        "support": 63.0
+      },
+      "accuracy": 0.9869230769230769,
+      "macro avg": {
+        "precision": 0.9376344086021505,
+        "recall": 0.9178054946042011,
+        "f1-score": 0.9274627384949667,
+        "support": 1300.0
+      },
+      "weighted avg": {
+        "precision": 0.9866724565756825,
+        "recall": 0.9869230769230769,
+        "f1-score": 0.9867715212601336,
+        "support": 1300.0
+      }
+    }
+  },
+  "comparison": {
+    "note": "Published values and the two local tests use different evaluation protocols.",
+    "rows": {
+      "Published MulCas": {
+        "accuracy": null,
+        "balanced_accuracy": null,
+        "precision": 0.951,
+        "recall": 0.674,
+        "f1": 0.789,
+        "pr_auc": null
+      },
+      "Old paper-aligned test": {
+        "accuracy": 0.925343811394892,
+        "balanced_accuracy": 0.723191713483146,
+        "precision": 0.90625,
+        "recall": 0.453125,
+        "f1": 0.6041666666666666,
+        "pr_auc": 0.6624476140288026
+      },
+      "New random-split test": {
+        "accuracy": 0.9869230769230769,
+        "balanced_accuracy": 0.9178054946042011,
+        "precision": 0.8833333333333333,
+        "recall": 0.8412698412698413,
+        "f1": 0.8617886178861789,
+        "pr_auc": 0.883321656015283
+      }
+    },
+    "confusion_matrices": {
+      "Old paper-aligned test": {
+        "tn": 442,
+        "fp": 3,
+        "fn": 35,
+        "tp": 29
+      },
+      "New random-split test": {
+        "tn": 1230,
+        "fp": 7,
+        "fn": 10,
+        "tp": 53
+      }
+    },
+    "new_minus_old_percentage_points": {
+      "accuracy": 6.157926552818493,
+      "balanced_accuracy": 19.46137811210551,
+      "precision": -2.2916666666666696,
+      "recall": 38.81448412698413,
+      "f1": 25.762195121951226,
+      "pr_auc": 22.08740419864804
+    }
+  }
+}

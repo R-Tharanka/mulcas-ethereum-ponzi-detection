@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-09-24T05:51:02.959480+00:00",
+  "generated_at_utc": "2026-10-13T22:00:22.467587+00:00",
   "protocol": "paper_aligned_phase_5_5",
-  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
-  "split_membership_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\results\\baseline\\paper_aligned\\split_membership.csv",
+  "dataset_path": "C:\\Users\\ASUS\\Documents\\GitHub\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "split_membership_path": "C:\\Users\\ASUS\\Documents\\GitHub\\mulcas-ethereum-ponzi-detection\\results\\baseline\\paper_aligned\\split_membership.csv",
   "ngram_filter": {
     "ngram_range": [
       1,

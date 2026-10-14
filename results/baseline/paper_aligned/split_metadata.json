@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-09-24T05:47:54.211402+00:00",
+  "generated_at_utc": "2026-10-13T21:56:41.071797+00:00",
   "protocol": "ponzi_occurrence_chronological_whole_block_boundaries",
-  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "dataset_path": "C:\\Users\\ASUS\\Documents\\GitHub\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
   "positive_occurrence_boundaries": {
     "train_through": 200,
     "validation_through": 250,

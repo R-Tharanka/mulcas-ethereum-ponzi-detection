@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-09-23T08:39:28.727026+00:00",
-  "dataset_path": "D:\\ALT-IN 1 - sub\\org repos\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
+  "generated_at_utc": "2026-10-13T21:56:35.427111+00:00",
+  "dataset_path": "C:\\Users\\ASUS\\Documents\\GitHub\\mulcas-ethereum-ponzi-detection\\data\\raw\\PonziDataset_20221114.csv",
   "file_size_bytes": 307176676,
   "sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
   "published_reference": {
@@ -159,13 +159,13 @@
     "missing_or_empty_count": 0,
     "exact_duplicate_rows": 712,
     "exact_duplicate_groups": 195,
-    "memory_usage_bytes_deep": 100264775
+    "memory_usage_bytes_deep": 100316759
   },
   "memory_usage_bytes": {
-    "metadata_only_deep": 2475870,
-    "opcode_deep": 100264775,
+    "metadata_only_deep": 2683806,
+    "opcode_deep": 100316759,
     "raw_csv_file_size": 307176676,
-    "metadata_plus_opcode_deep": 102740645
+    "metadata_plus_opcode_deep": 103000565
   },
   "paper_discrepancies": {
     "row_count_delta": 0,
