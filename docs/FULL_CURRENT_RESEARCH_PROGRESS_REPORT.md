@@ -3,10 +3,10 @@
 ## MulCas Ethereum Ponzi Smart-Contract Detection
 
 - **Report date:** 2026-10-22
-- **Project status:** Complete through Phase 9C plus duplicate-group-safe collaborator-result audit
+- **Project status:** Complete through Phase 9C and controlled group-safe collaborator-result successors
 - **Current retained reference system:** Frozen Phase 5.5 paper-aligned MulCas
 - **Latest completed model phase:** Phase 9C, H9C not supported; no candidate advanced
-- **Latest completed audit:** duplicate-group-safe successor to commit `5ed8509`
+- **Latest completed diagnostics:** clone-balanced ensemble and sparse SVM; neither accepted
 - **External benchmark:** sealed STRICT Track B, 112 positive and 180 benign; not evaluated
 - **Raw dataset status:** Unmodified and hash-verified
 
@@ -52,9 +52,10 @@ The work completed five broad stages:
    benchmark, then froze Phase 9 development and final-evaluation rules before
    any Track B scoring.
 7. **Prospective development and branch audit, Phase 9C plus the `5ed8509`
-   successor:** tested deployment-available creator/code-family state on Track A
-   only, then corrected exact duplicate leakage in the collaborator's separate
-   random-split ensemble without overwriting its historical result.
+   successors:** tested deployment-available creator/code-family state on Track
+   A only, corrected exact duplicate leakage in the collaborator's separate
+   random-split ensemble, and tested clone-balanced weighting plus one fixed
+   sparse SVM without overwriting historical results.
 
 The current frozen Phase 5.5 final-test result is:
 
@@ -93,6 +94,12 @@ split shared addresses and exact opcode sequences across boundaries. A separate
 connected address/exact-opcode grouped successor preserves that result and
 produces F1=0.7778. This corrected random result is not chronological and is
 not the published MulCas cascade.
+
+Two controlled attempts to improve the grouped result were not accepted. A
+clone-capped AP-weighted ensemble increased recall to 0.8571 but reduced
+precision to 0.6923, F1 to 0.7660, and AP to 0.7435. A fixed clone-capped sparse
+SVM produced F1=0.7302 and AP=0.6935. The grouped three-view result remains the
+reference for this separate random diagnostic.
 
 The main unresolved weakness is temporal generalization: performance is strong
 in P4 but poor or unstable in P2, P3, and P5. The project has nevertheless
@@ -135,6 +142,8 @@ about where and how the system fails.
 | 9C | Creator and code-family state | Complete | H9C not supported; no candidate advanced; Track B and P5 excluded |
 | `5ed8509` random ensemble | Collaborator in-distribution diagnostic | Complete, historical | F1 0.8618 under row-random split; not duplicate-isolated |
 | Group-safe successor | Exact duplicate leakage correction | Complete | F1 0.7778 with zero exact address/opcode group overlap |
+| Clone-balanced grouped successor | Reduce duplicate-family training dominance | Complete; not supported | Recall rose to 0.8571, but F1 fell to 0.7660 and AP to 0.7435 |
+| Clone-capped sparse SVM | Fixed paper-motivated sparse classifier | Complete; not supported | F1 0.7302 and AP 0.6935 |
 | 9D | Cascade calibration and safer routing | Not started | Next prospective model-development phase |
 | Final synthesis | Notebook/report packaging | Pending | Notebook 08 remains empty |
 
@@ -1457,6 +1466,36 @@ duplicate-isolated estimate is lower by 0.0840 F1 and 0.1323 AP. The successor
 still uses a random in-distribution split and exact identities only; it does not
 solve fuzzy semantic-family overlap or establish forward temporal performance.
 
+### 11.30 Controlled Group-Safe Improvement Attempts
+
+Two narrowly scoped successors tested mechanisms motivated by the grouped
+audit. Both retained the exact group-safe split, used validation-only threshold
+selection, excluded P5 and Track B, and preserved all parent hashes.
+
+**Clone-balanced ensemble:** capped fit data at one row per connected
+group-label pair, reducing 4,159 fit rows to 3,829, and compared equal versus
+validation-AP-derived viewer weights. The clone-capped AP-weighted candidate
+won on validation (F1=0.8411, AP=0.8821) and therefore received the only test
+confirmation. It produced P=0.6923, R=0.8571, F1=0.7660, and AP=0.7435. Recall
+improved, but precision, F1, and AP declined relative to the parent grouped
+result. The mechanism was not accepted.
+
+**Sparse SVM:** evaluated one fixed, paper-motivated clone-capped
+`LinearSVC(C=1, class_weight="balanced")` over training-only opcode TF-IDF. It
+produced P=R=F1=0.7302 and AP=0.6935. It was also not accepted.
+
+| Group-safe system | Precision | Recall | F1 | AP | Status |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Parent three-view ensemble | 0.7778 | 0.7778 | 0.7778 | 0.7510 | Retained grouped reference |
+| Clone-balanced AP-weighted ensemble | 0.6923 | 0.8571 | 0.7660 | 0.7435 | Not supported |
+| Clone-capped sparse SVM | 0.7302 | 0.7302 | 0.7302 | 0.6935 | Not supported |
+
+**Decision:** no tested grouped successor improved both the operating-point and
+ranking evidence. Because the same grouped test has now been observed by
+multiple diagnostics, additional classifier or threshold shopping on it is
+closed. Further improvement work must return to the frozen Phase 9 forward
+P2-P4 protocol. Phase 9D was not started by these experiments.
+
 ## 12. Consolidated Current Results
 
 ### 12.1 Original Paper vs Reconstructions
@@ -1815,6 +1854,10 @@ Key source-of-truth artifacts:
   `results/experiments/static_random_mulcas_results.json`
 - Duplicate-group-safe successor:
   `results/experiments/static_grouped_mulcas/static_grouped_mulcas_results.json`
+- Clone-balanced grouped successor:
+  `results/experiments/static_grouped_improvement/static_grouped_improvement_results.json`
+- Clone-capped sparse SVM diagnostic:
+  `results/experiments/static_grouped_sparse_svm/static_grouped_sparse_svm_results.json`
 - Extension outputs: `results/extension/phase8r0/` through
   `results/extension/phase8r5c1/`
 - Sequence checkpoints: manifest at

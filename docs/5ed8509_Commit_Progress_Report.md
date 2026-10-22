@@ -560,3 +560,21 @@ and exact grouping does not prove semantic family independence. The corrected
 result should be presented as duplicate-isolated in-distribution static
 classification, with chronological results retained as the evidence about
 forward temporal robustness.
+
+## 21. Controlled Successor Attempts
+
+Two additional successors retained the exact group-safe partition and excluded
+P5 and Track B. Neither replaced the grouped reference.
+
+| System | Precision | Recall | F1 | AP | Conclusion |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Group-safe three-view reference | 0.7778 | 0.7778 | 0.7778 | 0.7510 | Retained |
+| Clone-capped AP-weighted ensemble | 0.6923 | 0.8571 | 0.7660 | 0.7435 | Not supported |
+| Clone-capped sparse SVM | 0.7302 | 0.7302 | 0.7302 | 0.6935 | Not supported |
+
+Clone capping removed 330 repeated fit rows and improved validation metrics,
+but the selected candidate traded ten additional false positives for five
+recovered positives on the held-out grouped test. The sparse SVM reduced both
+ranking and operating-point performance. Additional classifier or threshold
+shopping on this now repeatedly observed partition is not justified; subsequent
+development belongs under the frozen Phase 9 forward protocol.

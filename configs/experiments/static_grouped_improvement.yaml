@@ -1,0 +1,48 @@
+phase: static_grouped_improvement
+status: frozen_before_execution
+parent_result: results/experiments/static_grouped_mulcas/static_grouped_mulcas_results.json
+parent_result_sha256: 8751e0ea1d0fc9d3d581f1b92730ff2e94466d96e1a83691992278162debbf3b
+historical_result: results/experiments/static_random_mulcas_results.json
+historical_result_sha256: 4f8bd7d3c028317495fa7b8a3fa0efed1247f2b8f5c12287cf93192372204916
+dataset_sha256: 48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+seed: 42
+max_features: 20000
+workers: 4
+split_membership: results/experiments/static_grouped_mulcas/split_membership.csv
+group_policy: connected normalized address OR exact normalized opcode
+training_variants:
+  full: all fit rows
+  clone_capped: one deterministic row per duplicate-group and label pair
+ensemble_variants:
+  equal: arithmetic mean of three viewer probabilities
+  validation_ap_weighted: viewer weights proportional to validation average precision
+candidates:
+  - C0_full_equal
+  - C1_clone_capped_equal
+  - C2_full_ap_weighted
+  - C3_clone_capped_ap_weighted
+model_policy:
+  hyperparameters: frozen_from_parent_group_safe_result
+  threshold: validation_f1_selected_per_candidate
+  new_hyperparameter_search: false
+selection:
+  data: validation_only
+  order:
+    - highest_validation_f1
+    - highest_validation_average_precision
+    - simplest_candidate_order
+  simplest_candidate_order:
+    - C0_full_equal
+    - C1_clone_capped_equal
+    - C2_full_ap_weighted
+    - C3_clone_capped_ap_weighted
+test_policy:
+  score_only_selected_candidate: true
+  historical_parent_control_used_for_comparison: true
+  no_test_reselection: true
+guards:
+  p5_loaded: false
+  track_b_loaded: false
+  historical_results_modified: false
+  outer_group_split_changed: false
+

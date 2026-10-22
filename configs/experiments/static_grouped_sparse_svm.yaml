@@ -1,0 +1,26 @@
+phase: static_grouped_sparse_svm
+status: frozen_before_execution
+rationale: sparse linear margin classifier from the published baseline family, combined with clone-capped training
+dataset_sha256: 48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+parent_result: results/experiments/static_grouped_mulcas/static_grouped_mulcas_results.json
+parent_result_sha256: 8751e0ea1d0fc9d3d581f1b92730ff2e94466d96e1a83691992278162debbf3b
+seed: 42
+training: one deterministic row per duplicate-group and label pair
+features:
+  type: opcode_tfidf
+  ngram_range: [1, 3]
+  min_df: 2
+  max_features: 20000
+model:
+  type: LinearSVC
+  C: 1.0
+  class_weight: balanced
+threshold: validation_f1_selected
+hyperparameter_search: false
+test_policy: one_confirmation_only
+guards:
+  exact_group_safe_split: true
+  p5_loaded: false
+  track_b_loaded: false
+  parent_modified: false
+
