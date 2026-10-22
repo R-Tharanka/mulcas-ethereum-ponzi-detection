@@ -1,0 +1,182 @@
+{
+  "experiment": "duplicate_group_safe_random_static_opcode_three_viewer",
+  "status": "complete",
+  "successor_to_commit": "5ed8509613838f8e43268e075b58753f77c60e80",
+  "historical_result": {
+    "path": "results\\experiments\\static_random_mulcas_results.json",
+    "sha256_before": "4f8bd7d3c028317495fa7b8a3fa0efed1247f2b8f5c12287cf93192372204916",
+    "preserved": true,
+    "sha256_after": "4f8bd7d3c028317495fa7b8a3fa0efed1247f2b8f5c12287cf93192372204916"
+  },
+  "dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "seed": 42,
+  "group_policy": "connected components over normalized address OR exact normalized opcode",
+  "split_policy": "5-fold stratified-group candidates; deterministic size/prevalence objective",
+  "cv_policy": "3-fold StratifiedGroupKFold over fit duplicate groups",
+  "grouping": {
+    "groups": 5981,
+    "multirow_groups": 195,
+    "rows_in_multirow_groups": 712,
+    "largest_group_rows": 34,
+    "mixed_label_groups": 11
+  },
+  "split_counts": {
+    "development": {
+      "rows": 5198,
+      "ponzi": 251,
+      "benign": 4947,
+      "groups": 4783
+    },
+    "fit": {
+      "rows": 4159,
+      "ponzi": 201,
+      "benign": 3958,
+      "groups": 3822
+    },
+    "validation": {
+      "rows": 1039,
+      "ponzi": 50,
+      "benign": 989,
+      "groups": 961
+    },
+    "test": {
+      "rows": 1300,
+      "ponzi": 63,
+      "benign": 1237,
+      "groups": 1198
+    }
+  },
+  "boundary_overlap": {
+    "fit_validation_groups": 0,
+    "fit_validation_addresses": 0,
+    "fit_validation_opcodes": 0,
+    "development_test_groups": 0,
+    "development_test_addresses": 0,
+    "development_test_opcodes": 0
+  },
+  "limitations": [
+    "Random grouped evaluation is not forward temporal evaluation.",
+    "Exact address/opcode grouping does not establish fuzzy semantic family isolation.",
+    "The three-view probability ensemble is MulCas-style, not the published MulCas cascade."
+  ],
+  "models": {
+    "xgboost_count": {
+      "best_params": {
+        "model__learning_rate": 0.1,
+        "model__max_depth": 3,
+        "model__n_estimators": 200
+      },
+      "cv_f1": 0.7768970428417026
+    },
+    "xgboost_tfidf": {
+      "best_params": {
+        "model__learning_rate": 0.1,
+        "model__max_depth": 3,
+        "model__n_estimators": 100
+      },
+      "cv_f1": 0.7802619692863596
+    },
+    "ridge": {
+      "alpha": 1.0,
+      "calibration": "sigmoid_grouped_3fold"
+    }
+  },
+  "validation_selected_threshold": 0.43247271908012824,
+  "validation_f1": 0.8260869565217391,
+  "test": {
+    "threshold": 0.43247271908012824,
+    "tn": 1223,
+    "fp": 14,
+    "fn": 14,
+    "tp": 49,
+    "accuracy": 0.9784615384615385,
+    "balanced_accuracy": 0.8832300368274499,
+    "precision": 0.7777777777777778,
+    "recall": 0.7777777777777778,
+    "f1": 0.7777777777777778,
+    "pr_auc_trapezoidal": 0.7569663323597607,
+    "average_precision": 0.750979945368982,
+    "classification_report": {
+      "Benign": {
+        "precision": 0.9886822958771221,
+        "recall": 0.9886822958771221,
+        "f1-score": 0.9886822958771221,
+        "support": 1237.0
+      },
+      "Ponzi": {
+        "precision": 0.7777777777777778,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.7777777777777778,
+        "support": 63.0
+      },
+      "accuracy": 0.9784615384615385,
+      "macro avg": {
+        "precision": 0.8832300368274499,
+        "recall": 0.8832300368274499,
+        "f1-score": 0.8832300368274499,
+        "support": 1300.0
+      },
+      "weighted avg": {
+        "precision": 0.9784615384615385,
+        "recall": 0.9784615384615385,
+        "f1-score": 0.9784615384615385,
+        "support": 1300.0
+      }
+    }
+  },
+  "historical_row_random_test": {
+    "threshold": 0.39088033297408625,
+    "tn": 1230,
+    "fp": 7,
+    "fn": 10,
+    "tp": 53,
+    "accuracy": 0.9869230769230769,
+    "balanced_accuracy": 0.9178054946042011,
+    "precision": 0.8833333333333333,
+    "recall": 0.8412698412698413,
+    "f1": 0.8617886178861789,
+    "pr_auc_trapezoidal": 0.8836950397145659,
+    "average_precision": 0.883321656015283,
+    "classification_report": {
+      "Benign": {
+        "precision": 0.9919354838709677,
+        "recall": 0.994341147938561,
+        "f1-score": 0.9931368591037545,
+        "support": 1237.0
+      },
+      "Ponzi": {
+        "precision": 0.8833333333333333,
+        "recall": 0.8412698412698413,
+        "f1-score": 0.8617886178861789,
+        "support": 63.0
+      },
+      "accuracy": 0.9869230769230769,
+      "macro avg": {
+        "precision": 0.9376344086021505,
+        "recall": 0.9178054946042011,
+        "f1-score": 0.9274627384949667,
+        "support": 1300.0
+      },
+      "weighted avg": {
+        "precision": 0.9866724565756825,
+        "recall": 0.9869230769230769,
+        "f1-score": 0.9867715212601336,
+        "support": 1300.0
+      }
+    }
+  },
+  "group_safe_minus_historical": {
+    "precision": -0.10555555555555551,
+    "recall": -0.06349206349206349,
+    "f1": -0.0840108401084011,
+    "average_precision": -0.13234171064630096
+  },
+  "runtime_seconds": 1829.7132272999988,
+  "environment": {
+    "python": "3.13.14",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6"
+  }
+}

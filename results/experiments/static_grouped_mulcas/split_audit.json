@@ -1,0 +1,62 @@
+{
+  "experiment": "duplicate_group_safe_random_static_opcode_three_viewer",
+  "status": "split_audit_complete",
+  "successor_to_commit": "5ed8509613838f8e43268e075b58753f77c60e80",
+  "historical_result": {
+    "path": "results\\experiments\\static_random_mulcas_results.json",
+    "sha256_before": "4f8bd7d3c028317495fa7b8a3fa0efed1247f2b8f5c12287cf93192372204916",
+    "preserved": true
+  },
+  "dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "seed": 42,
+  "group_policy": "connected components over normalized address OR exact normalized opcode",
+  "split_policy": "5-fold stratified-group candidates; deterministic size/prevalence objective",
+  "cv_policy": "3-fold StratifiedGroupKFold over fit duplicate groups",
+  "grouping": {
+    "groups": 5981,
+    "multirow_groups": 195,
+    "rows_in_multirow_groups": 712,
+    "largest_group_rows": 34,
+    "mixed_label_groups": 11
+  },
+  "split_counts": {
+    "development": {
+      "rows": 5198,
+      "ponzi": 251,
+      "benign": 4947,
+      "groups": 4783
+    },
+    "fit": {
+      "rows": 4159,
+      "ponzi": 201,
+      "benign": 3958,
+      "groups": 3822
+    },
+    "validation": {
+      "rows": 1039,
+      "ponzi": 50,
+      "benign": 989,
+      "groups": 961
+    },
+    "test": {
+      "rows": 1300,
+      "ponzi": 63,
+      "benign": 1237,
+      "groups": 1198
+    }
+  },
+  "boundary_overlap": {
+    "fit_validation_groups": 0,
+    "fit_validation_addresses": 0,
+    "fit_validation_opcodes": 0,
+    "development_test_groups": 0,
+    "development_test_addresses": 0,
+    "development_test_opcodes": 0
+  },
+  "limitations": [
+    "Random grouped evaluation is not forward temporal evaluation.",
+    "Exact address/opcode grouping does not establish fuzzy semantic family isolation.",
+    "The three-view probability ensemble is MulCas-style, not the published MulCas cascade."
+  ],
+  "runtime_seconds": 3.749570500000118
+}

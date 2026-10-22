@@ -10,9 +10,15 @@
 
 The commit adds a new static classification experiment intended to maximize
 classification performance on the available dataset. It abandons chronological
-evaluation for this experiment and instead uses a reproducible random stratified
+evaluation for this experiment and instead uses a seeded random stratified
 split. The original paper-aligned results remain available as a reference and
 are not overwritten.
+
+**Successor audit status (2026-10-22):** the commit result remains preserved as
+historical evidence, but it is not duplicate-isolated. A separate successor now
+groups every row connected by normalized address or exact normalized opcode in
+fit, validation, test, and internal CV. That correction lowers test F1 from
+0.8618 to 0.7778. The original file was not overwritten.
 
 ## 2. Files changed
 
@@ -327,6 +333,7 @@ also retains the trapezoidal precision-recall AUC as a separate value.
 | Published MulCas | Not reported | Not reported | 95.10% | 67.40% | 78.90% | Not reported |
 | Old paper-aligned test | 92.53% | 72.32% | 90.63% | 45.31% | 60.42% | 66.24% |
 | New random-split test | 98.69% | 91.78% | 88.33% | 84.13% | 86.18% | 88.33% |
+| Duplicate-group-safe successor | 97.85% | 88.32% | 77.78% | 77.78% | 77.78% | 75.10% |
 
 Compared with the old local paper-aligned test, the new result changes by:
 
@@ -342,9 +349,32 @@ Compared numerically with the published MulCas result, the new experiment has
 precision. This is a descriptive comparison, not a controlled superiority
 claim, because the evaluation protocols differ.
 
+### 13.1 Duplicate-group-safe successor
+
+The successor preserves the historical result JSON byte-for-byte and writes to
+`results/experiments/static_grouped_mulcas/`. Its connected-component rule
+keeps together rows sharing either normalized address or exact normalized
+opcode, including transitive links. The outer development/test split, inner
+fit/validation split, XGBoost search folds, and Ridge calibration folds are all
+group-safe.
+
+| Item | Historical row-random | Duplicate-group-safe |
+|---|---:|---:|
+| Test rows / Ponzi | 1,300 / 63 | 1,300 / 63 |
+| Precision | 0.8833 | 0.7778 |
+| Recall | 0.8413 | 0.7778 |
+| F1 | 0.8618 | 0.7778 |
+| Average precision | 0.8833 | 0.7510 |
+| TN / FP / FN / TP | 1230 / 7 / 10 / 53 | 1223 / 14 / 14 / 49 |
+
+The corrected score is lower by 0.0840 F1 and 0.1323 average precision. This
+does not erase the collaborator's result; it narrows its meaning to the
+row-random protocol actually used. For duplicate-isolated random evaluation,
+the successor is the stronger evidence.
+
 ## 14. Final outcome
 
-The commit successfully establishes a reproducible static-classification
+The commit establishes a seeded static-classification
 experiment that substantially improves minority-class recall and F1 relative to
 the local chronological baseline. The saved experiment detects 84.13% of Ponzi
 contracts while keeping precision at 88.33%.
@@ -362,6 +392,12 @@ The result does not support this stronger conclusion:
 
 That claim would require identical evaluation data and protocol, preferably
 with grouped and repeated testing.
+
+After the successor audit, the defensible additional conclusion is:
+
+> Exact address/opcode duplicate isolation reduces the random-split F1 to
+> 77.78%. The historical 86.18% remains the recorded row-random outcome, but it
+> must not be presented as duplicate-isolated generalization.
 
 ## 15. Testing and validation evidence
 
@@ -396,6 +432,17 @@ existing test suite therefore does not directly protect its split logic,
 fold-local SMOTE behavior, threshold selection, probability averaging, result
 schema, or comparison formatting from regression.
 
+The successor adds `tests/test_static_grouped_mulcas.py`, covering transitive
+group construction, outer/inner split isolation, grouped CV isolation,
+historical-result hash preservation, and separate output paths. Its focused
+suite passed 5 tests.
+
+The full branch suite completed with **326 passed, 28 failed, 66 warnings**.
+The failures are pre-existing branch-integrity findings: collaborator-refreshed
+Phase 5.5 metadata no longer matches frozen manifests, and a required Phase
+8R6D enrichment CSV is present as a Git LFS pointer. No frozen manifest was
+rewritten and no failure was converted to a skip.
+
 ## 16. Environment observed during validation
 
 The current virtual environment contains:
@@ -417,9 +464,10 @@ reproduction depends on preserving or recording the environment separately.
 
 1. **Evaluation protocol changed.** Much of the improvement may come from the
    easier random split rather than solely from a better classifier.
-2. **Duplicate leakage risk.** Three addresses cross the train/test boundary,
-   and many opcode sequences are duplicated. Row-level stratification does not
-   keep contract families or duplicate groups together.
+2. **Historical duplicate leakage.** Three addresses and many exact opcode
+   sequences cross the commit's row-level split. The successor resolves exact
+   address/opcode leakage, but not fuzzy, compiler-derived, template-derived,
+   or semantically equivalent families.
 3. **Single split and seed.** The reported result is one realization with seed
    42. It does not quantify variance or confidence intervals.
 4. **Small positive test sample.** Only 63 Ponzi contracts determine recall and
@@ -451,7 +499,9 @@ reproduction depends on preserving or recording the environment separately.
 
 ## 18. Recommended next steps
 
-1. Deduplicate or group by address and exact opcode hash before splitting.
+1. **Completed:** group connected normalized-address and exact-opcode identities
+   before outer splitting and internal CV; retain fuzzy-family grouping as a
+   separate future protocol.
 2. Repeat the experiment over multiple fixed seeds and report mean, standard
    deviation, and confidence intervals.
 3. Add ablations for SMOTE, Word2Vec, threshold optimization, each viewer, and
@@ -487,18 +537,26 @@ The machine-readable output is stored at:
 
 `results/experiments/static_random_mulcas_results.json`
 
+Run or inspect the duplicate-group-safe successor separately:
+
+```powershell
+python scripts\static_grouped_mulcas.py
+```
+
+Its result, membership, predictions, and report are under
+`results/experiments/static_grouped_mulcas/`.
+
 ## 20. Conclusion
 
-The latest commit adds a complete, leakage-conscious static opcode
-classification experiment and records a strong result: 98.69% accuracy, 91.78%
-balanced accuracy, 84.13% Ponzi recall, and 86.18% Ponzi F1. The most valuable
-improvement is the large reduction in missed Ponzi contracts, from 35 false
-negatives in the old 509-row paper-aligned test to 10 false negatives in the new
-1,300-row random test.
+The commit records a strong row-random result: 98.69% accuracy, 91.78% balanced
+accuracy, 84.13% Ponzi recall, and 86.18% Ponzi F1. The successor preserves that
+evidence while showing that exact duplicate isolation reduces the estimate to
+97.85% accuracy, 88.32% balanced accuracy, 77.78% recall, and 77.78% F1.
 
 The experiment is a useful performance-oriented extension of the project. Its
-main research limitation is comparability: the random split removes the temporal
-generalization challenge that caused the earlier score reduction. The result
-should therefore be presented as strong in-distribution static classification,
-with chronological performance retained as evidence about concept drift and
-realistic future-contract robustness.
+main research limitations are comparability and remaining near-family leakage:
+the grouped random split still removes the temporal generalization challenge,
+and exact grouping does not prove semantic family independence. The corrected
+result should be presented as duplicate-isolated in-distribution static
+classification, with chronological results retained as the evidence about
+forward temporal robustness.
