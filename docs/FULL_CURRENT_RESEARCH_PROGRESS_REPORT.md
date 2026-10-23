@@ -3,9 +3,9 @@
 ## MulCas Ethereum Ponzi Smart-Contract Detection
 
 - **Report date:** 2026-10-22
-- **Project status:** Complete through Phase 9C and controlled group-safe collaborator-result successors
+- **Project status:** Complete through Phase 9D and controlled group-safe collaborator-result successors
 - **Current retained reference system:** Frozen Phase 5.5 paper-aligned MulCas
-- **Latest completed model phase:** Phase 9C, H9C not supported; no candidate advanced
+- **Latest completed model phase:** Phase 9D, H9D not supported; no candidate advanced
 - **Latest completed diagnostics:** clone-balanced ensemble and sparse SVM; neither accepted
 - **External benchmark:** sealed STRICT Track B, 112 positive and 180 benign; not evaluated
 - **Raw dataset status:** Unmodified and hash-verified
@@ -13,7 +13,7 @@
 ## 1. Purpose of This Report
 
 This document gives one ordered, understandable account of the project from
-repository setup through Phase 9C and the duplicate-group-safe collaborator
+repository setup through Phase 9D and the duplicate-group-safe collaborator
 result audit. It
 describes the project, execution flow, environment, dataset, preprocessing,
 splits, features, thresholds, models, each research phase, results,
@@ -51,11 +51,12 @@ The work completed five broad stages:
    discovered, enriched, overlap-audited, and sealed a strict later-time Track B
    benchmark, then froze Phase 9 development and final-evaluation rules before
    any Track B scoring.
-7. **Prospective development and branch audit, Phase 9C plus the `5ed8509`
+7. **Prospective development and branch audit, Phases 9C-9D plus the `5ed8509`
    successors:** tested deployment-available creator/code-family state on Track
    A only, corrected exact duplicate leakage in the collaborator's separate
    random-split ensemble, and tested clone-balanced weighting plus one fixed
-   sparse SVM without overwriting historical results.
+   sparse SVM without overwriting historical results. Phase 9D then tested
+   prior-period score calibration and a fixed consensus routing guard.
 
 The current frozen Phase 5.5 final-test result is:
 
@@ -88,6 +89,13 @@ Phase 9C improved pooled operating-point F1 from 0.2722 for frozen MulCas to
 0.3744 for its diagnostic-best combined state candidate, but PR-AUC fell by
 more than the frozen 0.01 tolerance. No candidate satisfied all prospective
 advancement criteria, so H9C was not supported and Track B remained sealed.
+
+Phase 9D's fixed raw-score consensus guard raised pooled F1 to 0.4550 and
+PR-AUC to 0.4044 while reducing pooled FPR to 0.0024. This pooled result was
+not accepted: it predicted no positives in P3, reduced P2 F1, and failed the
+predeclared temporal-breadth and maximum-period-degradation conditions. H9D
+was therefore not supported; the strong pooled diagnostic must not be described
+as a reliable forward-temporal replacement.
 
 The collaborator's row-random three-view ensemble recorded F1=0.8618, but its
 split shared addresses and exact opcode sequences across boundaries. A separate
@@ -140,11 +148,11 @@ about where and how the system fails.
 | 8R6D | Complete enrichment and Track B sealing | Complete | 1,453 enriched; strict Track B sealed with 112 positive and 180 benign |
 | 9B | Prospective evaluation protocol | Complete and frozen | Track A development metrics/rules frozen; Track B default-deny |
 | 9C | Creator and code-family state | Complete | H9C not supported; no candidate advanced; Track B and P5 excluded |
+| 9D | Cascade calibration and safer routing | Complete | H9D not supported; pooled D2 gain failed temporal criteria; Track B and P5 excluded |
 | `5ed8509` random ensemble | Collaborator in-distribution diagnostic | Complete, historical | F1 0.8618 under row-random split; not duplicate-isolated |
 | Group-safe successor | Exact duplicate leakage correction | Complete | F1 0.7778 with zero exact address/opcode group overlap |
 | Clone-balanced grouped successor | Reduce duplicate-family training dominance | Complete; not supported | Recall rose to 0.8571, but F1 fell to 0.7660 and AP to 0.7435 |
 | Clone-capped sparse SVM | Fixed paper-motivated sparse classifier | Complete; not supported | F1 0.7302 and AP 0.6935 |
-| 9D | Cascade calibration and safer routing | Not started | Next prospective model-development phase |
 | Final synthesis | Notebook/report packaging | Pending | Notebook 08 remains empty |
 
 ### 2.2 Source Paper and Reproduction Target
@@ -1426,9 +1434,35 @@ Per-period F1 was C0 `.0828/.2222/.8519`, C1 `.1042/.2222/.8519`, C2
 `.1290/.3478/.8519`, and C3 `.1404/.4000/.8519` for P2/P3/P4. C3 improved the
 operating-point F1 most, but its PR-AUC degradation exceeded the frozen 0.01
 tolerance. No candidate advanced. **H9C was not supported; Phase 9D was not
-started.**
+started by Phase 9C itself.**
 
-### 11.29 Commit `5ed8509` and Duplicate-Group-Safe Successor
+### 11.29 Phase 9D - Cascade Calibration and Safer Routing
+
+**Work:** preregistered exactly four candidates before reading their outcomes:
+D0 frozen MulCas, D1 prior-period Platt calibration, D2 a fixed raw-score
+consensus guard, and D3 calibration plus the same guard. Calibration used only
+forward historical predictions: `P0 -> P1` calibrated P2, `P0+P1 -> P2`
+calibrated P3, and `P0-P2 -> P3` calibrated P4. The safety guard required two
+of four voting views to confirm a positive and three to overturn a negative.
+No threshold was searched, underlying viewers were unchanged, and P5 and
+sealed Track B were not loaded.
+
+| Candidate | Pooled P | Pooled R | Pooled F1 | Pooled PR-AUC | Pooled FPR | Advanced |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| D0 frozen control | 0.1970 | 0.4400 | 0.2722 | 0.3373 | 0.04954 | Control |
+| D1 calibrated cascade | 0.2305 | 0.3733 | 0.2850 | 0.3439 | 0.03444 | No |
+| D2 fixed consensus guard | 0.7869 | 0.3200 | 0.4550 | 0.4044 | 0.00239 | No |
+| D3 calibrated guard | 0.7742 | 0.3200 | 0.4528 | 0.3872 | 0.00258 | No |
+
+Per-period F1 was D0 `.0828/.2222/.8519`, D1 `.0789/.0000/.8174`, D2
+`.0755/.0000/.8519`, and D3 `.0755/.0000/.8440` for P2/P3/P4. D2 corrected
+250 P2 and six P3 false positives but introduced 11 P2 and seven P3 false
+negatives. Its pooled bootstrap deltas were positive for F1 and PR-AUC, but its
+zero P3 recall caused the frozen temporal-breadth and maximum-period-loss gates
+to fail. No candidate advanced. **H9D was not supported, Phase 5.5 remains the
+retained reference, and Phase 9E was not started.**
+
+### 11.30 Commit `5ed8509` and Duplicate-Group-Safe Successor
 
 **Historical collaborator work:** commit `5ed8509` added a row-random,
 stratified three-view probability ensemble using count XGBoost, N-gram TF-IDF
@@ -1538,6 +1572,9 @@ metric difference is caused only by model implementation.
   explicitly non-deployable oracle, not a replacement result.
 - Phase 9C's C3 state features raised pooled P2-P4 F1 from 0.2722 to 0.3744,
   but PR-AUC fell from 0.3373 to 0.2620, so no candidate passed the frozen rule.
+- Phase 9D's D2 guard raised pooled F1 to 0.4550 and PR-AUC to 0.4044 while
+  lowering FPR to 0.0024, but it produced zero P3 recall and failed the frozen
+  temporal breadth and maximum period-degradation rules.
 - The collaborator row-random F1=0.8618 falls to 0.7778 after exact
   address/opcode group isolation; neither random result is forward temporal.
 
@@ -1549,9 +1586,10 @@ under their predefined criteria. Negative results are preserved rather than
 hidden or post-hoc combined. Phase 8 is formally closed. Phase 9A is complete
 with its D3 candidate replay runtime-gated. Phase 8R6D established sealed Track
 B, Phase 9B is frozen, and Phase 9C is complete without an advancing candidate.
-Phase 9D has not started. The separate collaborator random-split result is
-retained as historical evidence, with its duplicate-group-safe successor now
-the appropriate exact-duplicate-isolated comparison.
+Phase 9D is also complete without an advancing candidate. The separate
+collaborator random-split result is retained as historical evidence, with its
+duplicate-group-safe successor now the appropriate exact-duplicate-isolated
+comparison.
 
 ## 13. Tests and Validation
 
@@ -1563,22 +1601,23 @@ Executed on 2026-10-22:
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Current collaborator branch result: **326 passed, 28 failed, 66 warnings in
-964.24 seconds**. The separate duplicate-group-safe focused suite passed
-**5 tests**.
+Current collaborator branch result after restoring the Phase 8R6D LFS object:
+**345 passed, 27 failed, 66 warnings in 298.72 seconds**. The Phase 9D focused
+suite passes **10 tests**.
 
-All 28 full-suite failures predate the grouped successor and reflect two
-existing collaborator-branch integrity problems:
+All 27 full-suite failures predate Phase 9D and share one existing
+collaborator-branch integrity problem; no Phase 9D test failed:
 
 - refreshed `feature_summary.json` and `split_metadata.json` no longer match
   frozen Phase 5.5/Phase 7 manifest hashes, causing dependent Phase 6-9 anchor
-  tests to fail as designed; and
-- the Phase 8R6D completed-run idempotence test encounters a Git LFS pointer
-  instead of the required large enrichment CSV.
+  tests to fail as designed.
 
 These failures were not converted to skips and the frozen manifests were not
-rewritten. They mean this branch is not a clean archival/reproducibility state,
-even though the new grouped-split implementation tests pass.
+rewritten. The Phase 8R6D LFS object is now restored and its idempotence test
+passes. Exact reconciliation evidence for the two remaining metadata-only
+changes is stored at
+`results/integrity/frozen_artifact_reconciliation.json`. The branch is not yet
+a clean archival/reproducibility state.
 
 Warnings were non-failing deprecation/future warnings from PyTorch,
 PyTorch Geometric, and scikit-learn, plus a Windows permission warning when
@@ -1790,6 +1829,15 @@ Do not:
 27. **Phase 9C state result did not advance:** C3 improved pooled F1 but lost
     more PR-AUC than the preregistered tolerance; Track B generalization remains
     unknown because its labels stayed sealed.
+28. **Phase 9D pooled gain is not temporally reliable:** the D2 consensus guard
+    improved pooled F1 and PR-AUC largely by removing false positives, but it
+    predicted no positives in P3 and slightly reduced P2 F1. It therefore
+    failed the prospective temporal criteria despite strong pooled metrics.
+29. **Phase 9D's original runtime preflight undercounted bootstrap cost:** it
+    projected 0.27 minutes from score generation alone, while the complete run
+    took 8.85 minutes. The implementation now benchmarks a bounded pooled
+    bootstrap and applies a conservative projection factor; the completed
+    experimental metrics and decision were not changed.
 
 ## 16. Pending Work
 
@@ -1802,7 +1850,7 @@ Do not:
 3. Run a clean-environment reproducibility audit and archive a pinned dependency
    snapshot.
 4. Synchronize `README.md`, `docs/experiment_log.md`, and
-   `docs/RUN_AND_TEST_GUIDE.md` through Phase 9C and the grouped random audit.
+   `docs/RUN_AND_TEST_GUIDE.md` through Phase 9D and the grouped random audit.
 
 ### 16.2 External Validation
 
@@ -1819,10 +1867,10 @@ predefined Phase 8R5C1 gate. It should not be treated as routine pending work.
 Any future fine-tuning study requires a new preregistered rationale and must
 remain P5-free during design and selection.
 
-Phase 9B is frozen and Phase 9C is complete without an accepted candidate.
-Phase 9D may evaluate only the preregistered cascade-calibration and safer-routing
-mechanism. It must not access Track B, evaluate P5, reopen Phase 8, or use the
-collaborator's random split as a model-selection target.
+Phase 9B is frozen, and Phases 9C and 9D are complete without an accepted
+candidate. Phase 9E is the next preregistered mechanism-driven phase, but it
+must not begin automatically. It must not access Track B, evaluate P5, reopen
+Phase 8, or use the collaborator's random split as a model-selection target.
 
 ### 16.4 Optional Future Work
 
@@ -1850,6 +1898,8 @@ Key source-of-truth artifacts:
 - Phase 8R6D result: `results/extension/phase8r6d/phase8r6d_results.json`
 - Frozen Phase 9B protocol: `results/phase9/phase9b/phase9b_protocol.json`
 - Phase 9C result: `results/phase9/phase9c/phase9c_results.json`
+- Phase 9D result: `results/phase9/phase9d/phase9d_results.json`
+- Phase 9D report: `results/phase9/phase9d/phase9d_report.md`
 - Historical collaborator result:
   `results/experiments/static_random_mulcas_results.json`
 - Duplicate-group-safe successor:
@@ -1901,13 +1951,14 @@ and prediction traces rather than the 307 MB source data or large matrices.
 - `results/phase9/phase9a/phase9a_report.md` is the Phase 9A protocol-gap
   diagnostic and records its non-deployable oracle boundary and D3 runtime gate.
 - `results/extension/phase8r6d/phase8r6d_report.md` records Track B construction,
-  while `results/phase9/phase9c/phase9c_report.md` records the first prospective
-  Phase 9 model-development result.
+  while `results/phase9/phase9c/phase9c_report.md` and
+  `results/phase9/phase9d/phase9d_report.md` record the first two prospective
+  Phase 9 model-development results.
 - `docs/5ed8509_Commit_Progress_Report.md` now preserves both the collaborator's
   historical result and its duplicate-group-safe successor interpretation.
 - `README.md`, `docs/RUN_AND_TEST_GUIDE.md`, and `docs/experiment_log.md` require
-  a later synchronization pass through Phase 9C.
-- This file is the current cross-phase report through Phase 9C and the grouped
+  a later synchronization pass through Phase 9D.
+- This file is the current cross-phase report through Phase 9D and the grouped
   random-split audit.
 
 ## 18. Final Current Conclusion
@@ -1920,7 +1971,10 @@ representations.
 Phase 8 is formally closed, Phase 8R6D established sealed Track B, Phase 9B
 froze the prospective protocol, and Phase 9C tested deployment-available state
 without accessing P5 or Track B. No Phase 9C candidate passed every advancement
-criterion, so the frozen Phase 5.5 system remains the reference.
+criterion. Phase 9D then tested historical calibration and fixed consensus
+routing under the same boundary. Its strongest pooled result failed the
+period-level reliability gates, so the frozen Phase 5.5 system remains the
+reference.
 
 The strongest honest final statement is:
 
@@ -1941,5 +1995,5 @@ resource gate, and the publication does not uniquely define the full viewer
 mapping. The collaborator's 0.8618 row-random F1 also does not overturn this
 conclusion: exact duplicate isolation lowers that estimate to 0.7778, and both
 random protocols omit forward temporal evaluation. The next prospective model
-phase is Phase 9D; sealed Track B must remain untouched until one final system
-is frozen.
+phase is Phase 9E, but it has not started; sealed Track B must remain untouched
+until one final system is frozen.

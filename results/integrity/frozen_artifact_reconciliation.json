@@ -1,0 +1,44 @@
+{
+  "status": "authorization_required",
+  "audit_date": "2026-10-22",
+  "cause_commit": "5ed8509613838f8e43268e075b58753f77c60e80",
+  "anchored_source_commit": "54339c1960224e5f070cc187a1070845914baf54",
+  "remaining_failing_tests": 27,
+  "shared_root_cause_count": 2,
+  "artifacts": [
+    {
+      "path": "results/baseline/paper_aligned/feature_summary.json",
+      "manifest_expected_sha256": "ad722be5153b220db4c0dcda8869f2a6ab0d16151fe0659eab4397d33ab427b6",
+      "current_worktree_sha256": "4b7b6ebd776dc15e87a540f8ad8342722339a5cd35b99be43895943d7ded8cb0",
+      "anchored_git_blob_sha256_lf": "8cac05fac123e4b40ee50e42b5d17f175b440b1ab5a621166224c6b7320499a8",
+      "difference_scope": [
+        "generated_at_utc",
+        "dataset_path",
+        "split_membership_path"
+      ],
+      "scientific_metrics_changed": false
+    },
+    {
+      "path": "results/baseline/paper_aligned/split_metadata.json",
+      "manifest_expected_sha256": "8441f002f935250b7c524e04d33679115a68ed93f3204f8f8665ee4d3eb9a3a3",
+      "current_worktree_sha256": "26dbc034af40c1a2de4b726968f1a1e3b86917ace96a224e896c214456aa868f",
+      "anchored_git_blob_sha256_lf": "3f27ee23b5985afa8dd478cfc374c50270e0db0d3cd2de33c024c954081ea5a7",
+      "difference_scope": [
+        "generated_at_utc",
+        "dataset_path"
+      ],
+      "scientific_metrics_changed": false
+    }
+  ],
+  "lfs_repair": {
+    "path": "results/extension/phase8r6d/enriched_contracts_final.csv",
+    "oid_sha256": "c58dede57cdc88b852f862f01769eb5393b26da8e03ba16623c77b0cf4f1a269",
+    "size_bytes": 107441279,
+    "restored": true,
+    "idempotence_test": "passed"
+  },
+  "recommended_action": "restore the two metadata-only JSON files from anchored commit 54339c1 while preserving all collaborator model scripts and result artifacts",
+  "manifest_rewrite_recommended": false,
+  "test_skip_recommended": false,
+  "authorization_required_because": "restoration would intentionally reverse collaborator-authored tracked-file changes"
+}

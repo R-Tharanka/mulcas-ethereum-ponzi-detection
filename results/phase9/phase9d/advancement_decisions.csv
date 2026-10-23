@@ -1,0 +1,4 @@
+candidate,pooled_f1_improved,pr_auc_within_tolerance,fpr_within_ceiling,temporal_breadth_met,no_period_degradation_exceeded,paired_uncertainty_reported,advanced,P2_f1_delta,P3_f1_delta,P4_f1_delta
+D1,True,True,True,False,False,True,False,-0.0038551793496480052,-0.2222222222222222,-0.03446054750402572
+D2,True,True,True,False,False,True,False,-0.007330849657493088,-0.2222222222222222,0.0
+D3,True,True,True,False,False,True,False,-0.007330849657493088,-0.2222222222222222,-0.007815154604145391

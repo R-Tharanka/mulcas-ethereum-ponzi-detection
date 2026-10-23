@@ -1,0 +1,91 @@
+phase: 9D
+status: preregistered
+hypothesis: >-
+  Out-of-time calibration of existing MulCas viewer scores and a fixed
+  consensus-based safety guard improve forward temporal detection without
+  changing the underlying viewers or using future labels.
+dataset: data/raw/PonziDataset_20221114.csv
+dataset_sha256: 48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+phase9b_config: configs/phase9/phase9b.yaml
+phase7a_config: configs/phase7/temporal_robustness.yaml
+phase7a_results: results/experiments/phase7a/phase7a_results.json
+phase7a_predictions: results/experiments/phase7a/phase7a_predictions.csv
+paper_feature_config: configs/paper_aligned_features.yaml
+paper_model_config: configs/paper_aligned_baseline_models.yaml
+paper_mulcas_config: configs/paper_aligned_mulcas.yaml
+output_dir: results/phase9/phase9d
+seed: 42
+candidates:
+  D0: frozen_mulcas_control
+  D1: out_of_time_platt_calibration
+  D2: fixed_consensus_safety_guard
+  D3: calibrated_fixed_consensus_safety_guard
+calibration:
+  method: platt_logistic_regression
+  input: clipped_probability_logit
+  probability_clip: 0.000001
+  logistic_c: 1.0
+  solver: lbfgs
+  max_iter: 1000
+  class_weight: null
+  threshold: 0.5
+  temporal_pairs:
+    P2: {fit_periods: [P0], calibration_period: P1}
+    P3: {fit_periods: [P0, P1], calibration_period: P2}
+    P4: {fit_periods: [P0, P1, P2], calibration_period: P3}
+  target_period_labels: prohibited
+routing:
+  D0: frozen
+  D1: frozen_structure_with_calibrated_scores
+  D2: fixed_post_cascade_consensus_guard
+  D3: calibrated_structure_with_fixed_consensus_guard
+  positive_confirmation_votes: 2
+  negative_recovery_votes: 3
+  vote_count: 4
+  threshold_search: prohibited
+  score_policy:
+    calibrated_cascade: deciding_stream_probability
+    consensus_guard: mean_voting_probability
+temporal_protocol:
+  whole_creation_blocks: true
+  scenarios:
+    - {train_periods: [P0, P1], prediction_period: P2}
+    - {train_periods: [P0, P1, P2], prediction_period: P3}
+    - {train_periods: [P0, P1, P2, P3], prediction_period: P4}
+  p5_evaluation: prohibited
+metrics:
+  primary: [pooled_prequential_pr_auc, pooled_prequential_f1, recall_at_reference_fpr_ceiling]
+  secondary: [balanced_accuracy, roc_auc, per_period_precision, per_period_recall, per_period_f1, prevalence_standardized_precision]
+  reference_fpr_ceiling: 0.049539594843462244
+  reference_prevalence: 0.048322560787934746
+bootstrap:
+  replicates: 2000
+  seed: 42
+  resampling_unit: contract_row
+advancement:
+  pooled_f1_relation: strictly_greater
+  pr_auc_maximum_absolute_degradation: 0.01
+  fpr_maximum: 0.049539594843462244
+  minimum_periods_with_nonnegative_f1_delta: 2
+  maximum_allowed_single_period_f1_degradation: 0.02
+selection:
+  order: [pooled_f1, pooled_pr_auc, pooled_recall, simpler_intervention]
+  effective_tie_f1: 0.002
+  simplicity_order: [D1, D2, D3]
+performance_gate:
+  maximum_estimated_runtime_minutes: 30
+track_b:
+  access_permission: disabled
+  fitting: prohibited
+  scoring: prohibited
+  prediction_inspection: prohibited
+  metrics: prohibited
+constraints:
+  underlying_viewers: frozen
+  feature_views: frozen
+  cascade_stage_order: frozen
+  base_model_training: archived_target_outputs_reused
+  unrestricted_threshold_search: prohibited
+  p5_evaluation: prohibited
+  phase8_reopening: prohibited
+  phase9e_start: prohibited

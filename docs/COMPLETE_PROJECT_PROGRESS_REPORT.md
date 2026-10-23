@@ -4,16 +4,17 @@
 
 | Status item | Current value |
 | --- | --- |
-| Report date | 2026-10-13 |
-| Project status | Complete through Phase 8R6D; Phase 9A complete and Phase 9B protocol frozen |
+| Report date | 2026-10-22 |
+| Project status | Complete through Phase 9D under the frozen Phase 9B protocol |
 | Retained reference | Frozen Phase 5.5 paper-aligned MulCas |
 | External benchmark | Sealed STRICT Track B established; not yet evaluated |
-| Next research phase | Phase 9C, not started |
+| Next research phase | Phase 9E, not started and requiring explicit authorization |
 
 ## 1. Report Purpose
 
-This document is a complete, current account of the project through Phase 8R6D,
-the Phase 9A protocol-gap audit, and the prospective Phase 9B protocol freeze.
+This document is a complete, current account of the project through Phase 9D,
+including Track B construction, the Phase 9A protocol-gap audit, the frozen
+Phase 9B protocol, and the Phase 9C/9D development experiments.
 It explains what was implemented, why each phase was
 performed, what results were obtained, what conclusions are supported, what
 limitations remain, and what work is still pending.
@@ -55,6 +56,11 @@ The project has completed the following major objectives:
     Track B benchmark containing 112 positive and 180 benign contracts.
 15. Froze the prospective Phase 9B evaluation protocol before any Phase 9
     intervention was trained or Track B performance was observed.
+16. Tested deployment-available creator and code-family state in Phase 9C;
+    none of the fixed candidates met every prospective advancement condition.
+17. Tested prior-period viewer calibration and fixed consensus routing in Phase
+    9D; pooled results improved diagnostically, but temporal reliability gates
+    rejected every candidate.
 
 The frozen Phase 5.5 MulCas final-test result is:
 
@@ -120,7 +126,9 @@ No detector has yet been evaluated on Track B.
 | 8R6A-8R6C | External-source audit and provider enrichment | Complete as staged predecessors | Candidate union and 787-row resumable evidence established |
 | 8R6D | Complete enrichment and Track B sealing | Complete | 1,453 enriched; 292-contract STRICT Track B sealed |
 | 9B | Prospective Phase 9 evaluation protocol | Frozen | Track A development and one-shot sealed Track B rules fixed |
-| 9C | Creator/family-state intervention | Not started | Next recommended research phase |
+| 9C | Creator/family-state intervention | Complete | H9C not supported; no candidate advanced |
+| 9D | Cascade calibration and safer routing | Complete | H9D not supported; pooled D2 gain failed temporal gates |
+| 9E | Selector and semantic static features | Not started | Requires explicit authorization under Phase 9B |
 | Final synthesis | Notebook and manuscript packaging | Pending | `08_final_evaluation.ipynb` remains empty |
 | Optional prototype | New-contract warning interface | Not started | Outside the completed research scope |
 
@@ -154,9 +162,11 @@ replication of the paper's scores. None of the Phase 6 changes reliably
 improved the model for RQ3. For RQ4, contribution is period-dependent. For RQ5,
 performance is useful in some periods but not temporally stable.
 For RQ6, the tested Phase 8 methods did not reliably improve P2-P4 performance,
-although GIN showed a period-specific P3 benefit. RQ7 is prospectively defined
-but unanswered: Phase 9B is frozen, Phase 9C has not started, and Track B labels
-remain unavailable to development.
+although GIN showed a period-specific P3 benefit. RQ7 is partially answered
+internally: Phases 9C and 9D did not produce a candidate satisfying every
+prospective advancement condition. External generalization remains unanswered
+because Track B labels remain unavailable to development and have never been
+scored.
 
 ## 5. Dataset and Integrity Findings
 
@@ -215,12 +225,12 @@ The project uses the following controls throughout:
 The automated suite now covers imports, validation, leakage, deterministic
 behavior, feature extraction, estimators, MulCas routing, frozen manifests,
 Phase 6-9 governance, provider-resume behavior, overlap classification, and
-sealed-label controls. On 2026-10-13, focused Phase 8R6D verification passed
-**14 tests**. The full suite reported **331 passed and 2 failed**;
-the two failures are legacy Phase 8R6B/R6C assertions that expected sealed
-labels not to exist before the explicitly authorized Phase 8R6D seal. They are
-an unresolved test-anchor migration, not evidence of a model or data-integrity
-failure, and are not hidden as a passing suite.
+sealed-label controls. The pre-seal Phase 8R6B/R6C assertions were migrated
+after the authorized Phase 8R6D seal. The current 2026-10-22 branch run is
+**345 passed and 27 failed**. The Phase 8R6D LFS object has now been restored
+and its idempotence test passes. Every remaining failure is downstream of the
+two frozen-artifact hash mismatches detailed in Section 16; the suite is not
+misrepresented as passing.
 
 ## 7. Phase-by-Phase Work Through the Frozen Baseline
 
@@ -852,7 +862,52 @@ with 2,000 replicates and seed 42.
 
 **Outcome:** The protocol is frozen. Phase 9C-9F may not access Track B labels.
 Only after a Phase 9F system is frozen may one final Track B evaluation occur,
-with no subsequent tuning. Phase 9C has not started.
+with no subsequent tuning.
+
+### 12.3 Phase 9C: Deployment-Available Creator and Code-Family State
+
+**Work completed:** Phase 9C evaluated exactly four candidates on Track A:
+C0 frozen MulCas, C1 creator-state features, C2 historical code-family
+features, and C3 their combination. Every feature used only strictly earlier
+blocks; target-period labels did not update verified state. Model families,
+cascade thresholds, viewer order, and voting remained frozen. P5 and Track B
+were excluded.
+
+| Candidate | Pooled precision | Pooled recall | Pooled F1 | Pooled PR-AUC | Pooled FPR | Advanced |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| C0 frozen control | 0.1970 | 0.4400 | 0.2722 | 0.3373 | 0.04954 | Control |
+| C1 creator state | 0.2104 | 0.4600 | 0.2887 | 0.1837 | 0.04770 | No |
+| C2 code family | 0.2951 | 0.4800 | 0.3655 | 0.2785 | 0.03168 | No |
+| C3 combined state | 0.2969 | 0.5067 | 0.3744 | 0.2620 | 0.03315 | No |
+
+**Outcome:** C3 improved operating-point F1, with P2/P3/P4 F1 of
+0.1404/0.4000/0.8519 versus C0's 0.0828/0.2222/0.8519. Its PR-AUC fell by
+more than the frozen 0.01 tolerance, however, so no candidate advanced and H9C
+was not supported.
+
+### 12.4 Phase 9D: Cascade Calibration and Safer Routing
+
+**Work completed:** Phase 9D preregistered D0 frozen MulCas, D1 out-of-time
+Platt calibration, D2 a fixed consensus safety guard, and D3 calibration plus
+that guard. Calibration used the immediately preceding labeled period predicted
+from still-earlier history. D2/D3 required two of four voting views to confirm
+a positive and three to overturn a negative. No threshold search or underlying
+viewer change occurred. P5 and Track B remained excluded.
+
+| Candidate | Pooled precision | Pooled recall | Pooled F1 | Pooled PR-AUC | Pooled FPR | Advanced |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| D0 frozen control | 0.1970 | 0.4400 | 0.2722 | 0.3373 | 0.04954 | Control |
+| D1 calibrated cascade | 0.2305 | 0.3733 | 0.2850 | 0.3439 | 0.03444 | No |
+| D2 fixed consensus guard | 0.7869 | 0.3200 | 0.4550 | 0.4044 | 0.00239 | No |
+| D3 calibrated guard | 0.7742 | 0.3200 | 0.4528 | 0.3872 | 0.00258 | No |
+
+**Outcome:** D2 substantially improved pooled precision, F1, PR-AUC, and FPR,
+and its paired bootstrap F1 and PR-AUC deltas were positive. It nevertheless
+produced P2/P3/P4 F1 of 0.0755/0.0000/0.8519: P3 recall collapsed to zero and
+P2 F1 declined slightly. D1 and D3 also lost more than 0.02 F1 in at least one
+period. Every candidate therefore failed the frozen temporal-breadth and
+maximum-period-degradation conditions. H9D was not supported, no replacement
+was accepted, and Phase 9E was not started.
 
 ## 13. What the Project Has Demonstrated
 
@@ -887,6 +942,11 @@ The project has demonstrated that:
     from the frozen sources while keeping Track A unchanged.
 15. A prospective model-development and one-shot external-evaluation protocol
     can be frozen before any Track B performance is observed.
+16. Deployment-available creator/code-family state can improve operating-point
+    F1 while degrading ranking quality enough to fail a prospective rule.
+17. Fixed consensus routing can sharply reduce false positives and improve
+    pooled metrics while still failing temporal reliability because one period
+    loses all positive detections.
 
 ## 14. What the Project Has Not Demonstrated
 
@@ -899,7 +959,8 @@ The current evidence does not demonstrate that:
 - creator identity causes Ponzi behavior;
 - exact clone prevalence fully explains period differences;
 - the non-deployable Phase 9A creator oracle is a usable improvement;
-- Phase 9C, 9D, 9E, or 9F will improve the retained baseline;
+- Phase 9E or 9F will improve the retained baseline;
+- the strong pooled Phase 9D D2 result is a reliable cross-period replacement;
 - the frozen system generalizes to Track B, because sealed labels have not been
   loaded for evaluation;
 - a live deployment would generalize to present-day Ethereum contracts; or
@@ -964,6 +1025,11 @@ Its labels must remain inaccessible during Phase 9C-9F.
 - `docs/phase9_evaluation_protocol.md`
 - `results/phase9/phase9b/phase9b_protocol.json`
 - `results/phase9/phase9b/phase9b_report.md`
+- `results/phase9/phase9c/phase9c_results.json`
+- `results/phase9/phase9c/phase9c_report.md`
+- `configs/phase9/phase9d.yaml`
+- `results/phase9/phase9d/phase9d_results.json`
+- `results/phase9/phase9d/phase9d_report.md`
 
 ### Notebooks
 
@@ -1005,12 +1071,21 @@ Run all tests:
 python -m pytest -q
 ```
 
-The 2026-10-13 focused Phase 8R6D run passed **14 tests in 13.68 seconds**.
-The full run reported **331 passed, 2 failed, and 66 warnings in 153.69
-seconds**. Both failures are stale
-historical tests that assert sealed labels are absent, which was true before
-the authorized Phase 8R6D sealing step. Until those anchors are migrated to the
-successor manifest, the repository must not be described as fully green.
+The current Phase 9D focused suite passes **10 tests**. After restoring the
+tracked Phase 8R6D LFS object, the full 2026-10-22 branch run reported **345
+passed, 27 failed, and 66 warnings in 298.72 seconds**. No Phase 9D test failed.
+All 27 failures share one existing branch-integrity cause rather than a
+candidate-performance failure:
+
+- current `feature_summary.json` and `split_metadata.json` bytes do not match
+  their frozen Phase 5.5/Phase 7 manifest hashes, so dependent frozen-chain
+  tests fail as designed.
+
+The earlier sealed-label lifecycle assertions were already migrated, and the
+LFS failure is resolved. The 27 current failures must not be relabeled as
+expected skips, and frozen manifests must not be silently rewritten to accept
+changed historical artifacts. Exact reconciliation evidence is recorded in
+`results/integrity/frozen_artifact_reconciliation.json`.
 
 Run Jupyter:
 
@@ -1037,7 +1112,7 @@ synthesis of frozen outputs and must not train, tune, or select a model. It
 should:
 
 - load Phase 5.5, Phase 6-8 closures, Phase 9A, Track B construction metadata,
-  and the Phase 9B protocol;
+  the Phase 9B protocol, and completed Phase 9C/9D results;
 - present the final baseline, published comparison, negative improvement
   results, and temporal robustness findings;
 - include final confusion matrices and precision/recall/F1/PR-AUC tables;
@@ -1064,15 +1139,19 @@ period was subsequently analyzed in Phases 7A-7E. Therefore:
 
 This limitation should be stated explicitly in the final thesis/report.
 
-### 17.3 Phase 9C-9F Research
+### 17.3 Remaining Phase 9 Research
 
-Phase 9C is the next prospective research phase and has not started. The frozen
-sequence is:
+Phases 9C and 9D are complete and neither supplied an advancing component.
+Phase 9E is the next prospective research phase but has not started and
+requires explicit authorization. The frozen sequence status is:
 
-1. Phase 9C: deployment-available creator and code-family state.
-2. Phase 9D: cascade calibration and safer routing.
-3. Phase 9E: selector and semantic static features.
-4. Phase 9F: combine only independently supported components.
+1. Phase 9C: deployment-available creator and code-family state - complete,
+   H9C not supported.
+2. Phase 9D: cascade calibration and safer routing - complete, H9D not
+   supported.
+3. Phase 9E: selector and semantic static features - not started.
+4. Phase 9F: combine only independently supported components - conditional;
+   no Phase 9C/9D component is currently eligible.
 
 Arbitrary model search, reopening GIN/Transformer/creation-code models, and
 unrestricted threshold search are prohibited by the Phase 9B protocol.
@@ -1092,6 +1171,8 @@ The final written research output remains to be assembled. It should include:
 - Phase 9A protocol-gap diagnostics;
 - Phase 8R6 external-data provenance, enrichment, overlap, and sealing;
 - Phase 9B prospective evaluation governance;
+- Phase 9C creator/code-family state and its failed ranking-quality gate;
+- Phase 9D calibration/routing results and their failed temporal gates;
 - threats to validity;
 - answers to RQ1-RQ6 and the status of RQ7;
 - limitations and future work; and
@@ -1104,7 +1185,8 @@ Before submission or release, perform one clean-environment verification:
 1. create a fresh `.venv`;
 2. install dependencies;
 3. verify the raw dataset hash;
-4. migrate the two stale pre-seal test anchors and run all tests;
+4. restore the two metadata-only frozen artifacts after explicit approval;
+   the required Phase 8R6D LFS object is now available locally;
 5. execute implemented notebooks non-interactively;
 6. verify frozen manifests and closure JSON files;
 7. verify the sealed-label default-deny guard without loading labels into model
@@ -1171,12 +1253,12 @@ the existing P5 errors.
 
 The recommended order is:
 
-1. Migrate the two stale pre-seal test anchors to the frozen Phase 8R6D
-   successor state and restore a fully green suite.
-2. Begin Phase 9C only under the frozen Phase 9B protocol; do not access Track B
-   labels.
-3. Run Phase 9D and 9E as mechanism-driven tests, then Phase 9F only with
-   independently supported components.
+1. Reconcile the branch's two frozen Phase 5.5/Phase 7 metadata artifacts after
+   explicit approval; the Phase 8R6D LFS object is already restored.
+2. Begin Phase 9E only after explicit authorization and under the frozen Phase
+   9B protocol; do not access Track B labels or P5.
+3. Run Phase 9F only if Phase 9E supplies an independently supported component;
+   Phase 9C and 9D supplied none.
 4. Freeze the final Phase 9 system before the single permitted Track B
    evaluation.
 5. Populate notebook 08 as read-only synthesis and prepare thesis/manuscript
@@ -1201,12 +1283,15 @@ improvement.
 
 Phase 8R6D established a sealed, strict-only STRONG Track B benchmark with 112
 positive and 180 benign later-time contracts while preserving Track A. Phase
-9B now fixes how future development and one-shot external evaluation must be
-conducted. Track B performance remains unknown, Phase 9C has not started, and
-the retained reference remains frozen Phase 5.5 paper-aligned MulCas.
+9B fixes how development and one-shot external evaluation must be conducted.
+Phase 9C improved operating-point F1 but violated the ranking-quality gate.
+Phase 9D improved pooled F1 and PR-AUC through conservative consensus routing,
+but P3 recall collapsed to zero and the temporal gates rejected it. Neither
+phase produced an accepted replacement.
 
-The immediate work is Phase 9C under the frozen protocol, restoration of a
-fully green test suite by migrating stale pre-seal assertions, and final
-synthesis/reproducibility packaging. No claim of external generalization is
-supported until a frozen Phase 9 system receives the one permitted Track B
-evaluation.
+Track B performance remains unknown and the retained reference remains frozen
+Phase 5.5 paper-aligned MulCas. The immediate work is explicit authorization
+and preregistration for Phase 9E, restoration of the branch's frozen-artifact
+and LFS integrity, and final synthesis/reproducibility packaging. No claim of
+external generalization is supported until a frozen Phase 9 system receives
+the one permitted Track B evaluation.
