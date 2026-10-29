@@ -1,7 +1,8 @@
 # Running and Testing Guide
 
-This guide describes how to reproduce and verify the frozen baseline and read
-the completed Phase 8 closure. See
+This guide describes how to reproduce and verify the frozen baseline, run the
+separate random-split three-viewer diagnostic, and read the completed Phase 8
+closure. See
 [Full Current Research Progress Report](FULL_CURRENT_RESEARCH_PROGRESS_REPORT.md)
 for the complete project account and [Phase 8 Research Extension Closure](phase8_summary.md)
 for the current research decision. Run all commands from the repository root
@@ -16,6 +17,7 @@ The implemented workflow covers:
 3. Independent reproduction of the static feature views.
 4. Ridge, SVM, and XGBoost individual baselines.
 5. The independently reconstructed MulCas cascade and voting baseline.
+6. The optional collaborator-authored random-split three-viewer diagnostic.
 
 Phases 6, 7, and 8 are closed. The retained reference remains Phase 5.5 MulCas;
 Phase 8R6A has not started, and notebook `08` remains reserved for read-only
@@ -52,7 +54,7 @@ Confirm that commands resolve to the virtual environment:
 
 ```powershell
 python -c "import sys; print(sys.executable); print(sys.version)"
-python -c "import numpy, pandas, sklearn, xgboost, gensim; print('Imports OK')"
+python -c "import numpy, pandas, sklearn, xgboost, gensim, imblearn; print('Imports OK')"
 ```
 
 `sys.executable` should end in `.venv\Scripts\python.exe`.
@@ -173,6 +175,85 @@ Machine-readable outputs are stored under
 `results/artifacts/paper_aligned/` and ignored by Git. The corrected report is
 `docs/paper_aligned_baseline_report.md`.
 
+### Optional diagnostic: random-split three-viewer method
+
+This standalone experiment was introduced by commit
+`5ed8509613838f8e43268e075b58753f77c60e80`. It is not the frozen MulCas
+cascade and is not part of the chronological Phase 1-5.5 dependency chain.
+Read `docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md` before interpreting its metrics.
+
+Required files:
+
+- `scripts/static_random_mulcas.py`
+- `data/raw/PonziDataset_20221114.csv`
+- `results/baseline/paper_aligned/mulcas_results.json`
+- `requirements.txt`
+
+The recommended command writes to an ignored temporary location and leaves the
+tracked result unchanged:
+
+```powershell
+New-Item -ItemType Directory -Force results\temp | Out-Null
+python scripts\static_random_mulcas.py `
+  --output results\temp\static_random_mulcas_results.json
+```
+
+To reproduce the collaborator's default output path exactly, use:
+
+```powershell
+python scripts\static_random_mulcas.py
+```
+
+This second command creates or overwrites:
+
+- `results/experiments/static_random_mulcas_results.json`
+
+The default run uses seed 42, four XGBoost workers, and at most 20,000 text
+features. It performs the following operations:
+
+1. Randomly stratifies the 6,498 rows into development and test partitions.
+2. Randomly splits development rows into fit and validation partitions.
+3. Tunes unigram-count XGBoost and 1-3-gram TF-IDF XGBoost viewers with
+   shuffled three-fold cross-validation.
+4. Fits a calibrated Ridge viewer using TF-IDF and 64-dimensional mean
+   Word2Vec features.
+5. Applies SMOTE only inside fitting and cross-validation pipelines.
+6. Averages the three viewer probabilities.
+7. Selects the ensemble threshold that maximizes validation F1.
+8. Applies the frozen validation-selected threshold to the random test rows.
+
+The recorded commit result used threshold `0.39088033297408625` and reported
+test precision 0.8833, recall 0.8413, F1 0.8618, and average precision 0.8833.
+Minor numerical differences can occur when dependency versions differ.
+
+To display the already saved comparison without training models:
+
+```powershell
+python scripts\static_random_mulcas.py --show-comparison-only
+```
+
+To inspect a temporary result without changing it:
+
+```powershell
+$result = Get-Content `
+  results\temp\static_random_mulcas_results.json -Raw | ConvertFrom-Json
+$result.split_counts
+$result.test | Select-Object threshold, precision, recall, f1, average_precision
+$result.train_test_shared_addresses
+```
+
+The method reports train/test address overlap but does not prevent it. The
+recorded run contains three shared addresses, and exact duplicate opcode or
+contract-family groups are not kept together. Random splitting also mixes
+deployment periods. Consequently, its higher random-holdout F1 must not be
+reported as an equivalent chronological improvement over published MulCas or
+the frozen Phase 5.5 reference.
+
+The script does not use `src/models/mulcas.py`, does not save fitted model
+objects, and has no dedicated automated test module. Run the full repository
+suite to detect broader integrity regressions, but do not describe that suite
+as direct behavioral coverage of this standalone script.
+
 ## 6. Run Automated Tests
 
 Run the complete test suite:
@@ -242,7 +323,7 @@ evaluate P5, change a threshold, or start Phase 8R6A.
 
 `results/temp/` is ignored by Git and may be removed after inspection.
 
-## 8. Reproducibility Checks
+## 9. Reproducibility Checks
 
 Before accepting regenerated results:
 
@@ -268,7 +349,7 @@ The primary reproducibility controls are:
 - Randomized components use the configured seed and single-worker Word2Vec and
   XGBoost settings where configured.
 
-## 9. What You Should Do
+## 10. What You Should Do
 
 - Run commands from the repository root with the `.venv` active.
 - Keep the raw CSV byte-for-byte unchanged.
@@ -283,7 +364,7 @@ The primary reproducibility controls are:
   `results/artifacts/`.
 - Compare published metrics and experimental metrics as distinct results.
 
-## 10. What You Should Not Do
+## 11. What You Should Not Do
 
 - Do not edit, sort, clean, deduplicate, or resave the raw CSV.
 - Do not shuffle rows before chronological partition assignment.
@@ -301,7 +382,7 @@ The primary reproducibility controls are:
 - Do not claim that independently reconstructed metrics are the paper's
   published results.
 
-## 11. Troubleshooting
+## 12. Troubleshooting
 
 **`ModuleNotFoundError`**
 
