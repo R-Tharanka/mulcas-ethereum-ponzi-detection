@@ -26,7 +26,6 @@ venv/
 *.key
 secrets.*
 Alchemy.txt
-Alchemy.txt
 
 # Local datasets
 data/raw/
@@ -49,3 +48,7 @@ results/artifacts/
 
 # Documentation
 docs/reference
+
+# Local-only historical material moved out of the active random-split workflow.
+# This can contain ignored datasets, fitted artifacts, credentials, and caches.
+archive/local-only/

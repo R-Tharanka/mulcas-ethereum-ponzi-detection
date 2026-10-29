@@ -1,0 +1,34 @@
+{
+  "archive_date": "2026-10-30",
+  "active_flow": "random_stratified_static_opcode_three_viewer",
+  "source_commit": "5ed8509613838f8e43268e075b58753f77c60e80",
+  "tracked_files_moved": 567,
+  "tracked_manifest": "archive/history/TRACKED_FILE_MANIFEST.csv",
+  "tracked_archive_missing_files": 0,
+  "tracked_archive_content_exceptions": 1,
+  "tracked_archive_content_exception": {
+    "path": "archive/history/results/extension/phase8r6d/enriched_contracts_final.csv",
+    "reason": "archive contains the verified materialized Git LFS object instead of pointer text",
+    "audit": "archive/history/LFS_MATERIALIZATION_AUDIT.json"
+  },
+  "files_deleted": false,
+  "git_index_modified": false,
+  "active_dataset_sha256": "48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf",
+  "active_result_sha256": "4f8bd7d3c028317495fa7b8a3fa0efed1247f2b8f5c12287cf93192372204916",
+  "comparison_baseline_sha256": "c3ef8b9762be18c9780bc0e8b6756b6bcc0b07bd772e32c687def3c3276f9c97",
+  "commented_script_sha256": "ed28b108e61c5ae193493f0f4c39d986b4e605d61715dc333ae334a5ee5b7a20",
+  "active_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "comparison_only_command_verified": true,
+  "models_retrained": false,
+  "active_result_regenerated": false,
+  "local_only_archive_ignored": true,
+  "remaining_root_cache": {
+    "path": ".pytest_cache",
+    "tracked": false,
+    "research_artifact": false,
+    "reason": "Windows ACL denied the requested move"
+  }
+}

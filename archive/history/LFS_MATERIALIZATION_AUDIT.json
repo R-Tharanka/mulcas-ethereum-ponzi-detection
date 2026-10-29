@@ -1,0 +1,10 @@
+{
+  "archived_path": "archive/history/results/extension/phase8r6d/enriched_contracts_final.csv",
+  "original_path": "results/extension/phase8r6d/enriched_contracts_final.csv",
+  "git_pointer_blob": "f0c3100fa7df12811af3d8d55a983f2c7f6ec813",
+  "git_lfs_oid_sha256": "c58dede57cdc88b852f862f01769eb5393b26da8e03ba16623c77b0cf4f1a269",
+  "materialized_sha256": "c58dede57cdc88b852f862f01769eb5393b26da8e03ba16623c77b0cf4f1a269",
+  "expected_size_bytes": 107441279,
+  "materialized_size_bytes": 107441279,
+  "status": "verified_materialized_lfs_object"
+}

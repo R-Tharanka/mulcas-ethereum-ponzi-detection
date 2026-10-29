@@ -1,67 +1,83 @@
-# MulCas Ethereum Ponzi Detection
+# Random-Split Static Ponzi Detection
 
-Reproducing and improving the MulCas multi-view cascade ensemble for Ethereum
-smart Ponzi scheme detection through feature engineering, model fine-tuning, and
-performance evaluation.
+This repository's active workflow is the collaborator-authored random-split
+three-viewer experiment introduced by commit
+`5ed8509613838f8e43268e075b58753f77c60e80`.
 
-The repository implements the research workflow through the formal Phase 8
-extension closure. The retained reference remains the frozen Phase 5.5
-paper-aligned MulCas; no Phase 8 candidate met its predefined temporal
-acceptance criterion.
+The active method uses static Ethereum opcode documents and combines:
 
-See [Full Current Research Progress Report](docs/FULL_CURRENT_RESEARCH_PROGRESS_REPORT.md)
-for the complete cross-phase account and [Phase 8 Research Extension Closure](docs/phase8_summary.md)
-for the frozen extension decision. The next recommended research phase is
-Phase 8R6A, an external/later dataset provenance and overlap audit; it has not
-started.
+1. unigram opcode counts, SMOTE, and XGBoost;
+2. 1-3-gram opcode TF-IDF, SMOTE, and XGBoost; and
+3. 1-3-gram TF-IDF plus mean Word2Vec, SMOTE, calibrated Ridge.
 
-See [Running and Testing Guide](docs/RUN_AND_TEST_GUIDE.md) for the complete
-setup, phase-by-phase execution, notebook, testing, reproducibility, and do/don't
-instructions.
+The three positive-class probabilities are averaged. A validation-selected
+threshold is then applied to a random-stratified test partition.
 
-## Local Setup
+## Important Interpretation
 
-From Windows PowerShell:
+The recorded random-split result is:
+
+| Precision | Recall | F1 | Average precision |
+| ---: | ---: | ---: | ---: |
+| 0.8833 | 0.8413 | 0.8618 | 0.8833 |
+
+This is not an equivalent chronological comparison with published MulCas. The
+split mixes deployment periods, contains three addresses shared across the
+development/test boundary, and does not keep duplicate code families together.
+The result is therefore a random-holdout diagnostic, not proof of forward
+temporal generalization.
+
+## Active Files
+
+```text
+data/raw/PonziDataset_20221114.csv
+scripts/static_random_mulcas.py
+results/baseline/dataset_audit.json
+results/baseline/paper_aligned/mulcas_results.json
+results/experiments/static_random_mulcas_results.json
+tests/test_static_random_mulcas.py
+docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md
+docs/RUN_AND_TEST_GUIDE.md
+docs/LAST_COMMIT_PROGRESS_REPORT.md
+requirements.txt
+pytest.ini
+```
+
+The raw CSV is intentionally ignored by Git and must remain byte-for-byte
+unchanged. Its expected SHA-256 is:
+
+```text
+48b13eab1f87c68b3e486f5932df22c7907e76bd23b4042de8d0b2a83ce846cf
+```
+
+## Quick Start
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python -m pytest -q
+python scripts\static_random_mulcas.py --show-comparison-only
 ```
 
-If PowerShell blocks activation scripts, allow scripts for the current process
-and activate again:
+For a non-destructive retraining run:
 
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-.\.venv\Scripts\Activate.ps1
+New-Item -ItemType Directory -Force results\temp | Out-Null
+python scripts\static_random_mulcas.py `
+  --output results\temp\static_random_mulcas_results.json
 ```
 
-## Verify Environment
+See `docs/RUN_AND_TEST_GUIDE.md` for exact commands and
+`docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md` for the full model flow.
 
-Run the test suite from the repository root:
+## Historical Research Archive
 
-```powershell
-python -m pytest
-```
+All previous chronological baseline, Phase 6-9, extension, notebook, test, and
+report files are preserved under `archive/history/` using their original
+relative paths. `archive/CHRONOLOGY.md` explains the research timeline, and
+`archive/history/TRACKED_FILE_MANIFEST.csv` records every moved tracked file and
+its original Git blob ID.
 
-The tests cover the environment, data validation, temporal and feature leakage,
-evaluation metrics, baseline models, and MulCas cascade routing and voting.
-
-## Repository Layout
-
-- `configs/`: configuration files for future experiments.
-- `data/`: local datasets and derived data. Raw and processed data are ignored.
-- `docs/`: research notes, protocol documents, and references.
-- `notebooks/`: exploratory notebooks.
-- `src/`: Python package code.
-- `tests/`: pytest tests.
-- `results/`: local experiment outputs and temporary artifacts.
-
-## Reproducibility Notes
-
-Use `src.utils.paths` for repository-relative paths and
-`src.utils.seed.set_random_seed` before any future randomized processing or model
-training. For fully deterministic Python hash behavior, set `PYTHONHASHSEED`
-before starting Python.
+Large ignored datasets, generated artifacts, caches, and private local material
+are preserved locally under ignored `archive/local-only/` paths.

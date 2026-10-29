@@ -272,6 +272,7 @@ come from a mixed-time distribution.
 | `scripts/static_random_mulcas.py` | Complete experiment implementation: loading, random splitting, feature extraction, SMOTE, model tuning, probability averaging, threshold selection, evaluation, and result writing | Yes |
 | `data/raw/PonziDataset_20221114.csv` | Input dataset containing `opcode`, `label`, and `address` | Yes |
 | `results/baseline/paper_aligned/mulcas_results.json` | Supplies the published MulCas and frozen paper-aligned values shown in the comparison table | Yes for the default comparison step; not used to fit the random-split models |
+| `results/baseline/dataset_audit.json` | Preserves source-dataset integrity measurements and SHA-256 | Supporting evidence; not read by the training script |
 | `requirements.txt` | Declares the Python packages used by the script, including NumPy, pandas, scikit-learn, XGBoost, imbalanced-learn, and gensim | Environment dependency |
 
 The raw CSV exists locally but is ignored by Git. Creating another branch does
@@ -309,9 +310,9 @@ Commit `5ed8509` also modified the following tracked metadata artifacts:
 
 | File | Relationship to the random-split run |
 | --- | --- |
-| `results/baseline/dataset_audit.json` | Dataset-audit metadata changed in the same commit; the random-split script does not read it |
-| `results/baseline/paper_aligned/feature_summary.json` | Paper-aligned feature metadata changed in the same commit; the random-split script does not read it |
-| `results/baseline/paper_aligned/split_metadata.json` | Paper-aligned split metadata changed in the same commit; the random-split script does not read it |
+| `results/baseline/dataset_audit.json` | Retained as active source-integrity evidence; the random-split script does not read it |
+| `archive/history/results/baseline/paper_aligned/feature_summary.json` | Paper-aligned feature metadata changed in the same commit; now archived and not read by the random-split script |
+| `archive/history/results/baseline/paper_aligned/split_metadata.json` | Paper-aligned split metadata changed in the same commit; now archived and not read by the random-split script |
 
 These files should not be described as inputs to the random-split model merely
 because they appear in the same commit.
@@ -400,13 +401,14 @@ It prints the comparison to the terminal and does not write a new file.
 | Storage/ignore policy | `.gitignore` |
 | Raw model input | `data/raw/PonziDataset_20221114.csv` |
 | Executable implementation | `scripts/static_random_mulcas.py` |
+| Dataset-integrity evidence | `results/baseline/dataset_audit.json` |
 | Comparison-only input | `results/baseline/paper_aligned/mulcas_results.json` |
 | Primary generated result | `results/experiments/static_random_mulcas_results.json` |
 | Optional temporary result | `results/temp/static_random_mulcas_results.json` |
 | Focused method documentation | `docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md` |
 | Run instructions | `docs/RUN_AND_TEST_GUIDE.md` |
 | Commit-level audit | `docs/LAST_COMMIT_PROGRESS_REPORT.md` |
-| Same-commit metadata, not runtime input | `results/baseline/dataset_audit.json`; `results/baseline/paper_aligned/feature_summary.json`; `results/baseline/paper_aligned/split_metadata.json` |
+| Archived same-commit metadata, not runtime input | `archive/history/results/baseline/paper_aligned/feature_summary.json`; `archive/history/results/baseline/paper_aligned/split_metadata.json` |
 
 This table covers every repository file directly involved in executing,
 recording, governing, or documenting the current random-split flow. Files under
