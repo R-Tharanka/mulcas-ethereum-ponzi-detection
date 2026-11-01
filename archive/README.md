@@ -1,5 +1,11 @@
 # Historical Research Archive
 
+For a detailed explanation of trust boundaries, control files, phase lookup,
+integrity checks, and safe restoration, see
+[`docs/ARCHIVE_DIRECTORY_GUIDE.md`](../docs/ARCHIVE_DIRECTORY_GUIDE.md).
+For a module-by-module index of the preserved Python implementation, see
+[`docs/ARCHIVED_CODE_REFERENCE.md`](../docs/ARCHIVED_CODE_REFERENCE.md).
+
 The active repository root now contains only the random-split three-viewer
 workflow and the files required to understand, run, and verify it.
 

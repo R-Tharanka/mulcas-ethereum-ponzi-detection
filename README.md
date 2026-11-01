@@ -79,5 +79,11 @@ relative paths. `archive/CHRONOLOGY.md` explains the research timeline, and
 `archive/history/TRACKED_FILE_MANIFEST.csv` records every moved tracked file and
 its original Git blob ID.
 
+See `docs/ARCHIVE_DIRECTORY_GUIDE.md` for the archive layout, tracked versus
+local-only boundaries, phase lookup, integrity checks, and safe restoration
+procedure.
+See `docs/ARCHIVED_CODE_REFERENCE.md` for the complete historical Python module
+and public-callable catalog.
+
 Large ignored datasets, generated artifacts, caches, and private local material
 are preserved locally under ignored `archive/local-only/` paths.
