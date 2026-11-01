@@ -1,67 +1,35 @@
-# MulCas Ethereum Ponzi Detection
+# Phase-Ordered Historical Archive
 
-Reproducing and improving the MulCas multi-view cascade ensemble for Ethereum
-smart Ponzi scheme detection through feature engineering, model fine-tuning, and
-performance evaluation.
+The historical research is organized chronologically under `phases/`. Each
+phase package contains the configuration, source, tests, results, notebooks,
+and documentation owned by that phase.
 
-The repository implements the research workflow through the formal Phase 8
-extension closure. The retained reference remains the frozen Phase 5.5
-paper-aligned MulCas; no Phase 8 candidate met its predefined temporal
-acceptance criterion.
-
-See [Full Current Research Progress Report](docs/FULL_CURRENT_RESEARCH_PROGRESS_REPORT.md)
-for the complete cross-phase account and [Phase 8 Research Extension Closure](docs/phase8_summary.md)
-for the frozen extension decision. The next recommended research phase is
-Phase 8R6A, an external/later dataset provenance and overlap audit; it has not
-started.
-
-See [Running and Testing Guide](docs/RUN_AND_TEST_GUIDE.md) for the complete
-setup, phase-by-phase execution, notebook, testing, reproducibility, and do/don't
-instructions.
-
-## Local Setup
-
-From Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+```text
+phases/
+|-- 00_05_foundation_and_baseline/
+|-- 05_5_paper_aligned/
+|-- 06_phase6_improvements/
+|-- 07_phase7_analysis/
+|-- 08_phase8_extension/
+|-- 09_phase9_prospective/
+`-- 10_cross_phase_synthesis_and_support/
 ```
 
-If PowerShell blocks activation scripts, allow scripts for the current process
-and activate again:
+Inside every package, paths remain relative to the original repository root.
+For example, the archived Phase 7 implementation remains under
+`07_phase7_analysis/src/experiments/`, while its configuration remains under
+`07_phase7_analysis/configs/phase7/`.
 
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
-.\.venv\Scripts\Activate.ps1
-```
+Use `TRACKED_FILE_MANIFEST.csv` as the authoritative lookup table. It records:
 
-## Verify Environment
+- chronological owner;
+- original repository path;
+- current archive path; and
+- original Git blob identifier.
 
-Run the test suite from the repository root:
+`LFS_MATERIALIZATION_AUDIT.json` separately verifies the large Phase 8R6D
+enrichment table that was materialized from Git LFS.
 
-```powershell
-python -m pytest
-```
-
-The tests cover the environment, data validation, temporal and feature leakage,
-evaluation metrics, baseline models, and MulCas cascade routing and voting.
-
-## Repository Layout
-
-- `configs/`: configuration files for future experiments.
-- `data/`: local datasets and derived data. Raw and processed data are ignored.
-- `docs/`: research notes, protocol documents, and references.
-- `notebooks/`: exploratory notebooks.
-- `src/`: Python package code.
-- `tests/`: pytest tests.
-- `results/`: local experiment outputs and temporary artifacts.
-
-## Reproducibility Notes
-
-Use `src.utils.paths` for repository-relative paths and
-`src.utils.seed.set_random_seed` before any future randomized processing or model
-training. For fully deterministic Python hash behavior, set `PYTHONHASHSEED`
-before starting Python.
+The phase packages are historical evidence, not directly executable projects.
+To run a phase, restore its original paths into a separate worktree or copy of
+the repository and include the required predecessor packages.

@@ -1,2 +1,2 @@
 results/extension/phase8r6d/enriched_contracts_final.csv filter=lfs diff=lfs merge=lfs -text
-archive/history/results/extension/phase8r6d/enriched_contracts_final.csv filter=lfs diff=lfs merge=lfs -text
+archive/history/phases/08_phase8_extension/results/extension/phase8r6d/enriched_contracts_final.csv filter=lfs diff=lfs merge=lfs -text

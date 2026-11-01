@@ -1,9 +1,10 @@
 # Research Chronology
 
 This index orders the archived research from the beginning of the project to
-the final prospective phases. The physical archive preserves original paths;
-`archive/history/TRACKED_FILE_MANIFEST.csv` assigns each file to one of these
-chronological groups.
+the final prospective phases. Each chronological group now has a physical
+package under `archive/history/phases/`. Within a package, files preserve their
+original repository-relative paths. `archive/history/TRACKED_FILE_MANIFEST.csv`
+records both the original and current archived location.
 
 ## 00-05: Foundation and Baseline Reproduction
 
@@ -13,7 +14,7 @@ chronological groups.
 - Ridge, SVM, and XGBoost individual baselines.
 - Independent MulCas cascade and voting reconstruction.
 
-Archive group: `00_05_foundation_and_baseline`
+Archive package: `history/phases/00_05_foundation_and_baseline/`
 
 ## 05.5: Paper-Aligned Correction
 
@@ -21,7 +22,7 @@ Archive group: `00_05_foundation_and_baseline`
 - Filtered N-grams, IDF-weighted Word2Vec, and creator feature alignment.
 - Frozen Phase 5.5 MulCas reference and paper comparison.
 
-Archive group: `05_5_paper_aligned`
+Archive package: `history/phases/05_5_paper_aligned/`
 
 The active repository retains only
 `results/baseline/paper_aligned/mulcas_results.json` because the random-split
@@ -33,7 +34,7 @@ script reads it to print a descriptive comparison.
   interventions.
 - No intervention satisfied the predefined reliability criteria.
 
-Archive group: `06_phase6_improvements`
+Archive package: `history/phases/06_phase6_improvements/`
 
 ## 07: Temporal and Failure Analysis
 
@@ -41,7 +42,7 @@ Archive group: `06_phase6_improvements`
 - Viewer and creator ablations, error analysis, and code-novelty analysis.
 - Strong temporal variation documented without claiming causal concept drift.
 
-Archive group: `07_phase7_analysis`
+Archive package: `history/phases/07_phase7_analysis/`
 
 ## 08: Static Research Extensions
 
@@ -52,7 +53,7 @@ Archive group: `07_phase7_analysis`
 - External dataset discovery, provider-backed enrichment, and Track B sealing.
 - Formal Phase 8 closure.
 
-Archive group: `08_phase8_extension`
+Archive package: `history/phases/08_phase8_extension/`
 
 ## 09: Prospective Protocol Work
 
@@ -61,7 +62,7 @@ Archive group: `08_phase8_extension`
 - Deployment-available creator/code-family state and routing experiments.
 - Track B remained governed by its sealed-label boundary during development.
 
-Archive group: `09_phase9_prospective`
+Archive package: `history/phases/09_phase9_prospective/`
 
 ## Cross-Phase Synthesis and Support
 
@@ -69,7 +70,7 @@ Archive group: `09_phase9_prospective`
 - Run guides, environment support, licenses, and shared project metadata that
   did not belong exclusively to one experimental phase.
 
-Archive group: `10_cross_phase_synthesis_and_support`
+Archive package: `history/phases/10_cross_phase_synthesis_and_support/`
 
 ## Current Active Flow
 

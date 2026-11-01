@@ -190,7 +190,7 @@ Use this wording:
 Historical tracked files are stored at:
 
 ```text
-archive/history/<original path>
+archive/history/phases/<chronology group>/<original path>
 ```
 
 Use these indexes:

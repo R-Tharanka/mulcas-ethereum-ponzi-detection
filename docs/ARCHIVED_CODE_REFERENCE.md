@@ -3,7 +3,7 @@
 ## 1. Purpose
 
 This document is a non-invasive documentation layer for the Python source
-preserved under `archive/history/src/`. It explains the historical modules
+preserved across `archive/history/phases/*/src/`. It explains the historical modules
 and indexes every public top-level class and function, plus every public
 class method, without editing the archived evidence or changing its Git blob
 identity.
@@ -14,7 +14,7 @@ payloads, or fitted artifacts.
 
 ## 2. Integrity Boundary
 
-- Files under `archive/history/src/` remain historical evidence.
+- Files under `archive/history/phases/*/src/` remain historical evidence.
 - The catalog does not make archived modules directly executable.
 - Underscore-prefixed private helpers are omitted from the symbol tables.
 - A missing callable description means the preserved callable lacked a
@@ -55,7 +55,7 @@ Package identity and shared top-level declarations.
 
 ### `__init__.py`
 
-**Source:** `archive/history/src/__init__.py`
+**Source:** `archive/history/phases/10_cross_phase_synthesis_and_support/src/__init__.py`
 
 **Purpose:** MulCas Ethereum Ponzi detection research package.
 
@@ -67,7 +67,7 @@ Raw-data loading, validation, integrity auditing, and chronological split constr
 
 ### `data/__init__.py`
 
-**Source:** `archive/history/src/data/__init__.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/data/__init__.py`
 
 **Purpose:** Data access and validation helpers.
 
@@ -75,7 +75,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `data/audit.py`
 
-**Source:** `archive/history/src/data/audit.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/data/audit.py`
 
 **Purpose:** Dataset integrity audit for the released raw Ponzi dataset.
 
@@ -88,7 +88,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `data/load.py`
 
-**Source:** `archive/history/src/data/load.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/data/load.py`
 
 **Purpose:** Dataset loading helpers for the released MulCas/Ponzi CSV.
 
@@ -100,7 +100,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `data/paper_aligned_split.py`
 
-**Source:** `archive/history/src/data/paper_aligned_split.py`
+**Source:** `archive/history/phases/05_5_paper_aligned/src/data/paper_aligned_split.py`
 
 **Purpose:** Ponzi-occurrence-based chronological split for the paper-aligned protocol.
 
@@ -115,7 +115,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `data/split.py`
 
-**Source:** `archive/history/src/data/split.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/data/split.py`
 
 **Purpose:** Leakage-safe chronological train/validation/test splitting.
 
@@ -135,7 +135,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `data/validate.py`
 
-**Source:** `archive/history/src/data/validate.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/data/validate.py`
 
 **Purpose:** Reusable validation primitives for dataset integrity audits.
 
@@ -155,7 +155,7 @@ Shared binary metrics and chronological period definitions.
 
 ### `evaluation/__init__.py`
 
-**Source:** `archive/history/src/evaluation/__init__.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/evaluation/__init__.py`
 
 **Purpose:** Standardized evaluation helpers.
 
@@ -163,7 +163,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `evaluation/metrics.py`
 
-**Source:** `archive/history/src/evaluation/metrics.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/evaluation/metrics.py`
 
 **Purpose:** Standardized binary-classification metrics.
 
@@ -173,7 +173,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `evaluation/temporal.py`
 
-**Source:** `archive/history/src/evaluation/temporal.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/evaluation/temporal.py`
 
 **Purpose:** Chronological period construction for temporal robustness evaluation.
 
@@ -190,7 +190,7 @@ Controlled Phase 6 interventions and Phase 7 temporal/diagnostic analyses.
 
 ### `experiments/__init__.py`
 
-**Source:** `archive/history/src/experiments/__init__.py`
+**Source:** `archive/history/phases/10_cross_phase_synthesis_and_support/src/experiments/__init__.py`
 
 **Purpose:** Controlled post-baseline research experiments.
 
@@ -198,7 +198,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6a.py`
 
-**Source:** `archive/history/src/experiments/phase6a.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6a.py`
 
 **Purpose:** Controlled cost-sensitive learning experiments for Phase 6A.
 
@@ -220,7 +220,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6b.py`
 
-**Source:** `archive/history/src/experiments/phase6b.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6b.py`
 
 **Purpose:** Controlled training-data sampling experiments for Phase 6B.
 
@@ -235,7 +235,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6c.py`
 
-**Source:** `archive/history/src/experiments/phase6c.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6c.py`
 
 **Purpose:** Controlled decision-threshold optimization for Phase 6C.
 
@@ -251,7 +251,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6d1.py`
 
-**Source:** `archive/history/src/experiments/phase6d1.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6d1.py`
 
 **Purpose:** Controlled structural static-feature experiments for Phase 6D1.
 
@@ -265,7 +265,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6d2.py`
 
-**Source:** `archive/history/src/experiments/phase6d2.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6d2.py`
 
 **Purpose:** Controlled normalized operand-derived static-feature experiments.
 
@@ -281,7 +281,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase6e.py`
 
-**Source:** `archive/history/src/experiments/phase6e.py`
+**Source:** `archive/history/phases/06_phase6_improvements/src/experiments/phase6e.py`
 
 **Purpose:** Controlled Logistic Regression and LightGBM experiments for Phase 6E.
 
@@ -298,7 +298,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase7a.py`
 
-**Source:** `archive/history/src/experiments/phase7a.py`
+**Source:** `archive/history/phases/07_phase7_analysis/src/experiments/phase7a.py`
 
 **Purpose:** Phase 7A temporal robustness analysis for the frozen MulCas reconstruction.
 
@@ -315,7 +315,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase7b.py`
 
-**Source:** `archive/history/src/experiments/phase7b.py`
+**Source:** `archive/history/phases/07_phase7_analysis/src/experiments/phase7b.py`
 
 **Purpose:** Phase 7B component/view ablation of the frozen MulCas reconstruction.
 
@@ -330,7 +330,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase7c.py`
 
-**Source:** `archive/history/src/experiments/phase7c.py`
+**Source:** `archive/history/phases/07_phase7_analysis/src/experiments/phase7c.py`
 
 **Purpose:** Phase 7C chronological creator-feature ablation for frozen MulCas.
 
@@ -345,7 +345,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase7d.py`
 
-**Source:** `archive/history/src/experiments/phase7d.py`
+**Source:** `archive/history/phases/07_phase7_analysis/src/experiments/phase7d.py`
 
 **Purpose:** Systematic error analysis over exact frozen Phase 7A MulCas predictions.
 
@@ -369,7 +369,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/phase7e.py`
 
-**Source:** `archive/history/src/experiments/phase7e.py`
+**Source:** `archive/history/phases/07_phase7_analysis/src/experiments/phase7e.py`
 
 **Purpose:** Historical exact-clone sensitivity analysis for frozen Phase 7A predictions.
 
@@ -392,7 +392,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `experiments/temporal_cv.py`
 
-**Source:** `archive/history/src/experiments/temporal_cv.py`
+**Source:** `archive/history/phases/10_cross_phase_synthesis_and_support/src/experiments/temporal_cv.py`
 
 **Purpose:** Forward-only temporal cross-validation utilities.
 
@@ -407,7 +407,7 @@ Phase 8 representations, graph and sequence work, external enrichment, Track B g
 
 ### `extension/__init__.py`
 
-**Source:** `archive/history/src/extension/__init__.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/__init__.py`
 
 **Purpose:** Planning and feasibility utilities for post-Phase-7 research extensions.
 
@@ -415,7 +415,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/artifact_resolver.py`
 
-**Source:** `archive/history/src/extension/artifact_resolver.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/artifact_resolver.py`
 
 **Purpose:** Hash-preserving resolver for historical artifacts relocated with a repository.
 
@@ -426,7 +426,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/cfg.py`
 
-**Source:** `archive/history/src/extension/cfg.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/cfg.py`
 
 **Purpose:** Deterministic, contract-local EVM control-flow graph construction.
 
@@ -446,7 +446,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/creation_code.py`
 
-**Source:** `archive/history/src/extension/creation_code.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/creation_code.py`
 
 **Purpose:** Deterministic creation/runtime bytecode boundary analysis.
 
@@ -458,7 +458,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/creation_features.py`
 
-**Source:** `archive/history/src/extension/creation_features.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/creation_features.py`
 
 **Purpose:** Frozen label-independent features for creation and deployment-init bytecode.
 
@@ -471,7 +471,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_enrichment.py`
 
-**Source:** `archive/history/src/extension/external_enrichment.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_enrichment.py`
 
 **Purpose:** Candidate construction, resumable ledger, and deterministic preflight.
 
@@ -484,7 +484,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_normalization.py`
 
-**Source:** `archive/history/src/extension/external_normalization.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_normalization.py`
 
 **Purpose:** Pure normalization helpers for the Phase 8R6A external-data audit.
 
@@ -498,7 +498,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_overlap.py`
 
-**Source:** `archive/history/src/extension/external_overlap.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_overlap.py`
 
 **Purpose:** Exact identity overlap calculations; no fuzzy similarity or model use.
 
@@ -511,7 +511,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_provenance.py`
 
-**Source:** `archive/history/src/extension/external_provenance.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_provenance.py`
 
 **Purpose:** Governance rules for external label provenance and Track B feasibility.
 
@@ -523,7 +523,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_rpc.py`
 
-**Source:** `archive/history/src/extension/external_rpc.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_rpc.py`
 
 **Purpose:** Credential-free Ethereum deployment/static metadata clients.
 
@@ -535,7 +535,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/external_sources.py`
 
-**Source:** `archive/history/src/extension/external_sources.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/external_sources.py`
 
 **Purpose:** Source-specific readers that preserve raw labels and missing values.
 
@@ -548,7 +548,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/feasibility.py`
 
-**Source:** `archive/history/src/extension/feasibility.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/feasibility.py`
 
 **Purpose:** Deterministic Phase 8R0 feasibility audits without model training.
 
@@ -569,7 +569,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/graph_dataset.py`
 
-**Source:** `archive/history/src/extension/graph_dataset.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/graph_dataset.py`
 
 **Purpose:** Verified readers and fixed transforms for the frozen Phase 8R2A corpus.
 
@@ -588,7 +588,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/graph_features.py`
 
-**Source:** `archive/history/src/extension/graph_features.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/graph_features.py`
 
 **Purpose:** Frozen block-local feature schema for Phase 8R2A control-flow graphs.
 
@@ -599,7 +599,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/graph_models.py`
 
-**Source:** `archive/history/src/extension/graph_models.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/graph_models.py`
 
 **Purpose:** Frozen Phase 8R2B GIN architecture and deterministic training helpers.
 
@@ -616,7 +616,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8_closure.py`
 
-**Source:** `archive/history/src/extension/phase8_closure.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8_closure.py`
 
 **Purpose:** Deterministic evidence consolidation for the formal Phase 8 closure.
 
@@ -632,7 +632,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r1a.py`
 
-**Source:** `archive/history/src/extension/phase8r1a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r1a.py`
 
 **Purpose:** Controlled recency-aware temporal backtesting for Phase 8R1A.
 
@@ -660,7 +660,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r2a.py`
 
-**Source:** `archive/history/src/extension/phase8r2a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r2a.py`
 
 **Purpose:** Build and validate the frozen Phase 8R2A static EVM CFG corpus.
 
@@ -680,7 +680,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r2b.py`
 
-**Source:** `archive/history/src/extension/phase8r2b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r2b.py`
 
 **Purpose:** Run Phase 8R2B graph aggregate and temporal GIN backtests.
 
@@ -701,7 +701,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r3a.py`
 
-**Source:** `archive/history/src/extension/phase8r3a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r3a.py`
 
 **Purpose:** Frozen MulCas-GIN complementarity and hybrid-headroom analysis.
 
@@ -725,7 +725,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r3b.py`
 
-**Source:** `archive/history/src/extension/phase8r3b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r3b.py`
 
 **Purpose:** Forward-only score fusion of frozen MulCas and GIN predictions.
 
@@ -744,7 +744,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r4a.py`
 
-**Source:** `archive/history/src/extension/phase8r4a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r4a.py`
 
 **Purpose:** Creation-code feasibility audit and frozen deployment-time feature corpus.
 
@@ -766,7 +766,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r4b.py`
 
-**Source:** `archive/history/src/extension/phase8r4b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r4b.py`
 
 **Purpose:** Forward temporal classification with frozen Phase 8R4A creation features.
 
@@ -790,7 +790,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r5a.py`
 
-**Source:** `archive/history/src/extension/phase8r5a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r5a.py`
 
 **Purpose:** Phase 8R5A opcode-sequence feasibility and compute audit.
 
@@ -813,7 +813,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r5b.py`
 
-**Source:** `archive/history/src/extension/phase8r5b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r5b.py`
 
 **Purpose:** Phase 8R5B temporally valid masked-opcode pretraining runner.
 
@@ -827,7 +827,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r5b0.py`
 
-**Source:** `archive/history/src/extension/phase8r5b0.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r5b0.py`
 
 **Purpose:** CUDA validation and bounded GPU benchmark for the frozen opcode Transformer.
 
@@ -850,7 +850,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r5c1.py`
 
-**Source:** `archive/history/src/extension/phase8r5c1.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r5c1.py`
 
 **Purpose:** Phase 8R5C1 forward temporal linear probes over frozen opcode encoders.
 
@@ -868,7 +868,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r6a.py`
 
-**Source:** `archive/history/src/extension/phase8r6a.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r6a.py`
 
 **Purpose:** Phase 8R6A deterministic external dataset audit (strictly no model scoring).
 
@@ -878,7 +878,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r6b.py`
 
-**Source:** `archive/history/src/extension/phase8r6b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r6b.py`
 
 **Purpose:** Phase 8R6B external enrichment and Track B construction; no detector access.
 
@@ -893,7 +893,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r6c.py`
 
-**Source:** `archive/history/src/extension/phase8r6c.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r6c.py`
 
 **Purpose:** Phase 8R6C provider-gated external enrichment finalization (no model access).
 
@@ -907,7 +907,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r6c_provider_resume.py`
 
-**Source:** `archive/history/src/extension/phase8r6c_provider_resume.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r6c_provider_resume.py`
 
 **Purpose:** Audited provider validation and bounded Phase 8R6C continuation.
 
@@ -930,7 +930,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/phase8r6d.py`
 
-**Source:** `archive/history/src/extension/phase8r6d.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/phase8r6d.py`
 
 **Purpose:** Phase 8R6D external enrichment, Track B sealing, and Phase 9B protocol freeze.
 
@@ -954,7 +954,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/sealed_track_b.py`
 
-**Source:** `archive/history/src/extension/sealed_track_b.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/sealed_track_b.py`
 
 **Purpose:** Default-deny access to any future sealed Track B labels.
 
@@ -964,7 +964,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/sequence_data.py`
 
-**Source:** `archive/history/src/extension/sequence_data.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/sequence_data.py`
 
 **Purpose:** Deterministic opcode-sequence preparation for temporal experiments.
 
@@ -984,7 +984,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/sequence_embeddings.py`
 
-**Source:** `archive/history/src/extension/sequence_embeddings.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/sequence_embeddings.py`
 
 **Purpose:** Frozen opcode-encoder inference and deterministic embedding caches.
 
@@ -1000,7 +1000,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/sequence_model.py`
 
-**Source:** `archive/history/src/extension/sequence_model.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/sequence_model.py`
 
 **Purpose:** Frozen small opcode Transformer used by the Phase 8R5 benchmark.
 
@@ -1014,7 +1014,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/sequence_pretraining.py`
 
-**Source:** `archive/history/src/extension/sequence_pretraining.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/sequence_pretraining.py`
 
 **Purpose:** Reusable, temporally safe masked-opcode pretraining utilities.
 
@@ -1034,7 +1034,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/successor_migration.py`
 
-**Source:** `archive/history/src/extension/successor_migration.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/successor_migration.py`
 
 **Purpose:** Verify frozen manifests while honoring explicit successor test migrations.
 
@@ -1045,7 +1045,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `extension/track_b_builder.py`
 
-**Source:** `archive/history/src/extension/track_b_builder.py`
+**Source:** `archive/history/phases/08_phase8_extension/src/extension/track_b_builder.py`
 
 **Purpose:** Strict, model-free Track B construction from verified enrichment records.
 
@@ -1064,7 +1064,7 @@ Static opcode, creator, Word2Vec, structural, and operand feature construction.
 
 ### `features/__init__.py`
 
-**Source:** `archive/history/src/features/__init__.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/__init__.py`
 
 **Purpose:** Static feature views used to reproduce the published MulCas inputs.
 
@@ -1072,7 +1072,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/developer.py`
 
-**Source:** `archive/history/src/features/developer.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/developer.py`
 
 **Purpose:** Chronological creator feature without future-label leakage.
 
@@ -1085,7 +1085,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/opcode.py`
 
-**Source:** `archive/history/src/features/opcode.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/opcode.py`
 
 **Purpose:** Training-only opcode count and TF-IDF feature views.
 
@@ -1103,7 +1103,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/opcode_categories.py`
 
-**Source:** `archive/history/src/features/opcode_categories.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/opcode_categories.py`
 
 **Purpose:** Canonical opcode categories for deterministic structural features.
 
@@ -1111,7 +1111,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/operands.py`
 
-**Source:** `archive/history/src/features/operands.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/operands.py`
 
 **Purpose:** Deterministic normalized features from deployed EVM PUSH operands.
 
@@ -1127,7 +1127,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/paper_aligned.py`
 
-**Source:** `archive/history/src/features/paper_aligned.py`
+**Source:** `archive/history/phases/05_5_paper_aligned/src/features/paper_aligned.py`
 
 **Purpose:** Paper-aligned feature variants for the frozen Phase 5.5 protocol.
 
@@ -1139,7 +1139,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/reproduce.py`
 
-**Source:** `archive/history/src/features/reproduce.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/reproduce.py`
 
 **Purpose:** Generate reproducible summaries for the published static feature views.
 
@@ -1153,7 +1153,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/structural.py`
 
-**Source:** `archive/history/src/features/structural.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/structural.py`
 
 **Purpose:** Fit-free, opcode-name-only structural contract features.
 
@@ -1166,7 +1166,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `features/word2vec.py`
 
-**Source:** `archive/history/src/features/word2vec.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/features/word2vec.py`
 
 **Purpose:** Deterministic training-only Word2Vec contract representations.
 
@@ -1189,7 +1189,7 @@ Baseline estimators, MulCas cascade/voting, and model execution entry points.
 
 ### `models/__init__.py`
 
-**Source:** `archive/history/src/models/__init__.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/__init__.py`
 
 **Purpose:** Model definitions and training helpers.
 
@@ -1197,7 +1197,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `models/alternative.py`
 
-**Source:** `archive/history/src/models/alternative.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/alternative.py`
 
 **Purpose:** Alternative classifier constructors for the controlled Phase 6E study.
 
@@ -1207,7 +1207,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `models/baselines.py`
 
-**Source:** `archive/history/src/models/baselines.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/baselines.py`
 
 **Purpose:** Fixed-parameter baseline viewer families from the published study.
 
@@ -1218,7 +1218,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `models/mulcas.py`
 
-**Source:** `archive/history/src/models/mulcas.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/mulcas.py`
 
 **Purpose:** Reusable confidence cascade and final voting for MulCas reconstruction.
 
@@ -1232,7 +1232,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `models/run_baselines.py`
 
-**Source:** `archive/history/src/models/run_baselines.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/run_baselines.py`
 
 **Purpose:** Run fixed individual baseline models across reproduced feature views.
 
@@ -1248,7 +1248,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `models/run_mulcas.py`
 
-**Source:** `archive/history/src/models/run_mulcas.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/models/run_mulcas.py`
 
 **Purpose:** Train, run, and report the frozen independent MulCas reconstruction.
 
@@ -1268,7 +1268,7 @@ Prospective Phase 9 diagnostics, state features, metrics, and protocol-gap analy
 
 ### `phase9/__init__.py`
 
-**Source:** `archive/history/src/phase9/__init__.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/__init__.py`
 
 **Purpose:** Phase 9 diagnostic reproduction analyses.
 
@@ -1276,7 +1276,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/creator_oracle.py`
 
-**Source:** `archive/history/src/phase9/creator_oracle.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/creator_oracle.py`
 
 **Purpose:** Non-deployable true-label online creator-state oracle for Phase 9A.
 
@@ -1288,7 +1288,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/family_similarity.py`
 
-**Source:** `archive/history/src/phase9/family_similarity.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/family_similarity.py`
 
 **Purpose:** Strictly historical opcode-family similarity features for Phase 9C.
 
@@ -1300,7 +1300,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/ngram_reproduction_audit.py`
 
-**Source:** `archive/history/src/phase9/ngram_reproduction_audit.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/ngram_reproduction_audit.py`
 
 **Purpose:** Label-independent N-gram dimensionality audit for Phase 9A.
 
@@ -1310,7 +1310,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/p2_anomaly_audit.py`
 
-**Source:** `archive/history/src/phase9/p2_anomaly_audit.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/p2_anomaly_audit.py`
 
 **Purpose:** Deterministic descriptive audit of the 251 frozen P2 false positives.
 
@@ -1320,7 +1320,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/phase9_metrics.py`
 
-**Source:** `archive/history/src/phase9/phase9_metrics.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/phase9_metrics.py`
 
 **Purpose:** Frozen Phase 9B pooled metrics and paired uncertainty.
 
@@ -1333,7 +1333,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/phase9a.py`
 
-**Source:** `archive/history/src/phase9/phase9a.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/phase9a.py`
 
 **Purpose:** Command-line entry point for Phase 9A.
 
@@ -1343,7 +1343,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/phase9c.py`
 
-**Source:** `archive/history/src/phase9/phase9c.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/phase9c.py`
 
 **Purpose:** Phase 9C deployment-available creator and code-family state experiment.
 
@@ -1358,7 +1358,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/protocol_gap.py`
 
-**Source:** `archive/history/src/phase9/protocol_gap.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/protocol_gap.py`
 
 **Purpose:** Orchestration and evidence consolidation for Phase 9A.
 
@@ -1371,7 +1371,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/state_features.py`
 
-**Source:** `archive/history/src/phase9/state_features.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/state_features.py`
 
 **Purpose:** Leakage-safe deployment-available creator state for Phase 9C.
 
@@ -1383,7 +1383,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `phase9/viewer_selection_oracle.py`
 
-**Source:** `archive/history/src/phase9/viewer_selection_oracle.py`
+**Source:** `archive/history/phases/09_phase9_prospective/src/phase9/viewer_selection_oracle.py`
 
 **Purpose:** Fixed-candidate, non-deployable P5 viewer-selection oracle.
 
@@ -1398,7 +1398,7 @@ Repository-relative paths and deterministic random seeding.
 
 ### `utils/__init__.py`
 
-**Source:** `archive/history/src/utils/__init__.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/utils/__init__.py`
 
 **Purpose:** Shared utility helpers.
 
@@ -1406,7 +1406,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `utils/paths.py`
 
-**Source:** `archive/history/src/utils/paths.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/utils/paths.py`
 
 **Purpose:** Repository-relative filesystem paths.
 
@@ -1416,7 +1416,7 @@ No public top-level classes or functions are declared in this module.
 
 ### `utils/seed.py`
 
-**Source:** `archive/history/src/utils/seed.py`
+**Source:** `archive/history/phases/00_05_foundation_and_baseline/src/utils/seed.py`
 
 **Purpose:** Deterministic random seed helpers for reproducible experiments.
 
@@ -1427,7 +1427,7 @@ No public top-level classes or functions are declared in this module.
 ## 14. Tests and Supporting Evidence
 
 The historical test suite is preserved separately under
-`archive/history/tests/`. Tests are intentionally not cataloged function by
+`archive/history/phases/*/tests/`. Tests are intentionally not cataloged function by
 function here because they are verification evidence rather than reusable
 source APIs. Match tests to modules by phase or feature name, for example:
 
@@ -1448,4 +1448,4 @@ source APIs. Match tests to modules by phase or feature name, for example:
 - `archive/README.md`: concise archive landing page.
 - `archive/CHRONOLOGY.md`: research phases in chronological order.
 - `archive/history/TRACKED_FILE_MANIFEST.csv`: file-level phase and Git-blob index.
-- `archive/history/README.md`: preserved README from the historical repository layout.
+- `archive/history/phases/10_cross_phase_synthesis_and_support/README.md`: preserved README from the historical repository layout.

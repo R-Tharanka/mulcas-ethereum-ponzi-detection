@@ -33,13 +33,14 @@ archive/
 |   |-- README.md
 |   |-- TRACKED_FILE_MANIFEST.csv
 |   |-- LFS_MATERIALIZATION_AUDIT.json
-|   |-- configs/
-|   |-- data/
-|   |-- docs/
-|   |-- notebooks/
-|   |-- results/
-|   |-- src/
-|   `-- tests/
+|   `-- phases/
+|       |-- 00_05_foundation_and_baseline/
+|       |-- 05_5_paper_aligned/
+|       |-- 06_phase6_improvements/
+|       |-- 07_phase7_analysis/
+|       |-- 08_phase8_extension/
+|       |-- 09_phase9_prospective/
+|       `-- 10_cross_phase_synthesis_and_support/
 `-- local-only/                 # ignored by Git
     |-- cache/
     |-- data/
@@ -48,15 +49,16 @@ archive/
     `-- private/
 ```
 
-The `history/` tree mirrors original repository-relative paths. For example:
+The `history/phases/` tree is ordered by research phase. Each package mirrors
+original repository-relative paths internally. For example:
 
 ```text
 Original: configs/paper_aligned_mulcas.yaml
-Archive:  archive/history/configs/paper_aligned_mulcas.yaml
+Archive:  archive/history/phases/05_5_paper_aligned/configs/paper_aligned_mulcas.yaml
 ```
 
-This path-preserving layout makes it possible to identify where a file
-originally belonged and to restore a historical workflow deliberately.
+This phase-first, path-preserving layout makes ownership immediately visible
+while retaining enough information to restore a historical workflow.
 
 ## 3. Tracked Historical Archive
 
@@ -64,7 +66,7 @@ originally belonged and to restore a historical workflow deliberately.
 cleanup. The archive operation moved 567 tracked files. Additional archive
 control files document and verify that migration.
 
-| Historical area | Preserved content |
+| Path inside each phase | Preserved content |
 | --- | --- |
 | `configs/` | Baseline, Phase 6-9, extension, and frozen-manifest YAML files |
 | `docs/` | Progress reports, protocols, phase summaries, and the earlier run guide |
@@ -114,8 +116,8 @@ each chronological group:
 | `09_phase9_prospective` | Protocol-gap analysis and prospective Phase 9 development |
 | `10_cross_phase_synthesis_and_support` | Cross-phase reports, guides, and shared support files |
 
-These groups are logical labels in the manifest. They are not separate physical
-directories because the physical tree preserves each file's original path.
+These groups are physical packages under `archive/history/phases/`. Their
+internal paths preserve each file's original repository location.
 
 ### `archive/history/TRACKED_FILE_MANIFEST.csv`
 
@@ -154,7 +156,7 @@ archive operation claimed and what it deliberately did not do.
 One archived result is a 107,441,279-byte Git LFS object:
 
 ```text
-archive/history/results/extension/phase8r6d/enriched_contracts_final.csv
+archive/history/phases/08_phase8_extension/results/extension/phase8r6d/enriched_contracts_final.csv
 ```
 
 The archive stores the materialized CSV rather than the small LFS pointer text.
@@ -168,27 +170,26 @@ Use this order:
 
 1. Read `archive/CHRONOLOGY.md` to identify the phase and chronology group.
 2. Filter `TRACKED_FILE_MANIFEST.csv` by that group.
-3. Start with the archived report or result JSON under `history/docs/` or
-   `history/results/`.
-4. Read the corresponding YAML under `history/configs/`.
-5. Trace implementation code under `history/src/`.
-6. Use the matching files under `history/tests/` to understand integrity and
-   leakage controls.
+3. Open that package's `README.md`.
+4. Start with its report or result JSON under `docs/` or `results/`.
+5. Read the corresponding YAML under `configs/`.
+6. Trace implementation under `src/` and use `tests/` to understand integrity
+   and leakage controls.
 
 For example, the Phase 5.5 paper-aligned flow is represented by:
 
 ```text
-archive/history/configs/paper_aligned_split.yaml
-archive/history/configs/paper_aligned_features.yaml
-archive/history/configs/paper_aligned_baseline_models.yaml
-archive/history/configs/paper_aligned_mulcas.yaml
-archive/history/src/data/paper_aligned_split.py
-archive/history/src/features/paper_aligned.py
-archive/history/src/models/run_baselines.py
-archive/history/src/models/run_mulcas.py
-archive/history/results/baseline/paper_aligned/
-archive/history/docs/paper_aligned_baseline_report.md
-archive/history/tests/test_paper_aligned_protocol.py
+archive/history/phases/05_5_paper_aligned/configs/paper_aligned_split.yaml
+archive/history/phases/05_5_paper_aligned/configs/paper_aligned_features.yaml
+archive/history/phases/05_5_paper_aligned/configs/paper_aligned_baseline_models.yaml
+archive/history/phases/05_5_paper_aligned/configs/paper_aligned_mulcas.yaml
+archive/history/phases/05_5_paper_aligned/src/data/paper_aligned_split.py
+archive/history/phases/05_5_paper_aligned/src/features/paper_aligned.py
+archive/history/phases/00_05_foundation_and_baseline/src/models/run_baselines.py
+archive/history/phases/00_05_foundation_and_baseline/src/models/run_mulcas.py
+archive/history/phases/05_5_paper_aligned/results/baseline/paper_aligned/
+archive/history/phases/05_5_paper_aligned/docs/paper_aligned_baseline_report.md
+archive/history/phases/05_5_paper_aligned/tests/test_paper_aligned_protocol.py
 ```
 
 ## 7. Running Historical Work
@@ -283,7 +284,7 @@ results must still be described according to their original protocols.
   class, function, and class method in the preserved historical Python source.
 - `archive/README.md`: concise archive landing page.
 - `archive/CHRONOLOGY.md`: chronological research index.
-- `archive/history/README.md`: historical repository README preserved as
+- `archive/history/phases/10_cross_phase_synthesis_and_support/README.md`: historical repository README preserved as
   evidence of the earlier root layout.
 - `docs/RUN_AND_TEST_GUIDE.md`: instructions for the current active workflow.
 - `docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md`: current workflow architecture and

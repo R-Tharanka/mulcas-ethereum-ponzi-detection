@@ -7,7 +7,7 @@
   "tracked_archive_missing_files": 0,
   "tracked_archive_content_exceptions": 1,
   "tracked_archive_content_exception": {
-    "path": "archive/history/results/extension/phase8r6d/enriched_contracts_final.csv",
+    "path": "archive/history/phases/08_phase8_extension/results/extension/phase8r6d/enriched_contracts_final.csv",
     "reason": "archive contains the verified materialized Git LFS object instead of pointer text",
     "audit": "archive/history/LFS_MATERIALIZATION_AUDIT.json"
   },
@@ -25,6 +25,14 @@
   "models_retrained": false,
   "active_result_regenerated": false,
   "local_only_archive_ignored": true,
+  "phase_reorganization": {
+    "date": "2026-11-01",
+    "layout": "archive/history/phases/<chronology_group>/<original_path>",
+    "files_relocated": 567,
+    "missing_after_relocation": 0,
+    "git_blob_mismatches_after_relocation": 0,
+    "report": "archive/PHASE_REORGANIZATION_REPORT.md"
+  },
   "remaining_root_cache": {
     "path": ".pytest_cache",
     "tracked": false,

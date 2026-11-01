@@ -74,8 +74,9 @@ See `docs/RUN_AND_TEST_GUIDE.md` for exact commands and
 ## Historical Research Archive
 
 All previous chronological baseline, Phase 6-9, extension, notebook, test, and
-report files are preserved under `archive/history/` using their original
-relative paths. `archive/CHRONOLOGY.md` explains the research timeline, and
+report files are preserved under `archive/history/phases/`. The top-level
+packages follow research chronology, and each package retains original relative
+paths internally. `archive/CHRONOLOGY.md` explains the research timeline, and
 `archive/history/TRACKED_FILE_MANIFEST.csv` records every moved tracked file and
 its original Git blob ID.
 

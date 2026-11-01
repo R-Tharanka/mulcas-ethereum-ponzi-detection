@@ -311,8 +311,8 @@ Commit `5ed8509` also modified the following tracked metadata artifacts:
 | File | Relationship to the random-split run |
 | --- | --- |
 | `results/baseline/dataset_audit.json` | Retained as active source-integrity evidence; the random-split script does not read it |
-| `archive/history/results/baseline/paper_aligned/feature_summary.json` | Paper-aligned feature metadata changed in the same commit; now archived and not read by the random-split script |
-| `archive/history/results/baseline/paper_aligned/split_metadata.json` | Paper-aligned split metadata changed in the same commit; now archived and not read by the random-split script |
+| `archive/history/phases/05_5_paper_aligned/results/baseline/paper_aligned/feature_summary.json` | Paper-aligned feature metadata changed in the same commit; now archived and not read by the random-split script |
+| `archive/history/phases/05_5_paper_aligned/results/baseline/paper_aligned/split_metadata.json` | Paper-aligned split metadata changed in the same commit; now archived and not read by the random-split script |
 
 These files should not be described as inputs to the random-split model merely
 because they appear in the same commit.
@@ -408,7 +408,7 @@ It prints the comparison to the terminal and does not write a new file.
 | Focused method documentation | `docs/RANDOM_SPLIT_THREE_VIEWER_FLOW.md` |
 | Run instructions | `docs/RUN_AND_TEST_GUIDE.md` |
 | Commit-level audit | `docs/LAST_COMMIT_PROGRESS_REPORT.md` |
-| Archived same-commit metadata, not runtime input | `archive/history/results/baseline/paper_aligned/feature_summary.json`; `archive/history/results/baseline/paper_aligned/split_metadata.json` |
+| Archived same-commit metadata, not runtime input | `archive/history/phases/05_5_paper_aligned/results/baseline/paper_aligned/feature_summary.json`; `archive/history/phases/05_5_paper_aligned/results/baseline/paper_aligned/split_metadata.json` |
 
 This table covers every repository file directly involved in executing,
 recording, governing, or documenting the current random-split flow. Files under
